@@ -1,5 +1,10 @@
+.Sidebar_body {
+    width: 20rem;
+}
+
 .Sidebar {
     background-color: #496348;
     color: #FFFFFF;
-    width: 20rem;
+    flex:auto;
+    padding: 20px;
 }
