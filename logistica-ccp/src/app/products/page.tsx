@@ -1,11 +1,9 @@
-import Sidebar from "../../../components/Sidebar";
 import DataTable from "../../../components/Datatable";
 
 const Products: React.FC = () => {
 
     return (
-        <div className="flex h-screen w-screen">
-            <Sidebar />
+        <div className="flex">
             <DataTable />
         </div>
     )

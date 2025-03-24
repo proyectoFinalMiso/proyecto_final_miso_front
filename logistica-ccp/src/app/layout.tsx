@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles"
 import theme from "../theme";
 
+// MUI components for building the base layout
+import Grid from "@mui/material/Grid2";
+import Box from "@mui/material/Box";
+
+// Calling the components that are the base for the rest of the views
+import Footer from "../../components/Footer"
+import Sidebar from "../../components/Sidebar"
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -31,7 +37,21 @@ export default function RootLayout({
       >
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
-            {children}
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container>
+                <Grid size={2} sx={{ minWidth: "20rem", minHeight: "100vh", overflow: "auto", alignItems: "stretch" }}>
+                  <Sidebar />
+                </Grid>
+                <Grid size="grow" direction="column">
+                  <Grid size="grow">
+                    {children}
+                  </Grid>
+                  <Grid size="grow">
+                    <Footer />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Box>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

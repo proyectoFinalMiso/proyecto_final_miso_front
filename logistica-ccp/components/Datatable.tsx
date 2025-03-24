@@ -5,7 +5,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 const tableSchema: GridColDef[] = [
     { field: 'nombreProducto', headerName: 'Nombre Producto', width: 500 },
-    { field: 'sku', headerName: 'SKU', width: 130, type: 'number' },
+    { field: 'sku', headerName: 'SKU', width: 130 },
     { field: 'volumen', headerName: 'Volumen', width: 130, type: 'number' },
     { field: 'fabricante', headerName: 'Fabricante', width: 200 },
     { field: 'valorUnitario', headerName: 'Valor Unitario', width: 130, type: 'number' },
@@ -24,7 +24,7 @@ const paginationModel = { page: 0, pageSize: 5 };
 
 export default function DataTable() {
     return (
-        <Paper sx={{ height: 400, width: '86rem', margin: 'auto', marginTop: '1.25rem' }}>
+        <Paper sx={{ height: 400, width: '86rem', marginTop: '1.25rem' }}>
             <DataGrid
                 rows={mockData}
                 columns={tableSchema}

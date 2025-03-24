@@ -5,7 +5,7 @@ import styles from "./Sidebar.module.css"
 const Sidebar: React.FC = () => {
     
   return (
-    <div className={`${styles.Sidebar_body} flex h-screen`}>
+    <div className={`${styles.Sidebar_body} flex`}>
       {/* Sidebar */}
       <aside className={`${styles.Sidebar}`}>
         <h2 className="text-xl font-bold">My App</h2>

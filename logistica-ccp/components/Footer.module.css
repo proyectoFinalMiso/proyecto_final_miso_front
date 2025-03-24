@@ -1,0 +1,13 @@
+.Copyright {
+    margin: 1.25rem 0;
+}
+
+.Footer {
+    height: 30px;
+    flex:auto;
+    margin: 0.125rem 3.125rem;
+}
+
+.Footer_Divider {
+    color: #2E2E2E;   
+}
