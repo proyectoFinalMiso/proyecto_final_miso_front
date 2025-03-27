@@ -24,7 +24,7 @@ const paginationModel = { page: 0, pageSize: 5 };
 
 export default function DataTable() {
     return (
-        <Paper sx={{ height: 400, width: '86rem', marginTop: '1.25rem' }}>
+        <Paper sx={{ height: 400, width: '100%', marginTop: '1.25rem' }}>
             <DataGrid
                 rows={mockData}
                 columns={tableSchema}

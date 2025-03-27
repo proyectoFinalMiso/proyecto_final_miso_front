@@ -10,8 +10,8 @@ import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 
 // Calling the components that are the base for the rest of the views
-import Footer from "../../components/Footer"
-import Sidebar from "../../components/Sidebar"
+import Footer from "../../globalComponents/Footer"
+import Sidebar from "../../globalComponents/Sidebar"
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
