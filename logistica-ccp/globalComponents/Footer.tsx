@@ -19,9 +19,8 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <div className={`${styles.Footer}`}>
-      <Divider flexItem />
-      <Box>
+      <Box sx={{ marginInline: "3.125rem" }}>
+        <Divider flexItem />
         <Grid container sx={{ alignItems: "center" }}>
           <Grid size={6}>
             <p className={`${styles.Copyright}`}>Copyright © 2025. All rights reserved. </p>
@@ -46,7 +45,6 @@ const Footer: React.FC = () => {
           </Grid>
         </Grid>
       </Box>
-    </div>
   );
 };
 

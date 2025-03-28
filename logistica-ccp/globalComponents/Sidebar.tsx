@@ -8,14 +8,9 @@ const Sidebar: React.FC = () => {
     <div className={`${styles.Sidebar_body} flex`}>
       {/* Sidebar */}
       <aside className={`${styles.Sidebar}`}>
-        <h2 className="text-xl font-bold">My App</h2>
+        <h1 className="text-xl font-bold">CPP</h1>
         <nav className="mt-5">
           <ul>
-            <li className="mb-3">
-              <Link href="/" className="hover:text-gray-300">
-                Home
-              </Link>
-            </li>
             <li className="mb-3">
               <Link href="/dashboard" className="hover:text-gray-300">
                 Dashboard

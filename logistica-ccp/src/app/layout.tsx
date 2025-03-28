@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
-import { Roboto } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles"
 import theme from "../theme";
 
@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import Footer from "../../globalComponents/Footer"
 import Sidebar from "../../globalComponents/Sidebar"
 
-const roboto = Roboto({
+const roboto = Plus_Jakarta_Sans({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
