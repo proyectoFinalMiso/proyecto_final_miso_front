@@ -1,0 +1,12 @@
+.Sidebar_body {
+    height: 100%;
+    width: 100%;
+}
+
+.Sidebar {
+    background-color: #496348;
+    color: #FFFFFF;
+    flex:auto;
+    height: 100%;
+    padding: 20px;
+}

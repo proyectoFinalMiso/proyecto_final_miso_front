@@ -1,22 +1,16 @@
 // components/Layout.tsx
-import { ReactNode } from "react";
 import Link from "next/link";
 import styles from "./Sidebar.module.css"
 
 const Sidebar: React.FC = () => {
     
   return (
-    <div className="flex h-screen">
+    <div className={`${styles.Sidebar_body} flex`}>
       {/* Sidebar */}
-      <aside className={`${styles.Sidebar} w-64 p-5`}>
-        <h2 className="text-xl font-bold">My App</h2>
+      <aside className={`${styles.Sidebar}`}>
+        <h1 className="text-xl font-bold">CPP</h1>
         <nav className="mt-5">
           <ul>
-            <li className="mb-3">
-              <Link href="/" className="hover:text-gray-300">
-                Home
-              </Link>
-            </li>
             <li className="mb-3">
               <Link href="/dashboard" className="hover:text-gray-300">
                 Dashboard
@@ -27,12 +21,14 @@ const Sidebar: React.FC = () => {
                 Settings
               </Link>
             </li>
+            <li className="mb-3">
+              <Link href="/products" className="hover:text-gray-300">
+                Products
+              </Link>
+            </li>
           </ul>
         </nav>
       </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 p-5">{}</main>
     </div>
   );
 };

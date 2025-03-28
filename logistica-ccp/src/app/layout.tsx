@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
+import { Plus_Jakarta_Sans } from "next/font/google";
+import { ThemeProvider } from "@mui/material/styles"
+import theme from "../theme";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// MUI components for building the base layout
+import Grid from "@mui/material/Grid2";
+import Box from "@mui/material/Box";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Calling the components that are the base for the rest of the views
+import Footer from "../../globalComponents/Footer"
+import Sidebar from "../../globalComponents/Sidebar"
+
+const roboto = Plus_Jakarta_Sans({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto',
 });
 
 export const metadata: Metadata = {
@@ -25,9 +33,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${roboto.variable} antialiased`}
       >
-        {children}
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <ThemeProvider theme={theme}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container>
+                <Grid size={2} sx={{ minWidth: "20rem", minHeight: "100vh", overflow: "auto", alignItems: "stretch" }}>
+                  <Sidebar />
+                </Grid>
+                <Grid size="grow" direction="column">
+                  <Grid size="grow">
+                    {children}
+                  </Grid>
+                  <Grid size="grow">
+                    <Footer />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Box>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
