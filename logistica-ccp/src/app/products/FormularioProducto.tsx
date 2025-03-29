@@ -46,13 +46,16 @@ export default function FormularioProducto({ open, onClose, title = "Formulario"
                         margin: "auto",
                         padding: "1.25rem",
                         width: "40rem",
-                        }}>
-                        <Typography id="modal-formulario-producto-title" variant="h6" gutterBottom>
+                        }}
+                        title="Formulario nuevo producto"
+                    >
+                        <Typography id="modal-formulario-producto-title" variant="h6" title="Form title" gutterBottom>
                             {title}
                         </Typography>
                         <Typography 
                             id="modal-formulario-producto-subtitle"
                             sx={{ color: "#B0B0B0" }}
+                            title="Form subtitle"
                         >
                             Agregar un producto a la plataforma
                         </Typography>
@@ -64,6 +67,7 @@ export default function FormularioProducto({ open, onClose, title = "Formulario"
                                 value={formData.nombre}
                                 onChange={handleChange}
                                 margin="normal"
+                                title="Nombre del producto"
                             />
                             <TextField
                                 fullWidth
@@ -72,6 +76,7 @@ export default function FormularioProducto({ open, onClose, title = "Formulario"
                                 value={formData.valorUnitario}
                                 onChange={handleChange}
                                 margin="normal"
+                                title="Valor unitario del producto"
                             />
                             <TextField
                                 fullWidth
@@ -80,6 +85,7 @@ export default function FormularioProducto({ open, onClose, title = "Formulario"
                                 value={formData.fabricante}
                                 onChange={handleChange}
                                 margin="normal"
+                                title="Fabricante del producto"
                             />
                             <TextField
                                 fullWidth
@@ -89,6 +95,7 @@ export default function FormularioProducto({ open, onClose, title = "Formulario"
                                 onChange={handleChange}
                                 margin="normal"
                                 type="number"
+                                title="Volumen del producto"
                             />
                             <Stack 
                                 direction={"row"} 
