@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-      <Box sx={{ marginInline: "3.125rem" }}>
+      <Box sx={{ marginInline: "3.125rem" }} data-testid="footer">
         <Divider flexItem />
         <Grid container sx={{ alignItems: "center" }}>
           <Grid size={6}>
@@ -31,14 +31,16 @@ const Footer: React.FC = () => {
               <Select
                 labelId="language-select-label"
                 id="language-select"
-                value={language}
                 label="Language"
+                title="language-selector"
                 onChange={handleChange}
+                value={language}
                 variant="standard"
                 disableUnderline
+                MenuProps={{ disablePortal: true }}
               >
                 <MenuItem value={"ES_LA"}>Español (Latinoamérica)</MenuItem>
-                <MenuItem value={"EN_US"}>English (Estados Unidos)</MenuItem>
+                <MenuItem value={"EN_US"}>English (United States)</MenuItem>
                 <MenuItem value={"EN_UK"}>English (United Kingdom)</MenuItem>
               </Select>
             </FormControl>

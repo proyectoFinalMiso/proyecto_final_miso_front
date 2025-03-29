@@ -8,13 +8,12 @@ import theme from "../theme";
 // MUI components for building the base layout
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 
 // Calling the components that are the base for the rest of the views
 import Footer from "../../globalComponents/Footer"
 import Sidebar from "../../globalComponents/Sidebar"
 
-const roboto = Plus_Jakarta_Sans({
+const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
@@ -34,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} antialiased`}
+        className={`${plusJakartaSans.variable} antialiased`}
       >
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>

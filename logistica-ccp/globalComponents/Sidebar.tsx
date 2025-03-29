@@ -1,12 +1,12 @@
 // components/Layout.tsx
 import Link from "next/link";
 import styles from "./Sidebar.module.css"
+import { title } from "process";
 
 const Sidebar: React.FC = () => {
 
   return (
-    <div className={`${styles.Sidebar_body} flex`}>
-      {/* Sidebar */}
+    <div className={`${styles.Sidebar_body} flex`} data-testid="sidebar" title="CPP Menu">
       <aside className={`${styles.Sidebar}`}>
         <h1 className="text-xl font-bold">CPP</h1>
         <nav className="mt-5">
