@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "./Sidebar.module.css"
 
 const Sidebar: React.FC = () => {
-    
+
   return (
     <div className={`${styles.Sidebar_body} flex`}>
       {/* Sidebar */}

@@ -8,6 +8,7 @@ import theme from "../theme";
 // MUI components for building the base layout
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 
 // Calling the components that are the base for the rest of the views
 import Footer from "../../globalComponents/Footer"
@@ -38,15 +39,18 @@ export default function RootLayout({
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
             <Box sx={{ flexGrow: 1 }}>
-              <Grid container>
+              <Grid container sx={{ flex: 1, minHeight: "100vh" }}>
                 <Grid size={2} sx={{ minWidth: "20rem", minHeight: "100vh", overflow: "auto", alignItems: "stretch" }}>
                   <Sidebar />
                 </Grid>
-                <Grid size="grow" direction="column">
-                  <Grid size="grow">
+
+                <Grid direction="column" sx={{ display: "flex", flexDirection: "column", flex: 1, minHeight: "100vh" }}>
+
+                  <Grid size="grow" sx={{ flex: 1, overflow: "auto" }}>
                     {children}
                   </Grid>
-                  <Grid size="grow">
+
+                  <Grid sx={{ width: "100%", alignItems: "flex-end" }}>
                     <Footer />
                   </Grid>
                 </Grid>
