@@ -27,11 +27,11 @@ const FilterModal = ({
             animationType="fade"
             onRequestClose={onClose}
         >
-            <Pressable style={styles.modalOverlay} onPress={onClose}>
+            <Pressable style={styles.modalOverlay} onPress={onClose} testID="modal-overlay">
                 <View style={styles.modalContent} onStartShouldSetResponder={() => true}>
                     <View style={styles.modalHeader}>
                         <Text style={styles.modalTitle}>Filtrar productos</Text>
-                        <TouchableOpacity onPress={onClose}>
+                        <TouchableOpacity onPress={onClose} testID="modal-close-button">
                             <Ionicons name="close" size={24} color={Colors.light.text} />
                         </TouchableOpacity>
                     </View>
