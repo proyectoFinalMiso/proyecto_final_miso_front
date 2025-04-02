@@ -8,6 +8,7 @@ import {
   PlusJakartaSans_600SemiBold,
   PlusJakartaSans_700Bold,
 } from '@expo-google-fonts/plus-jakarta-sans';
+import { CartProvider } from '../contexts/CartContext';
 
 
 SplashScreen.preventAutoHideAsync();
@@ -31,7 +32,7 @@ export default function Layout() {
   }
 
   return (
-    
+    <CartProvider>
       <Stack
         screenOptions={{
           headerShown: false,
@@ -41,5 +42,6 @@ export default function Layout() {
         <Stack.Screen name="login" />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
+    </CartProvider>
   );
 }
