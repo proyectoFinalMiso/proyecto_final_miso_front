@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./Products.module.css"
 import DataTable from "../../../globalComponents/Datatable";
 import PageTitle from "../../../globalComponents/PageTitle";
-import FormularioProducto from "./FormularioProducto";
+import ProductsForm from "./productsForm";
 
 import theme from "@/theme";
 import Grid from "@mui/material/Grid2";
@@ -47,7 +47,7 @@ const Products: React.FC = () => {
         <ThemeProvider theme={theme}>
             <Box>
                 <Grid container>
-                    <FormularioProducto open={isOpen} onClose={() => setIsOpen(false)} title="Nuevo Producto"/>
+                    <ProductsForm open={isOpen} onClose={() => setIsOpen(false)} title="Nuevo Producto"/>
                     <Grid sx={{ direction: 'column' }} size="grow">
                         <PageTitle text="Productos" />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>

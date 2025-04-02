@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Modal, Box, Typography, TextField, Button, Stack } from "@mui/material"
 import Grid from "@mui/material/Grid2";
 
+import { createProduct } from "./adapters/microserviceProducts";
 
 interface ModalFormProps {
     open: boolean;
@@ -9,7 +10,7 @@ interface ModalFormProps {
     title?: string
 }
 
-export default function FormularioProducto({ open, onClose, title = "Formulario" }: ModalFormProps) {
+export default function ProductsForm({ open, onClose, title = "Formulario" }: ModalFormProps) {
     const [formData, setFormData] = useState({ nombre: "", valorUnitario: "", fabricante: "", volumen: "" });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,8 +72,8 @@ export default function FormularioProducto({ open, onClose, title = "Formulario"
                             />
                             <TextField
                                 fullWidth
-                                label="Valor Unitario"
-                                name="valor-unitario"
+                                label="Valor Unitario ($COP)"
+                                name="valorUnitario"
                                 value={formData.valorUnitario}
                                 onChange={handleChange}
                                 margin="normal"
