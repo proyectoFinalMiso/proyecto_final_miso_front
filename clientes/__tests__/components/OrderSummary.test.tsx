@@ -4,7 +4,6 @@ import OrderSummary from '../../components/OrderSummary';
 import { CartProvider, useCart } from '../../contexts/CartContext';
 import { Product } from '../../components/ProductTable';
 
-// Mock console.log to test handleFinishOrder
 const mockConsoleLog = jest.fn();
 console.log = mockConsoleLog;
 
@@ -17,8 +16,8 @@ const renderWithProvider = (component: React.ReactElement) => {
 };
 
 describe('OrderSummary', () => {
-    const product1: Product = { id: '1', name: 'Producto 1', price: 10000 };
-    const product2: Product = { id: '2', name: 'Producto 2', price: 20000 };
+    const product1: Product = { id: '1', name: 'Producto 1', price: 10000, sku: 10006 };
+    const product2: Product = { id: '2', name: 'Producto 2', price: 20000, sku: 10007 };
 
     beforeEach(() => {
         mockConsoleLog.mockClear();
@@ -59,13 +58,6 @@ describe('OrderSummary', () => {
         expect(getByText('$80000 COP')).toBeTruthy();
     });
 
-    it('should call handleFinishOrder when button is pressed', () => {
-        const { getByText } = renderWithProvider(<OrderSummary />);
-
-        fireEvent.press(getByText('Finalizar Pedido'));
-
-        expect(mockConsoleLog).toHaveBeenCalledWith('Finalizar pedido');
-    });
 });
 
 // Helper component to add products to cart for testing

@@ -1,13 +1,45 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { Colors } from '../constants/Colors';
 import { useCart } from '../contexts/CartContext';
+import { sendOrder } from '../services/api/orderService';
 
 const OrderSummary = () => {
-    const { getTotal } = useCart();
+    const { getTotal, items, clearCart } = useCart();
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleFinishOrder = () => {
-        console.log('Finalizar pedido');
+    const handleFinishOrder = async () => {
+        if (items.length === 0) {
+            Alert.alert('Error', 'No hay productos en el carrito');
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+            const response = await sendOrder(items);
+
+            Alert.alert(
+                'Éxito',
+                'El pedido se ha enviado correctamente',
+                [{
+                    text: 'OK',
+                    onPress: () => {
+                        clearCart();
+                    }
+                }]
+            );
+
+        } catch (error) {
+            let errorMessage = 'Ocurrió un error al enviar el pedido';
+
+            if (error instanceof Error) {
+                errorMessage += `: ${error.message}`;
+            }
+
+            Alert.alert('Error', errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -17,10 +49,18 @@ const OrderSummary = () => {
                 <Text style={styles.totalValue}>${getTotal().toFixed(0)} COP</Text>
             </View>
             <TouchableOpacity
-                style={styles.finishButton}
+                style={[
+                    styles.finishButton,
+                    isLoading && styles.finishButtonDisabled
+                ]}
                 onPress={handleFinishOrder}
+                disabled={isLoading}
             >
-                <Text style={styles.buttonText}>Finalizar Pedido</Text>
+                {isLoading ? (
+                    <ActivityIndicator size="small" color={Colors.light.buttonText} />
+                ) : (
+                    <Text style={styles.buttonText}>Finalizar Pedido</Text>
+                )}
             </TouchableOpacity>
         </View>
     );
@@ -68,6 +108,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         justifyContent: 'center',
         alignItems: 'center',
+        minWidth: 120,
+    },
+    finishButtonDisabled: {
+        backgroundColor: Colors.light.button + '80',
     },
     buttonText: {
         color: Colors.light.buttonText,
