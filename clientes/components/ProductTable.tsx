@@ -7,7 +7,8 @@ import {
   FlatList,
   LayoutAnimation,
   Platform,
-  UIManager
+  UIManager,
+  RefreshControlProps
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants/Colors';
@@ -25,14 +26,16 @@ export type Product = {
   id: string;
   name: string;
   price: number;
+  sku: number
 };
 
 type ProductTableProps = {
   products: Product[];
   onProductPress?: (product: Product) => void;
+  refreshControl?: React.ReactElement<RefreshControlProps>;
 };
 
-const ProductTable = ({ products, onProductPress }: ProductTableProps) => {
+const ProductTable = ({ products, onProductPress, refreshControl }: ProductTableProps) => {
   const { addToCart } = useCart();
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [quantities, setQuantities] = useState<Record<string, number>>({});
@@ -159,6 +162,7 @@ const ProductTable = ({ products, onProductPress }: ProductTableProps) => {
           renderItem={renderProduct}
           keyExtractor={item => item.id}
           contentContainerStyle={styles.listContent}
+          refreshControl={refreshControl}
         />
       )}
     </View>
