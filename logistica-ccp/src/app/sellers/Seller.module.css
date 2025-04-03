@@ -1,0 +1,11 @@
+.TextField {
+    background-color: #fff;
+    border-radius: 10%;
+    margin: 0;
+    width: 450px;
+}
+
+.TextField.MuiOutlinedInput-notchedOutline {
+    border-radius: 16px;
+}
+
