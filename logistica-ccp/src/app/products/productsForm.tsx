@@ -1,26 +1,48 @@
-import { useState } from "react";
-import { Modal, Box, Typography, TextField, Button, Stack } from "@mui/material"
+import { useState, useEffect } from "react";
+import { SelectChangeEvent } from "@mui/material";
+import { Modal, Box, Select, Typography, TextField, Button, Stack, MenuItem, InputLabel } from "@mui/material"
 import Grid from "@mui/material/Grid2";
 
-import { createProduct } from "./adapters/microserviceProducts";
+import { createProduct, getManufacturers } from "./adapters/microserviceProducts";
 
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
     title?: string
 }
+interface Manufacturer {
+    id: string;
+    nombre: string;
+}
 
 export default function ProductsForm({ open, onClose, title = "Formulario" }: ModalFormProps) {
-    const [formData, setFormData] = useState({ nombre: "", valorUnitario: "", fabricante: "", volumen: "" });
+    const [formData, setFormData] = useState({ nombre: "", valorUnitario: "", id_fabricante: "", volumen: "" });
+    const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
 
+    useEffect(() => {
+        getManufacturers().then(setManufacturers);
+    }, []);
+    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Formulario enviado:", formData)
+        await createProduct(
+            {
+                nombre: formData.nombre,
+                valorUnitario: parseInt(formData.valorUnitario),
+                id_fabricante: formData.id_fabricante,
+                volumen: formData.volumen
+            }
+        );
         onClose();
+    };
+
+    const handleSelectChange = (e: SelectChangeEvent<string>) => {
+        setFormData((prev) => ({ ...prev, id_fabricante: e.target.value }));
     };
 
     return (
@@ -79,15 +101,24 @@ export default function ProductsForm({ open, onClose, title = "Formulario" }: Mo
                                 margin="normal"
                                 title="Valor unitario del producto"
                             />
-                            <TextField
+                            <Select
                                 fullWidth
-                                label="Fabricante"
+                                labelId="fabricante-select-label"
+                                id="fabricante-select"
                                 name="fabricante"
-                                value={formData.fabricante}
-                                onChange={handleChange}
-                                margin="normal"
+                                value={formData.id_fabricante}
+                                onChange={handleSelectChange}
                                 title="Fabricante del producto"
-                            />
+                            >
+                                <MenuItem value="" disabled>
+                                    Seleccione un fabricante
+                                </MenuItem>
+                                {manufacturers.map((manufacturer) => (
+                                    <MenuItem key={manufacturer.id} value={manufacturer.id}>
+                                        {manufacturer.nombre}
+                                    </MenuItem>
+                                ))}
+                            </Select>
                             <TextField
                                 fullWidth
                                 label="Volumen"
