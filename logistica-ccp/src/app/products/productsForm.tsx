@@ -9,13 +9,22 @@ interface ModalFormProps {
     open: boolean;
     onClose: () => void;
     title?: string
+    onProductAdded: () => void;
 }
+
+interface Product {
+    nombre: string;
+    volumen: number;
+    fabricante: string;
+    valorUnitario: number;
+}
+
 interface Manufacturer {
     id: string;
     nombre: string;
 }
 
-export default function ProductsForm({ open, onClose, title = "Formulario" }: ModalFormProps) {
+export default function ProductsForm({ open, onClose, title = "Formulario", onProductAdded }: ModalFormProps) {
     const [formData, setFormData] = useState({ nombre: "", valorUnitario: "", id_fabricante: "", volumen: "" });
     const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
 
@@ -30,7 +39,7 @@ export default function ProductsForm({ open, onClose, title = "Formulario" }: Mo
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Formulario enviado:", formData)
-        await createProduct(
+        const newProduct = await createProduct(
             {
                 nombre: formData.nombre,
                 valorUnitario: parseInt(formData.valorUnitario),
@@ -38,6 +47,7 @@ export default function ProductsForm({ open, onClose, title = "Formulario" }: Mo
                 volumen: formData.volumen
             }
         );
+        await onProductAdded();
         onClose();
     };
 
