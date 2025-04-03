@@ -20,19 +20,25 @@ export interface OrderResponse {
     msg: string;
 }
 
-export const sendOrder = async (items: CartItem[]): Promise<OrderResponse> => {
+export const sendOrder = async (
+    items: CartItem[],
+    clienteId: string,
+    vendedorId: string,
+    destino: string
+): Promise<OrderResponse> => {
     try {
+        console.log({ clienteId, vendedorId, destino })
         const payload: OrderPayload = {
-            cliente: "Cliente Prueba",
-            vendedor: "Vendedor Prueba",
-            destino: "Bodega Central",
+            cliente: clienteId,
+            vendedor: vendedorId,
+            destino: destino,
             productos: items.map(item => ({
                 sku: item.product.sku.toString(),
                 cantidad: item.quantity
             }))
         };
 
-        console.log({payload})
+        console.log({ payload })
 
         const response = await axios.post<OrderResponse>(
             `${API_BASE_URL}/pedido/crear`,
