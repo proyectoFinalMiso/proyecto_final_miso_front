@@ -1,10 +1,10 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import styles from "./Products.module.css"
 import DataTable from "../../../globalComponents/Datatable";
 import PageTitle from "../../../globalComponents/PageTitle";
-import FormularioProducto from "./FormularioProducto";
+import ProductsForm from "./productsForm";
 
 import theme from "@/theme";
 import Grid from "@mui/material/Grid2";
@@ -15,6 +15,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import AddIcon from '@mui/icons-material/Add';
 
+import { getProducts } from "./adapters/microserviceProducts";
+
 
 declare module '@mui/material/Button' {
     interface ButtonPropsColorOverrides {
@@ -23,31 +25,42 @@ declare module '@mui/material/Button' {
     }
 }
 
+interface Product {
+    sku: string;
+    nombre: string;
+    volumen: number;
+    fabricante: string;
+    valorUnitario: number;
+    fechaCreacion: string;
+}
+
 const Products: React.FC = () => {
     const tableSchema: GridColDef[] = [
         { field: 'sku', headerName: 'SKU', flex: 1, headerClassName: styles.Header },
-        { field: 'nombreProducto', headerName: 'Nombre Producto', flex: 4, headerClassName: styles.Header },
+        { field: 'nombre', headerName: 'Nombre Producto', flex: 4, headerClassName: styles.Header },
         { field: 'volumen', headerName: 'Volumen', flex: 1, type: 'number', headerClassName: styles.Header },
         { field: 'fabricante', headerName: 'Fabricante', flex: 2, headerClassName: styles.Header },
         { field: 'valorUnitario', headerName: 'Valor Unitario', flex: 1, headerClassName: styles.Header },
         { field: 'fechaCreacion', headerName: 'Fecha de Creación', flex: 2, headerClassName: styles.Header }
     ]
 
-    const mockData: Object[] = [
-        { id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' },
-        { id: 2, nombreProducto: 'Cuaderno Universitario 100 hojas, Rayado, Colores Surtidos', 'sku': 10002, 'volumen': 0.002, 'fabricante': 'Distribuidora Santa Fe', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' },
-        { id: 3, nombreProducto: 'Mochila Escolar Reforzada, Diseño Ergonómico, Varios Compartimentos', 'sku': 10003, 'volumen': 0.012, 'fabricante': 'Suministros Express', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' },
-        { id: 4, nombreProducto: 'Agenda Ejecutiva Semanal, Tapa Dura, Cierre Elástico', 'sku': 10004, 'volumen': 0.002, 'fabricante': 'Suministros Express', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' },
-        { id: 5, nombreProducto: 'Coche a Control Remoto, Escala 1:18, Alta Velocidad', 'sku': 10005, 'volumen': 0.011, 'fabricante': 'Econotrade América', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }
-    ]
-
+    const [products, setProducts] = useState<Product[]>([]);
     const [isOpen, setIsOpen] = useState(false);
 
+    const fetchProducts = async () => {
+            const productList = await getProducts();
+            setProducts(productList);
+        }
+
+    useEffect(() => {
+        fetchProducts();
+        }, []);
+        
     return (
         <ThemeProvider theme={theme}>
             <Box>
                 <Grid container>
-                    <FormularioProducto open={isOpen} onClose={() => setIsOpen(false)} title="Nuevo Producto"/>
+                    <ProductsForm open={isOpen} onClose={() => setIsOpen(false)} onProductAdded={fetchProducts} title="Nuevo Producto"/>
                     <Grid sx={{ direction: 'column' }} size="grow">
                         <PageTitle text="Productos" />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>
@@ -95,7 +108,7 @@ const Products: React.FC = () => {
                             </Grid>
                         </Grid>
                         <Grid size="grow" sx={{ margin: '1.25rem 6.25rem' }}>
-                            <DataTable columns={tableSchema} rows={mockData} />
+                            <DataTable columns={tableSchema} rows={products} />
                         </Grid>
                     </Grid>
                 </Grid>
