@@ -26,6 +26,11 @@ const Sidebar: React.FC = () => {
                 Products
               </Link>
             </li>
+            <li className="mb-3">
+              <Link href="/stock" className="hover:text-gray-300">
+                Stock
+              </Link>
+            </li>
           </ul>
         </nav>
       </aside>
