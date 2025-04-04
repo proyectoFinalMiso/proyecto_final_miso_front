@@ -1,10 +1,9 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import styles from "./Products.module.css"
-import DataTable from "../../../globalComponents/Datatable";
+import styles from "./Seller.module.css"
 import PageTitle from "../../../globalComponents/PageTitle";
-import ProductsForm from "./productsForm";
+import FormSeller from "./FormSeller";
 
 import theme from "@/theme";
 import Grid from "@mui/material/Grid2";
@@ -15,9 +14,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import AddIcon from '@mui/icons-material/Add';
 
-import { getProducts } from "./adapters/microserviceProducts";
-
-
 declare module '@mui/material/Button' {
     interface ButtonPropsColorOverrides {
         cpp: true;
@@ -25,48 +21,21 @@ declare module '@mui/material/Button' {
     }
 }
 
-interface Product {
-    sku: string;
-    nombre: string;
-    volumen: number;
-    fabricante: string;
-    valorUnitario: number;
-    fechaCreacion: string;
-}
+const Seller: React.FC = () => {
 
-const Products: React.FC = () => {
-    const tableSchema: GridColDef[] = [
-        { field: 'sku', headerName: 'SKU', flex: 1, headerClassName: styles.Header },
-        { field: 'nombre', headerName: 'Nombre Producto', flex: 4, headerClassName: styles.Header },
-        { field: 'volumen', headerName: 'Volumen', flex: 1, type: 'number', headerClassName: styles.Header },
-        { field: 'fabricante', headerName: 'Fabricante', flex: 2, headerClassName: styles.Header },
-        { field: 'valorUnitario', headerName: 'Valor Unitario', flex: 1, headerClassName: styles.Header },
-        { field: 'fechaCreacion', headerName: 'Fecha de Creación', flex: 2, headerClassName: styles.Header }
-    ]
-
-    const [products, setProducts] = useState<Product[]>([]);
     const [isOpen, setIsOpen] = useState(false);
 
-    const fetchProducts = async () => {
-            const productList = await getProducts();
-            setProducts(productList);
-        }
-
-    useEffect(() => {
-        fetchProducts();
-        }, []);
-        
     return (
         <ThemeProvider theme={theme}>
             <Box>
                 <Grid container>
-                    <ProductsForm open={isOpen} onClose={() => setIsOpen(false)} onProductAdded={fetchProducts} title="Nuevo Producto"/>
+                    <FormSeller open={isOpen} onClose={() => setIsOpen(false)} title="Nuevo Vendedor"/>
                     <Grid sx={{ direction: 'column' }} size="grow">
-                        <PageTitle text="Productos" />
+                        <PageTitle text="Vendedores" />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>
                             <Grid size="grow">
-                                <TextField fullWidth id="buscar-producto" className={styles.TextField}
-                                    placeholder="Buscar por Nombre o SKU"
+                            <TextField fullWidth id="buscar-vendedor" className={styles.TextField}
+                                    placeholder="Buscar por Nombre o E-mail"
                                     slotProps={{
                                         input: {
                                             startAdornment: (
@@ -102,19 +71,18 @@ const Products: React.FC = () => {
                                         color="cpp"
                                         startIcon={<AddIcon />}
                                     >
-                                        Registrar Producto
+                                        Registrar Vendedor
                                     </Button>
                                 </Stack>
                             </Grid>
-                        </Grid>
-                        <Grid size="grow" sx={{ margin: '1.25rem 6.25rem' }}>
-                            <DataTable columns={tableSchema} rows={products} />
                         </Grid>
                     </Grid>
                 </Grid>
             </Box>
         </ThemeProvider>
+        
     )
+
 }
 
-export default Products
+export default Seller

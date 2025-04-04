@@ -1,39 +1,65 @@
-import React, { useMemo, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, RefreshControl } from 'react-native';
 import { Colors } from '../../constants/Colors';
 import ProductTable, { Product } from '../../components/ProductTable';
 import { Ionicons } from '@expo/vector-icons';
 import FilterModal from '../../components/FilterProductsModal';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import ErrorDisplay from '../../components/ErrorDisplay';
+import { fetchAvailableInventory, mapInventoryToProducts } from '../../services/api/inventoryService';
 
-const mockProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Laptop HP Pavilion',
-    price: 1200,
-  },
-  {
-    id: '2',
-    name: 'Monitor LG 27"',
-    price: 350,
-  },
-  {
-    id: '3',
-    name: 'Teclado mecánico RGB',
-    price: 120,
-  },
-  {
-    id: '4',
-    name: 'Mouse inalámbrico Logitech',
-    price: 45,
-  },
-];
+const AUTO_REFRESH_INTERVAL = 30000;
 
 export default function HomeScreen() {
-  const [products] = useState<Product[]>(mockProducts);
+  // API data
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+  // UI
   const [searchText, setSearchText] = useState<string>('');
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
   const [priceRange, setPriceRange] = useState<{ min: number | null, max: number | null }>({ min: null, max: null });
   const [tempPriceRange, setTempPriceRange] = useState<{ min: string, max: string }>({ min: '', max: '' });
+
+  const fetchData = useCallback(async (isRefreshingPull = false) => {
+    try {
+      if (!isRefreshingPull) {
+        setIsLoading(true);
+      }
+      setError(null);
+
+      // cantidadDisponible > 0
+      const inventoryData = await fetchAvailableInventory();
+
+      const mappedProducts = mapInventoryToProducts(inventoryData);
+
+      setProducts(mappedProducts);
+      setLastUpdated(new Date());
+    } catch (err) {
+      setError('No se pudieron cargar los productos. Por favor intente de nuevo.');
+    } finally {
+      setIsLoading(false);
+      setIsRefreshing(false);
+    }
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    setIsRefreshing(true);
+    fetchData(true);
+  }, [fetchData]);
+
+  useEffect(() => {
+    fetchData();
+
+    const intervalId = setInterval(() => {
+      fetchData(true);
+    }, AUTO_REFRESH_INTERVAL);
+
+    return () => clearInterval(intervalId);
+  }, [fetchData]);
 
   const handleProductPress = (product: Product) => {
     console.log('Producto seleccionado:', product);
@@ -85,11 +111,34 @@ export default function HomeScreen() {
 
   const hasActiveFilters = priceRange.min !== null || priceRange.max !== null;
 
+  const formattedLastUpdated = lastUpdated
+    ? `Última actualización: ${lastUpdated.toLocaleTimeString()}`
+    : '';
+
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <LoadingIndicator message="Cargando productos..." />
+      </SafeAreaView>
+    );
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ErrorDisplay message={error} onRetry={fetchData} />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.title}>Ordena lo que gustes</Text>
+          {lastUpdated && (
+            <Text style={styles.lastUpdatedText}>{formattedLastUpdated}</Text>
+          )}
         </View>
         <View style={styles.searchContainer}>
           <View style={styles.searchRow}>
@@ -131,6 +180,14 @@ export default function HomeScreen() {
         <ProductTable
           products={filteredProducts}
           onProductPress={handleProductPress}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={onRefresh}
+              colors={[Colors.light.primary]}
+              tintColor={Colors.light.primary}
+            />
+          }
         />
       </View>
 
@@ -159,6 +216,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.light.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
+  },
+  lastUpdatedText: {
+    marginTop: 4,
+    fontSize: 12,
+    color: Colors.light.text,
+    fontFamily: 'PlusJakartaSans_400Regular',
   },
   content: {
     padding: 16,

@@ -7,11 +7,12 @@ import {
   FlatList,
   LayoutAnimation,
   Platform,
-  UIManager
+  UIManager,
+  RefreshControlProps
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants/Colors';
-
+import { useCart } from '../contexts/CartContext';
 
 
 if (Platform.OS === 'android') {
@@ -25,14 +26,17 @@ export type Product = {
   id: string;
   name: string;
   price: number;
+  sku: number
 };
 
 type ProductTableProps = {
   products: Product[];
   onProductPress?: (product: Product) => void;
+  refreshControl?: React.ReactElement<RefreshControlProps>;
 };
 
-const ProductTable = ({ products, onProductPress }: ProductTableProps) => {
+const ProductTable = ({ products, onProductPress, refreshControl }: ProductTableProps) => {
+  const { addToCart } = useCart();
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
@@ -70,7 +74,12 @@ const ProductTable = ({ products, onProductPress }: ProductTableProps) => {
   };
 
   const handleAddToCart = (product: Product, quantity: number) => {
-    console.log(product, quantity);
+    addToCart(product, quantity);
+    setExpandedItems(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(product.id);
+      return newSet;
+    });
   };
 
   const renderProduct = ({ item }: { item: Product }) => {
@@ -106,6 +115,7 @@ const ProductTable = ({ products, onProductPress }: ProductTableProps) => {
                 <TouchableOpacity
                   style={styles.quantityButton}
                   onPress={() => decreaseQuantity(item.id)}
+                  testID={`decrease-quantity-button-${item.id}`}
                 >
                   <Ionicons name="remove" size={12} color={Colors.light.text} />
                 </TouchableOpacity>
@@ -113,6 +123,7 @@ const ProductTable = ({ products, onProductPress }: ProductTableProps) => {
                 <TouchableOpacity
                   style={styles.quantityButton}
                   onPress={() => increaseQuantity(item.id)}
+                  testID={`increase-quantity-button-${item.id}`}
                 >
                   <Ionicons name="add" size={12} color={Colors.light.text} />
                 </TouchableOpacity>
@@ -123,6 +134,7 @@ const ProductTable = ({ products, onProductPress }: ProductTableProps) => {
               <TouchableOpacity
                 style={styles.detailButton}
                 onPress={() => handleAddToCart(item, quantity)}
+                testID={`add-to-cart-button-${item.id}`}
               >
                 <Ionicons name="add" size={8} color={Colors.light.buttonText} />
                 <Text style={styles.detailButtonText}>Agregar al carrito</Text>
@@ -150,6 +162,7 @@ const ProductTable = ({ products, onProductPress }: ProductTableProps) => {
           renderItem={renderProduct}
           keyExtractor={item => item.id}
           contentContainerStyle={styles.listContent}
+          refreshControl={refreshControl}
         />
       )}
     </View>

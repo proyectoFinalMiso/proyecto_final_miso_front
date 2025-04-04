@@ -8,11 +8,13 @@ import {
   PlusJakartaSans_600SemiBold,
   PlusJakartaSans_700Bold,
 } from '@expo-google-fonts/plus-jakarta-sans';
+import { CartProvider } from '../contexts/CartContext';
+import { AuthProvider } from '../contexts/AuthContext';
 
 
 SplashScreen.preventAutoHideAsync();
 
-export default function Layout() {
+export default function RootLayout() {
   const [fontsLoaded] = usePlusJakartaSans({
     PlusJakartaSans_400Regular,
     PlusJakartaSans_500Medium,
@@ -31,15 +33,19 @@ export default function Layout() {
   }
 
   return (
-    
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="index" />
-        <Stack.Screen name="login" />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+    <AuthProvider>
+      <CartProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="index" />
+          <Stack.Screen name="login" />
+          <Stack.Screen name="register" />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+      </CartProvider>
+    </AuthProvider>
   );
 }

@@ -6,7 +6,7 @@ export default function OrdersScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
-        {/* Aquí irá el contenido de los productos */}
+        {/* Aquí irá el contenido de los pedidos */}
         <Text style={styles.placeholder}>Contenido de pedidos próximamente...</Text>
       </View>
     </ScrollView>

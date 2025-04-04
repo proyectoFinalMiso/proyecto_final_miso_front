@@ -2,15 +2,14 @@ import { useState } from "react";
 import { Modal, Box, Typography, TextField, Button, Stack } from "@mui/material"
 import Grid from "@mui/material/Grid2";
 
-
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
     title?: string
 }
 
-export default function FormularioProducto({ open, onClose, title = "Formulario" }: ModalFormProps) {
-    const [formData, setFormData] = useState({ nombre: "", valorUnitario: "", fabricante: "", volumen: "" });
+export default function FormStock({ open, onClose, title = "Formulario" }: ModalFormProps) {
+    const [formData, setFormData] = useState({ producto: "", lote: "", cantidad: ""});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,7 +46,7 @@ export default function FormularioProducto({ open, onClose, title = "Formulario"
                         padding: "1.25rem",
                         width: "40rem",
                         }}
-                        title="Formulario nuevo producto"
+                        title="Ingresar Lote"
                     >
                         <Typography id="modal-formulario-producto-title" variant="h6" title="Form title" gutterBottom>
                             {title}
@@ -57,45 +56,35 @@ export default function FormularioProducto({ open, onClose, title = "Formulario"
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            Agregar un producto a la plataforma
+                            AIngresar los datos del nuevo stock del producto
                         </Typography>
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 fullWidth
-                                label="Nombre"
-                                name="nombre"
-                                value={formData.nombre}
+                                label="Producto"
+                                name="producto"
+                                value={formData.producto}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="Nombre del producto"
+                                title="Producto"
                             />
                             <TextField
                                 fullWidth
-                                label="Valor Unitario"
-                                name="valor-unitario"
-                                value={formData.valorUnitario}
+                                label="Lote"
+                                name="lote"
+                                value={formData.lote}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="Valor unitario del producto"
+                                title="Lote"
                             />
                             <TextField
                                 fullWidth
-                                label="Fabricante"
-                                name="fabricante"
-                                value={formData.fabricante}
+                                label="Cantidad"
+                                name="cantidad"
+                                value={formData.cantidad}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="Fabricante del producto"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Volumen"
-                                name="volumen"
-                                value={formData.volumen}
-                                onChange={handleChange}
-                                margin="normal"
-                                type="number"
-                                title="Volumen del producto"
+                                title="Cantidad"
                             />
                             <Stack 
                                 direction={"row"} 
@@ -116,5 +105,4 @@ export default function FormularioProducto({ open, onClose, title = "Formulario"
             </Box>
         </Modal>
     )
-
 }
