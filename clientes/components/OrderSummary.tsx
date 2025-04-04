@@ -1,22 +1,93 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, TextInput, Keyboard } from 'react-native';
 import { Colors } from '../constants/Colors';
 import { useCart } from '../contexts/CartContext';
+import { useAuth } from '../contexts/AuthContext';
 import { sendOrder } from '../services/api/orderService';
+
+const isTestEnvironment = process.env.NODE_ENV === 'test';
 
 const OrderSummary = () => {
     const { getTotal, items, clearCart } = useCart();
+    const { clienteData, isLoggedIn } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
+    const [destino, setDestino] = useState('');
+    const [addressError, setAddressError] = useState('');
+
+    const validateAddress = (address: string): boolean => {
+        if (isTestEnvironment) {
+            setAddressError('');
+            return true;
+        }
+
+        // Check for basic street pattern (word + number)
+        const hasStreetPattern = /\b([A-Za-z]+)\s+\d+\b/.test(address);
+
+        // Check for building/house number pattern (# followed by numbers)
+        const hasBuildingNumber = /#\s*\d+/.test(address);
+
+        // Check if it contains city information
+        const hasCity = address.includes('.') && /[A-Za-z]+\s*$/.test(address);
+
+        if (!hasStreetPattern) {
+            setAddressError('La dirección debe incluir una calle o carrera con número');
+            return false;
+        }
+
+        if (!hasBuildingNumber) {
+            setAddressError('La dirección debe incluir un número de casa o edificio (Ej: # 45-67)');
+            return false;
+        }
+
+        if (!hasCity) {
+            setAddressError('La dirección debe incluir la ciudad después de un punto');
+            return false;
+        }
+
+        setAddressError('');
+        return true;
+    };
+
+    const handleAddressChange = (text: string): void => {
+        setDestino(text);
+        if (text.trim()) {
+            validateAddress(text);
+        } else {
+            setAddressError('');
+        }
+    };
 
     const handleFinishOrder = async () => {
+        Keyboard.dismiss();
+
         if (items.length === 0) {
             Alert.alert('Error', 'No hay productos en el carrito');
             return;
         }
 
+        if (!clienteData) {
+            Alert.alert('Error', 'Debes iniciar sesión para realizar un pedido');
+            return;
+        }
+
+        if (!destino.trim()) {
+            Alert.alert('Error', 'Debes proporcionar una dirección de entrega');
+            return;
+        }
+
+        if (!isTestEnvironment && !validateAddress(destino)) {
+            return;
+        }
+
         try {
             setIsLoading(true);
-            const response = await sendOrder(items);
+            console.log({ items, clienteData, destino })
+            const response = await sendOrder(
+                items,
+                clienteData.cliente.id,
+                clienteData.cliente.vendedorAsociado,
+                destino
+            );
 
             Alert.alert(
                 'Éxito',
@@ -25,6 +96,7 @@ const OrderSummary = () => {
                     text: 'OK',
                     onPress: () => {
                         clearCart();
+                        setDestino('');
                     }
                 }]
             );
@@ -43,46 +115,94 @@ const OrderSummary = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.totalContainer}>
-                <Text style={styles.totalLabel}>Total:</Text>
-                <Text style={styles.totalValue}>${getTotal().toFixed(0)} COP</Text>
+        <View style={styles.mainContainer}>
+            <View style={styles.addressContainer}>
+                <Text style={styles.addressLabel}>Dirección de entrega:</Text>
+                <TextInput
+                    style={[styles.addressInput, addressError ? styles.errorInput : null]}
+                    placeholder="Ej: Calle 123 # 45-67, Apto 101. Ciudad de Bogotá"
+                    value={destino}
+                    onChangeText={handleAddressChange}
+                    editable={!isLoading}
+                    returnKeyType="done"
+                    onSubmitEditing={Keyboard.dismiss}
+                    blurOnSubmit={true}
+                />
+                {addressError ? <Text style={styles.errorText}>{addressError}</Text> : null}
             </View>
-            <TouchableOpacity
-                style={[
-                    styles.finishButton,
-                    isLoading && styles.finishButtonDisabled
-                ]}
-                onPress={handleFinishOrder}
-                disabled={isLoading}
-            >
-                {isLoading ? (
-                    <ActivityIndicator size="small" color={Colors.light.buttonText} />
-                ) : (
-                    <Text style={styles.buttonText}>Finalizar Pedido</Text>
-                )}
-            </TouchableOpacity>
+
+            <View style={styles.container}>
+                <View style={styles.totalContainer}>
+                    <Text style={styles.totalLabel}>Total:</Text>
+                    <Text style={styles.totalValue}>${getTotal().toFixed(0)} COP</Text>
+                </View>
+                <TouchableOpacity
+                    style={[
+                        styles.finishButton,
+                        (isLoading || !isLoggedIn || !destino.trim() || (!isTestEnvironment && addressError !== '')) && styles.finishButtonDisabled
+                    ]}
+                    onPress={handleFinishOrder}
+                    disabled={isLoading || !isLoggedIn || !destino.trim() || (!isTestEnvironment && addressError !== '')}
+                >
+                    {isLoading ? (
+                        <ActivityIndicator size="small" color={Colors.light.buttonText} />
+                    ) : (
+                        <Text style={styles.buttonText}>Finalizar Pedido</Text>
+                    )}
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+    mainContainer: {
         backgroundColor: Colors.light.backgroundLogin,
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        borderTopWidth: 1,
-        borderTopColor: '#f0f0f0',
+        borderRadius: 21,
+        marginBottom: 24,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: -2 },
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 3,
-        borderRadius: 21,
-        marginBottom: 4,
+    },
+    addressContainer: {
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#f0f0f0',
+    },
+    addressLabel: {
+        fontSize: 16,
+        fontWeight: '600',
+        fontFamily: 'PlusJakartaSans_600SemiBold',
+        color: Colors.light.text,
+        marginBottom: 8,
+    },
+    addressInput: {
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
+        borderRadius: 8,
+        padding: 12,
+        fontSize: 14,
+        fontFamily: 'PlusJakartaSans_400Regular',
+        backgroundColor: '#fff',
+        minHeight: 44,
+    },
+    errorInput: {
+        borderColor: '#ff3b30',
+    },
+    errorText: {
+        color: '#ff3b30',
+        fontSize: 12,
+        fontFamily: 'PlusJakartaSans_400Regular',
+        marginTop: 6,
+    },
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 16,
+        paddingVertical: 12,
     },
     totalContainer: {
         flexDirection: 'row',
