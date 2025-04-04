@@ -27,6 +27,8 @@ const Sidebar: React.FC = () => {
               </Link>
             </li>
             <li className="mb-3">
+              <Link href="/stock" className="hover:text-gray-300">
+                Stock
               <Link href="/sellers" className="hover:text-gray-300">
                 Seller
               </Link>
