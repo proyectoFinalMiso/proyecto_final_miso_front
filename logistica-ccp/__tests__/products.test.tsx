@@ -1,30 +1,46 @@
 import '@testing-library/jest-dom'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import Products from '@/app/products/page'
 import userEvent from '@testing-library/user-event'
+import fetchMock from 'jest-fetch-mock'
 
 describe('Vista de creación de productos', () => {
-    it('Validar renderizado de la vista', () => {
+
+    beforeEach(() => {
+        fetchMock.resetMocks();
+    });
+
+    it('Validar renderizado de la vista', async () => {
+        fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, name: "Fabricante A" }]));
         render(<Products />)
-        const heading = screen.getByRole('heading', { level: 1 })
-        expect(heading).toBeInTheDocument()
+        await waitFor(() => {
+            const heading = screen.getByRole('heading', { level: 1 })
+            expect(heading).toBeInTheDocument()
+        })
     })
 
-    it('Renderizar tabla principal', () => {
+    it('Renderizar tabla principal', async () => {
+        fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
         render(<Products />)
-        const table = screen.getByRole('grid')
-        expect(table).toBeInTheDocument()
+        await waitFor(() => {
+            const table = screen.getByRole('grid')
+            expect(table).toBeInTheDocument()
+        })        
     })
 
-    it('Renderizado de botones', () => {
+    it('Renderizado de botones', async () => {
+        fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
         render(<Products />)
-        const filterButton = screen.getByRole('button', { name: /filtrar/i })
-        const addButton = screen.getByRole('button', { name: /registrar/i } )
-        expect(filterButton).toBeInTheDocument()
-        expect(addButton).toBeInTheDocument()
+        await waitFor(() => {
+            const filterButton = screen.getByRole('button', { name: /filtrar/i })
+            const addButton = screen.getByRole('button', { name: /registrar/i } )
+            expect(filterButton).toBeInTheDocument()
+            expect(addButton).toBeInTheDocument()
+        })        
     })
 
     it('Renderizado de formulario', async () => {
+        fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
         render(<Products />)
         const user = userEvent.setup()
         const addButton = screen.getByRole('button', { name: /registrar/i } )
@@ -61,6 +77,7 @@ describe('Vista de creación de productos', () => {
     })
 
     it('Función de cambio de los campos del formulario', async () => {
+        fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
         render(<Products />)
         const user = userEvent.setup()
         const addButton = screen.getByRole('button', { name: /registrar/i } )
