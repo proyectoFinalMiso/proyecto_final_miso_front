@@ -8,6 +8,8 @@ export interface OrderPayload {
     vendedor: string;
     destino: string;
     productos: ProductOrder[];
+    latitud: number;
+    longitud: number;
 }
 
 export interface ProductOrder {
@@ -28,6 +30,10 @@ export const sendOrder = async (
 ): Promise<OrderResponse> => {
     try {
         console.log({ clienteId, vendedorId, destino })
+
+        const latitud = 4.0 + (Math.random() * (11.0 - 5.5));
+        const longitud = -79.0 + (Math.random() * (-73.0 - (-76.0)));
+
         const payload: OrderPayload = {
             cliente: clienteId,
             vendedor: vendedorId,
@@ -35,7 +41,9 @@ export const sendOrder = async (
             productos: items.map(item => ({
                 sku: item.product.sku.toString(),
                 cantidad: item.quantity
-            }))
+            })),
+            latitud: Number(latitud.toFixed(5)),
+            longitud: Number(longitud.toFixed(5))
         };
 
         console.log({ payload })
