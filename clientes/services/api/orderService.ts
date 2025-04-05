@@ -6,7 +6,7 @@ const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL_PEDIDOS;
 export interface OrderPayload {
     cliente: string;
     vendedor: string;
-    destino: string;
+    direccion: string;
     productos: ProductOrder[];
     latitud: number;
     longitud: number;
@@ -31,13 +31,13 @@ export const sendOrder = async (
     try {
         console.log({ clienteId, vendedorId, destino })
 
-        const latitud = 4.0 + (Math.random() * (11.0 - 5.5));
-        const longitud = -79.0 + (Math.random() * (-73.0 - (-76.0)));
+        const latitud = 5.5 + (Math.random() * (11.0 - 5.5));
+        const longitud = -76.0 + (Math.random() * (-73.0 - (-76.0)));
 
         const payload: OrderPayload = {
             cliente: clienteId,
             vendedor: vendedorId,
-            destino: destino,
+            direccion: destino,
             productos: items.map(item => ({
                 sku: item.product.sku.toString(),
                 cantidad: item.quantity
