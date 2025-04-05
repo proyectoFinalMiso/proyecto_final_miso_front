@@ -31,8 +31,8 @@ export const sendOrder = async (
     try {
         console.log({ clienteId, vendedorId, destino })
 
-        const latitud = 5.5 + (Math.random() * (11.0 - 5.5));
-        const longitud = -76.0 + (Math.random() * (-73.0 - (-76.0)));
+        const latitud = 1.6 + (Math.random() * (11.0 - 1.6));
+        const longitud = -75.5 + (Math.random() * (-73.0 - (-75.5)));
 
         const payload: OrderPayload = {
             cliente: clienteId,
