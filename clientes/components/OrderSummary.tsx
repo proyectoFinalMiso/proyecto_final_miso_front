@@ -27,7 +27,7 @@ const OrderSummary = () => {
         const hasBuildingNumber = /#\s*\d+/.test(address);
 
         // Check if it contains city information
-        const hasCity = address.includes('.') && /[A-Za-z]+\s*$/.test(address);
+        const hasCity = address.includes('.') && /[\p{L}]+\.?\s*$/u.test(address);
 
         if (!hasStreetPattern) {
             setAddressError('La dirección debe incluir una calle o carrera con número');
