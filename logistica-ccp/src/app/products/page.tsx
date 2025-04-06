@@ -5,6 +5,7 @@ import styles from "./Products.module.css"
 import DataTable from "../../../globalComponents/Datatable";
 import PageTitle from "../../../globalComponents/PageTitle";
 import ProductsForm from "./productsForm";
+import UploadProductsModal from "./uploadModal";
 
 import theme from "@/theme";
 import Grid from "@mui/material/Grid2";
@@ -12,7 +13,7 @@ import { ThemeProvider, Box, Stack, InputAdornment, Button, TextField } from "@m
 import { GridColDef } from "@mui/x-data-grid";
 
 import SearchIcon from '@mui/icons-material/Search';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import AddIcon from '@mui/icons-material/Add';
 
 import { getProducts } from "./adapters/microserviceProducts";
@@ -46,6 +47,7 @@ const Products: React.FC = () => {
 
     const [products, setProducts] = useState<Product[]>([]);
     const [isOpen, setIsOpen] = useState(false);
+    const [openFileModal, setOpenFileModal] = useState(false);
 
     const fetchProducts = async () => {
             const productList = await getProducts();
@@ -61,10 +63,11 @@ const Products: React.FC = () => {
             <Box>
                 <Grid container>
                     <ProductsForm open={isOpen} onClose={() => setIsOpen(false)} onProductAdded={fetchProducts} title="Nuevo Producto"/>
+                    <UploadProductsModal open={openFileModal} onClose={() => setOpenFileModal(false)} onProductAdded={fetchProducts} title="Nuevo Producto"/>
                     <Grid sx={{ direction: 'column' }} size="grow">
                         <PageTitle text="Productos" />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>
-                            <Grid size="grow">
+                            {/* <Grid size="grow">
                                 <TextField fullWidth id="buscar-producto" className={styles.TextField}
                                     placeholder="Buscar por Nombre o SKU"
                                     slotProps={{
@@ -86,15 +89,16 @@ const Products: React.FC = () => {
                                             padding: "10px",
                                         },
                                     }} />
-                            </Grid>
+                            </Grid> */}
                             <Grid size="grow" sx={{ marginRight: '6.25rem' }}>
                                 <Stack spacing={2} direction="row" justifyContent={'flex-end'}>
                                     <Button
+                                        onClick={() => setOpenFileModal(true)}
                                         variant="outlined"
                                         color="dark"
-                                        endIcon={<FilterListIcon />}
+                                        endIcon={<FileUploadIcon />}
                                     >
-                                        Filtrar
+                                        Cargar con archivo
                                     </Button>
                                     <Button
                                         onClick={() => setIsOpen(true)}

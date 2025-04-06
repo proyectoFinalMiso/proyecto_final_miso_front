@@ -12,26 +12,18 @@ const Sidebar: React.FC = () => {
         <nav className="mt-5">
           <ul>
             <li className="mb-3">
-              <Link href="/dashboard" className="hover:text-gray-300">
-                Dashboard
-              </Link>
-            </li>
-            <li className="mb-3">
-              <Link href="/settings" className="hover:text-gray-300">
-                Settings
-              </Link>
-            </li>
-            <li className="mb-3">
               <Link href="/products" className="hover:text-gray-300">
-                Products
+                Productos
               </Link>
             </li>
             <li className="mb-3">
               <Link href="/stock" className="hover:text-gray-300">
-                Stock
+                Inventario
               </Link>
+            </li>
+            <li className="mb-3">
               <Link href="/sellers" className="hover:text-gray-300">
-                Seller
+                Vendedores
               </Link>
             </li>
           </ul>

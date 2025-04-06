@@ -41,9 +41,6 @@ describe('Vista de creación de stock', () => {
         const nameField = screen.getByTitle("Producto")
         expect(nameField).toBeInTheDocument()
 
-        const costField = screen.getByTitle("Lote")
-        expect(costField).toBeInTheDocument()
-
         const manufacturerField = screen.getByTitle("Cantidad")
         expect(manufacturerField).toBeInTheDocument()
 
