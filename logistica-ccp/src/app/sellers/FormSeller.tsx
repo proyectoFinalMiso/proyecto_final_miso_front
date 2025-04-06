@@ -2,23 +2,30 @@ import { useState } from "react";
 import { Modal, Box, Typography, TextField, Button, Stack } from "@mui/material"
 import Grid from "@mui/material/Grid2";
 
+import { createSeller } from "./adapters/microserviceSeller";
 
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
-    title?: string
+    title?: string;
 }
 
-export default function FormSeller({ open, onClose, title = "Formulario" }: ModalFormProps) {
+export default function FormSeller({ open, onClose, title = "Formulario"}: ModalFormProps) {
     const [formData, setFormData] = useState({nombre: "", email: ""});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Formulario enviado:", formData)
+        const newSeller = await createSeller(
+            {
+                nombre: formData.nombre,
+                email: formData.email
+            }
+        );
         onClose();
     };
 
@@ -60,23 +67,23 @@ export default function FormSeller({ open, onClose, title = "Formulario" }: Moda
                             Agregar vendedor
                         </Typography>
                         <form onSubmit={handleSubmit}>
-                        <TextField
-                                fullWidth
-                                label="Nombre"
-                                name="nombre"
-                                value={formData.nombre}
-                                onChange={handleChange}
-                                margin="normal"
-                                title="Nombre"
-                            />
+                            <TextField
+                                    fullWidth
+                                    label="Nombre"
+                                    name="nombre"
+                                    value={formData.nombre}
+                                    onChange={handleChange}
+                                    margin="normal"
+                                    title="Nombre"
+                                />
                             <TextField
                                 fullWidth
-                                label="e-mail"
-                                name="e-mail"
+                                label="email"
+                                name="email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="e-mail"
+                                title="email"
                             />
                             <Stack 
                                 direction={"row"} 
