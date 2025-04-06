@@ -5,7 +5,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { esES } from "@mui/x-data-grid/locales"
 import styles from './Datatable.module.css'
 
-const paginationModel = { page: 0, pageSize: 5 };
+const paginationModel = { page: 0, pageSize: 10 };
 
 type DataTableProps = {
     columns: GridColDef[];
@@ -23,7 +23,7 @@ export default function DataTable({ columns, rows }: DataTableProps) {
                 rows={rows}
                 columns={styledColumns}
                 initialState={{ pagination: { paginationModel } }}
-                pageSizeOptions={[5, 10, 20, 50, 100]}
+                pageSizeOptions={[10, 20, 50, 100]}
                 sx={{ border: 0, borderRadius: "16px" }}
                 getRowHeight={(params) => null}
                 localeText={esES.components.MuiDataGrid.defaultProps.localeText}

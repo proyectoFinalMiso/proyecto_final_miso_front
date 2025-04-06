@@ -67,7 +67,7 @@ const Products: React.FC = () => {
                     <Grid sx={{ direction: 'column' }} size="grow">
                         <PageTitle text="Productos" />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>
-                            <Grid size="grow">
+                            {/* <Grid size="grow">
                                 <TextField fullWidth id="buscar-producto" className={styles.TextField}
                                     placeholder="Buscar por Nombre o SKU"
                                     slotProps={{
@@ -89,7 +89,7 @@ const Products: React.FC = () => {
                                             padding: "10px",
                                         },
                                     }} />
-                            </Grid>
+                            </Grid> */}
                             <Grid size="grow" sx={{ marginRight: '6.25rem' }}>
                                 <Stack spacing={2} direction="row" justifyContent={'flex-end'}>
                                     <Button

@@ -18,7 +18,8 @@ export const createProduct = async (productData: {
         });
 
         if(!response.ok) {
-            throw new Error("No ha sido posible crear un nuevo producto")
+            const error_msg = await response.text()
+            throw new Error("No ha sido posible crear un nuevo producto: " + error_msg)
         }
 
         const data = await response.json()
@@ -38,7 +39,8 @@ export const getManufacturers = async (): Promise<any[]> => {
         });
 
         if(!response.ok) {
-            throw new Error("No ha sido posible listar los fabricantes")
+            const error_msg = await response.text()
+            throw new Error("No ha sido listar a los fabricantes: " + error_msg)
         }
 
         const data = await response.json()
@@ -58,9 +60,10 @@ export const getProducts = async (): Promise<any[]> => {
         });
 
         if(!response.ok) {
-            throw new Error("No ha sido posible listar los fabricantes")
+            const error_msg = await response.text()
+            throw new Error("No ha sido posible listar los productos: " + error_msg)
         }
-
+        
         const data = await response.json()
         return data.body || [];
     } 
@@ -72,7 +75,6 @@ export const getProducts = async (): Promise<any[]> => {
 
 export const createProductsWithFile = async (productFile: File): Promise<void> => {
     const url = apiURI + '/api/productos/crear_producto/masivo';
-
     const formData = new FormData();
     formData.append('file', productFile);
 
@@ -83,7 +85,8 @@ export const createProductsWithFile = async (productFile: File): Promise<void> =
         });
 
         if(!response.ok) {
-            throw new Error("No ha sido posible crear los nuevos productos: " + response.statusText)
+            const error_msg = await response.text()
+            throw new Error("No ha sido posible crear los nuevos productos: " + error_msg)
         }
 
         const data = await response.json()

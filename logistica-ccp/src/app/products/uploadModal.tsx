@@ -14,22 +14,23 @@ interface ModalFormProps {
     onProductAdded: () => void;
 }
 
-export default function UploadProductsModal({ open, onClose, title = "Modal" }: ModalFormProps) {
+export default function UploadProductsModal({ open, onClose, title = "Modal", onProductAdded }: ModalFormProps) {
+
     const [confirmDisabled, setConfirmDisabled] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const handleClose = () => {
+    const handleClose = async () => {
         setConfirmDisabled(true);
         setError(null);
         setSelectedFile(null);
+        await onProductAdded();
         onClose()
     }
 
     const handleUpload = async () => {
         if (!selectedFile) return;
-
         setLoading(true);
         await createProductsWithFile(selectedFile);
         setLoading(false);
@@ -83,7 +84,7 @@ export default function UploadProductsModal({ open, onClose, title = "Modal" }: 
                         padding: "1.25rem",
                         width: "40rem",
                     }}
-                        title="Formulario nuevo producto"
+                        title="Modal de carga de productos"
                     >
                         <Typography id="modal-formulario-producto-title" variant="h6" title="Form title" gutterBottom>
                             {title}
@@ -118,7 +119,7 @@ export default function UploadProductsModal({ open, onClose, title = "Modal" }: 
                                     }
                                 }]}>
                                     <UploadFileIcon sx={{ height: "4rem", width: "100%" }} />
-                                    <input {...getInputProps()} />
+                                    <input {...getInputProps()} title="Espacio de envio de archivos"/>
                                     <Typography id="modal-carga-producto-dropzone" title="Dropzone" variant="body2">
                                         {isDragActive ? "Suelta el archivo aquí..." : "Subir o arrastrar un archivo .xlsx, .csv o .json"}
                                     </Typography>
