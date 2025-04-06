@@ -6,7 +6,7 @@ export const createProduct = async (productData: {
     id_fabricante: string;
     volumen: string;
 }): Promise<void> => {
-    const url = apiURI + '/api/productos/producto/crear_producto'
+    const url = apiURI + '/api/productos/crear_producto'
 
     try {
         const response = await fetch(url, {
@@ -31,7 +31,7 @@ export const createProduct = async (productData: {
 }
 
 export const getManufacturers = async (): Promise<any[]> => {
-    const url = apiURI + '/api/productos/fabricante/listar_fabricantes'
+    const url = apiURI + '/api/productos/listar_fabricantes'
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -51,7 +51,7 @@ export const getManufacturers = async (): Promise<any[]> => {
 }
 
 export const getProducts = async (): Promise<any[]> => {
-    const url = apiURI + '/api/productos/producto/listar_productos'
+    const url = apiURI + '/api/productos/listar_productos'
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -67,5 +67,30 @@ export const getProducts = async (): Promise<any[]> => {
     catch (error) {
         console.error("No ha sido posible listar los fabricantes", error)
         return []
+    }
+}
+
+export const createProductsWithFile = async (productFile: File): Promise<void> => {
+    const url = apiURI + '/api/productos/crear_producto/masivo';
+
+    const formData = new FormData();
+    formData.append('file', productFile);
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData
+        });
+
+        if(!response.ok) {
+            throw new Error("No ha sido posible crear los nuevos productos: " + response.statusText)
+        }
+
+        const data = await response.json()
+        console.log("Productos creados con éxito:", data)
+
+    } 
+    catch (error) {
+        console.error("No ha sido posible crear un nuevo producto", error)
     }
 }

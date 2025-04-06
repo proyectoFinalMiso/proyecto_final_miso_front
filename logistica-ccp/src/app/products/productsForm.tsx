@@ -12,13 +12,6 @@ interface ModalFormProps {
     onProductAdded: () => void;
 }
 
-interface Product {
-    nombre: string;
-    volumen: number;
-    fabricante: string;
-    valorUnitario: number;
-}
-
 interface Manufacturer {
     id: string;
     nombre: string;
