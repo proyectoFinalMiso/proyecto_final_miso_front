@@ -15,6 +15,7 @@ interface ModalFormProps {
 }
 
 export default function UploadProductsModal({ open, onClose, title = "Modal", onProductAdded }: ModalFormProps) {
+
     const [confirmDisabled, setConfirmDisabled] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);

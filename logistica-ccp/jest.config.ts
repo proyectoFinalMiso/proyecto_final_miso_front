@@ -3,12 +3,12 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
+import type { Config } from 'jest';
 import nextJest from 'next/jest.js';
 
 const createJestConfig = nextJest({
-    dir: './'
-  }
+  dir: './'
+}
 )
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -41,15 +41,20 @@ const config: Config = {
   // coverageProvider: "babel",
 
   // A list of reporter names that Jest uses when writing coverage reports
-  // coverageReporters: [
-  //   "json",
-  //   "text",
-  //   "lcov",
-  //   "clover"
-  // ],
+  coverageReporters: [
+    "json",
+    "lcov",
+    "text",
+    "json-summary"
+  ],
 
   // An object that configures minimum threshold enforcement for coverage results
-  // coverageThreshold: undefined,
+  coverageThreshold: {
+    global: {
+      statements: 70,
+      lines: 70,
+    }
+  },
 
   // A path to a custom dependency extractor
   // dependencyExtractor: undefined,

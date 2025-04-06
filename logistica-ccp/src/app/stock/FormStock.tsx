@@ -1,51 +1,24 @@
-import { useState, useEffect } from "react";
-import { SelectChangeEvent } from "@mui/material";
-import { Modal, Box, Select, Typography, TextField, Button, Stack, MenuItem, InputLabel } from "@mui/material"
+import { useState } from "react";
+import { Modal, Box, Typography, TextField, Button, Stack } from "@mui/material"
 import Grid from "@mui/material/Grid2";
-
-import { createProduct, getManufacturers } from "./adapters/microserviceProducts";
 
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
     title?: string
-    onProductAdded: () => void;
 }
 
-interface Manufacturer {
-    id: string;
-    nombre: string;
-}
+export default function FormStock({ open, onClose, title = "Formulario" }: ModalFormProps) {
+    const [formData, setFormData] = useState({ producto: "", lote: "", cantidad: ""});
 
-export default function ProductsForm({ open, onClose, title = "Formulario", onProductAdded }: ModalFormProps) {
-    const [formData, setFormData] = useState({ nombre: "", valorUnitario: "", id_fabricante: "", volumen: "" });
-    const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
-
-    useEffect(() => {
-        getManufacturers().then(setManufacturers);
-    }, []);
-    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Formulario enviado:", formData)
-        const newProduct = await createProduct(
-            {
-                nombre: formData.nombre,
-                valorUnitario: parseInt(formData.valorUnitario),
-                id_fabricante: formData.id_fabricante,
-                volumen: formData.volumen
-            }
-        );
-        await onProductAdded();
         onClose();
-    };
-
-    const handleSelectChange = (e: SelectChangeEvent<string>) => {
-        setFormData((prev) => ({ ...prev, id_fabricante: e.target.value }));
     };
 
     return (
@@ -73,7 +46,7 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                         padding: "1.25rem",
                         width: "40rem",
                         }}
-                        title="Formulario nuevo producto"
+                        title="Ingresar Lote"
                     >
                         <Typography id="modal-formulario-producto-title" variant="h6" title="Form title" gutterBottom>
                             {title}
@@ -83,54 +56,35 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            Agregar un producto a la plataforma
+                            AIngresar los datos del nuevo stock del producto
                         </Typography>
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 fullWidth
-                                label="Nombre"
-                                name="nombre"
-                                value={formData.nombre}
+                                label="Producto"
+                                name="producto"
+                                value={formData.producto}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="Nombre del producto"
+                                title="Producto"
                             />
                             <TextField
                                 fullWidth
-                                label="Valor Unitario ($COP)"
-                                name="valorUnitario"
-                                value={formData.valorUnitario}
+                                label="Lote"
+                                name="lote"
+                                value={formData.lote}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="Valor unitario del producto"
+                                title="Lote"
                             />
-                            <Select
-                                fullWidth
-                                labelId="fabricante-select-label"
-                                id="fabricante-select"
-                                name="fabricante"
-                                value={formData.id_fabricante}
-                                onChange={handleSelectChange}
-                                title="Fabricante del producto"
-                            >
-                                <MenuItem value="" disabled>
-                                    Seleccione un fabricante
-                                </MenuItem>
-                                {manufacturers.map((manufacturer) => (
-                                    <MenuItem key={manufacturer.id} value={manufacturer.id}>
-                                        {manufacturer.nombre}
-                                    </MenuItem>
-                                ))}
-                            </Select>
                             <TextField
                                 fullWidth
-                                label="Volumen"
-                                name="volumen"
-                                value={formData.volumen}
+                                label="Cantidad"
+                                name="cantidad"
+                                value={formData.cantidad}
                                 onChange={handleChange}
                                 margin="normal"
-                                type="number"
-                                title="Volumen del producto"
+                                title="Cantidad"
                             />
                             <Stack 
                                 direction={"row"} 
@@ -151,5 +105,4 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
             </Box>
         </Modal>
     )
-
 }
