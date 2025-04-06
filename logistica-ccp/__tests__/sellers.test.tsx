@@ -38,7 +38,7 @@ describe('Vista de creación de vendedores', () => {
         const nameField = screen.getByTitle("Nombre")
         expect(nameField).toBeInTheDocument()
 
-        const emailField = screen.getByTitle("e-mail")
+        const emailField = screen.getByTitle("email")
         expect(emailField).toBeInTheDocument()
     })
 
