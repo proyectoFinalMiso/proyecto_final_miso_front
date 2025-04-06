@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Modal, Box, Typography, TextField, Button, Stack } from "@mui/material"
 import Grid from "@mui/material/Grid2";
 
+import { updateStock } from "./adapters/microserviceStock";
+
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
@@ -9,15 +11,21 @@ interface ModalFormProps {
 }
 
 export default function FormStock({ open, onClose, title = "Formulario" }: ModalFormProps) {
-    const [formData, setFormData] = useState({ producto: "", lote: "", cantidad: ""});
+    const [formData, setFormData] = useState({ id_producto: "", cantidad: ""});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Formulario enviado:", formData)
+        const changeStock  = await updateStock(
+            {
+                id_producto: formData.id_producto,
+                cantidad: parseInt(formData.cantidad),
+            }
+        );
         onClose();
     };
 
@@ -61,14 +69,14 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 fullWidth
-                                label="Producto"
-                                name="producto"
-                                value={formData.producto}
+                                label="ID Producto"
+                                name="id_producto"
+                                value={formData.id_producto}
                                 onChange={handleChange}
                                 margin="normal"
                                 title="Producto"
                             />
-                            <TextField
+                            {/* <TextField
                                 fullWidth
                                 label="Lote"
                                 name="lote"
@@ -76,7 +84,7 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                                 onChange={handleChange}
                                 margin="normal"
                                 title="Lote"
-                            />
+                            /> */}
                             <TextField
                                 fullWidth
                                 label="Cantidad"
