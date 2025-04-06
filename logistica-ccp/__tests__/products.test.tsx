@@ -8,7 +8,8 @@ import * as microserviceProducts from '@/app/products/adapters/microserviceProdu
 describe('Vista de creación de productos', () => {
 
     beforeEach(() => {
-        fetchMock.resetMocks();
+        fetchMock.resetMocks()
+        fetchMock.mockResponse(JSON.stringify({})) 
     });
 
     it('Validar renderizado de la vista', async () => {
@@ -91,13 +92,6 @@ describe('Vista de creación de productos', () => {
         expect(nameField).toHaveValue('Pepito Perez')
     })
 
-    it('Comprobar conexión con backend', async () => {
-        const manufacturers = await microserviceProducts.getManufacturers()
-        const products = await microserviceProducts.getProducts()
-        expect(manufacturers).toBeDefined()
-        expect(products).toBeDefined()
-    })
-
     it('Renderizado de modal de carga', async () => {
         fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
         render(<Products />)
@@ -125,4 +119,11 @@ describe('Vista de creación de productos', () => {
         await user.click(cancelButton)
         expect(form).not.toBeInTheDocument()
     })
+
+    it('Comprobar conexión con backend', async () => {
+            const manufacturers = await microserviceProducts.getManufacturers()
+            const products = await microserviceProducts.getProducts()
+            expect(manufacturers).toBeDefined()
+            expect(products).toBeDefined()
+        })
 })
