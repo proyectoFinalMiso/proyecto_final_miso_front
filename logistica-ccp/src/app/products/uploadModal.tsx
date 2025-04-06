@@ -31,7 +31,6 @@ export default function UploadProductsModal({ open, onClose, title = "Modal", on
 
     const handleUpload = async () => {
         if (!selectedFile) return;
-
         setLoading(true);
         await createProductsWithFile(selectedFile);
         setLoading(false);
@@ -85,7 +84,7 @@ export default function UploadProductsModal({ open, onClose, title = "Modal", on
                         padding: "1.25rem",
                         width: "40rem",
                     }}
-                        title="Formulario nuevo producto"
+                        title="Modal de carga de productos"
                     >
                         <Typography id="modal-formulario-producto-title" variant="h6" title="Form title" gutterBottom>
                             {title}
@@ -120,7 +119,7 @@ export default function UploadProductsModal({ open, onClose, title = "Modal", on
                                     }
                                 }]}>
                                     <UploadFileIcon sx={{ height: "4rem", width: "100%" }} />
-                                    <input {...getInputProps()} />
+                                    <input {...getInputProps()} title="Espacio de envio de archivos"/>
                                     <Typography id="modal-carga-producto-dropzone" title="Dropzone" variant="body2">
                                         {isDragActive ? "Suelta el archivo aquí..." : "Subir o arrastrar un archivo .xlsx, .csv o .json"}
                                     </Typography>
