@@ -9,7 +9,7 @@ const paginationModel = { page: 0, pageSize: 10 };
 
 type DataTableProps = {
     columns: GridColDef[];
-    rows: Object[];
+    rows: object[];
 }
 
 export default function DataTable({ columns, rows }: DataTableProps) {
