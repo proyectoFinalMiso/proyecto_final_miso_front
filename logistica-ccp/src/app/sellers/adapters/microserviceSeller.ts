@@ -1,4 +1,4 @@
-const apiURI = process.env.NEXT_PUBLIC_BFF_HOST
+const apiURI = "https://cr-bff-webapp-488938258128.us-central1.run.app"
 // const apiURI = 'http://127.0.0.1:3005'
 
 export const createSeller = async (sellerData: {

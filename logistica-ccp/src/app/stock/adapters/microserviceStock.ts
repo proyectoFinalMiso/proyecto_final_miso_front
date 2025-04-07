@@ -1,4 +1,4 @@
-const apiURI = process.env.NEXT_PUBLIC_BFF_HOST
+const apiURI = "https://cr-bff-webapp-488938258128.us-central1.run.app"
 
 export const updateStock = async (stockData: {
     id_producto: string;
