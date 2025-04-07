@@ -4,7 +4,7 @@ export const updateStock = async (stockData: {
     id_producto: string;
     cantidad: number;
 }): Promise<void> => {
-    const url = apiURI + '/api/stock/stock_ingresar_inventario'
+    const url = apiURI + '/api/bodega/stock_ingresar_inventario'
     
     try {
         const response = await fetch(url, {

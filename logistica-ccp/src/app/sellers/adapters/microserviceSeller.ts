@@ -5,7 +5,7 @@ export const createSeller = async (sellerData: {
     nombre: string;
     email: string;
 }): Promise<void> => {
-    const url = apiURI + '/api/vendedores/crear_vendedor'
+    const url = apiURI + '/api/vendedor/crear_vendedor'
     console.log(sellerData)
     try {
         const response = await fetch(url, {
