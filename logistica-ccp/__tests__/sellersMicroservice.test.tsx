@@ -20,7 +20,7 @@ describe('Interacción con microservicio de productos', () => {
         await microserviceSeller.createSeller(sellerData)
 
         expect(fetchMock).toHaveBeenCalledWith(
-            expect.stringContaining('/api/vendedores/crear_vendedor'),
+            expect.stringContaining('/api/vendedor/crear_vendedor'),
             expect.objectContaining({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

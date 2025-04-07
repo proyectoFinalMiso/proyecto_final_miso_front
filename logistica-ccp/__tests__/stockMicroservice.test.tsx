@@ -20,7 +20,7 @@ describe('Interacción con microservicio de inventarios', () => {
         await microserviceStock.updateStock(sellerData)
 
         expect(fetchMock).toHaveBeenCalledWith(
-            expect.stringContaining('/api/stock/stock_ingresar_inventario'),
+            expect.stringContaining('/api/bodega/stock_ingresar_inventario'),
             expect.objectContaining({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
