@@ -11,21 +11,21 @@ interface ModalFormProps {
 }
 
 export default function FormStock({ open, onClose, title = "Formulario" }: ModalFormProps) {
-    const [formData, setFormData] = useState({ id_producto: "", cantidad: ""});
+    const [formData, setFormData] = useState({ nombre: "",bodega: "", posicion: "", lote: "", cantidad: "", sku: "", valorUnitario:""});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log("Formulario enviado:", formData)
-        const changeStock  = await updateStock(
-            {
-                id_producto: formData.id_producto,
-                cantidad: parseInt(formData.cantidad),
-            }
-        );
+        // e.preventDefault();
+        // console.log("Formulario enviado:", formData)
+        // const changeStock  = await updateStock(
+        //     {
+        //         id_producto: formData.id_producto,
+        //         cantidad: parseInt(formData.cantidad),
+        //     }
+        // );
         onClose();
     };
 
@@ -33,8 +33,8 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
         <Modal
             open={open}
             onClose={onClose}
-            aria-labelledby="modal-formulario-producto"
-            aria-describedby="modal-formulario-producto-descripcion"
+            aria-labelledby="modal-formulario-crear-producto"
+            aria-describedby="modal-formulario-crear-producto-descripcion"
             sx={{
                 "& .MuiBackdrop-root": {
                     backgroundColor: "RGBA(248, 248, 248, 0.6)",
@@ -64,35 +64,35 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            Ingresar los datos del nuevo stock del producto
+                            Ingresar un nuevo producto al Inventario
                         </Typography>
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 fullWidth
-                                label="ID Producto"
-                                name="id_producto"
-                                value={formData.id_producto}
+                                label="Nombre"
+                                name="nombre"
+                                value={formData.nombre}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="Producto"
+                                title="Nombre"
                             />
-                            {/* <TextField
-                                fullWidth
-                                label="Lote"
-                                name="lote"
-                                value={formData.lote}
-                                onChange={handleChange}
-                                margin="normal"
-                                title="Lote"
-                            /> */}
                             <TextField
                                 fullWidth
-                                label="Cantidad"
-                                name="cantidad"
-                                value={formData.cantidad}
+                                label="Bodega"
+                                name="bodega"
+                                value={formData.bodega}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="Cantidad"
+                                title="Bodega"
+                            />
+                            <TextField
+                                fullWidth
+                                label="Posicion"
+                                name="posicion"
+                                value={formData.posicion}
+                                onChange={handleChange}
+                                margin="normal"
+                                title="Posicion"
                             />
                             <Stack 
                                 direction={"row"} 
