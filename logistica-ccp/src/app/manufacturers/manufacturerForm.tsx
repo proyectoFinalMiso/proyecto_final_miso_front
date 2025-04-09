@@ -20,7 +20,7 @@ interface Manufacturer {
 
 export default function ProductsForm({ open, onClose, title = "Formulario", onProductAdded }: ModalFormProps) {
     const [formData, setFormData] = useState({ nombre: "", pais: "" });
-    
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -57,29 +57,29 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
         >
             <Box sx={{ height: "100%" }}>
                 <Grid container sx={{ height: "100%" }}>
-                    <Grid sx={{ 
-                        backgroundColor: "white", 
+                    <Grid sx={{
+                        backgroundColor: "white",
                         borderRadius: "16px",
                         boxShadow: "3",
-                        direction: "column", 
-                        minHeight: "28.75rem", 
+                        direction: "column",
+                        minHeight: "28.75rem",
                         margin: "auto",
                         padding: "1.25rem",
-                        width: "40rem",
-                        }}
+                        maxWidth: "40rem",
+                    }}
                         title="Formulario nuevo fabricante"
                     >
                         <Typography id="modal-formulario-fabricante-title" variant="h6" title="Form title" gutterBottom>
                             {title}
                         </Typography>
-                        <Typography 
+                        <Typography
                             id="modal-formulario-fabricante-subtitle"
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
                             Agregar un fabricante a la plataforma
                         </Typography>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} style={{ height: "20rem" }}>
                             <TextField
                                 fullWidth
                                 label="Nombre"
@@ -98,11 +98,11 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                                 margin="normal"
                                 title="País del fabricante"
                             />
-                            <Stack 
-                                direction={"row"} 
-                                spacing={4} 
+                            <Stack
+                                direction={"row"}
+                                spacing={4}
                                 justifyContent={"center"}
-                                sx={{ marginTop: "1.25rem" }}
+                                sx={{ marginTop: "1.25rem", flexGrow: "1" }}
                             >
                                 <Button type="submit" variant="contained" color="cpp">
                                     Confirmar
