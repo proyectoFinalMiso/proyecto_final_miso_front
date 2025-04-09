@@ -24,7 +24,7 @@ export interface InventoryResponse {
 // Fetch all inventory items
 export const fetchInventory = async (): Promise<InventoryItem[]> => {
     try {
-        const response = await axios.get<InventoryResponse>(`${API_BASE_URL}/inventario/listar_inventarios`);
+        const response = await axios.get<InventoryResponse>(`${API_BASE_URL}/stock_listar_inventarios`);
         return response.data.body;
     } catch (error) {
         console.error('Error fetching available inventory:', error);
