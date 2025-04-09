@@ -3,7 +3,7 @@ import { SelectChangeEvent } from "@mui/material";
 import { Modal, Box, Select, Typography, TextField, Button, Stack, MenuItem, InputLabel } from "@mui/material"
 import Grid from "@mui/material/Grid2";
 
-import { createProduct, getManufacturers } from "./adapters/microserviceProducts";
+import { createManufacturer } from "./adapters/microserviceProducts";
 
 interface ModalFormProps {
     open: boolean;
@@ -15,15 +15,11 @@ interface ModalFormProps {
 interface Manufacturer {
     id: string;
     nombre: string;
+    pais: string;
 }
 
 export default function ProductsForm({ open, onClose, title = "Formulario", onProductAdded }: ModalFormProps) {
-    const [formData, setFormData] = useState({ nombre: "", valorUnitario: "", id_fabricante: "", volumen: "" });
-    const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
-
-    useEffect(() => {
-        getManufacturers().then(setManufacturers);
-    }, []);
+    const [formData, setFormData] = useState({ nombre: "", pais: "" });
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,12 +28,10 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Formulario enviado:", formData)
-        const newProduct = await createProduct(
+        const newManufacturer = await createManufacturer(
             {
                 nombre: formData.nombre,
-                valorUnitario: parseInt(formData.valorUnitario),
-                id_fabricante: formData.id_fabricante,
-                volumen: formData.volumen
+                pais: formData.pais
             }
         );
         await onProductAdded();
@@ -52,8 +46,8 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
         <Modal
             open={open}
             onClose={onClose}
-            aria-labelledby="modal-formulario-producto"
-            aria-describedby="modal-formulario-producto-descripcion"
+            aria-labelledby="modal-formulario-fabricante"
+            aria-describedby="modal-formulario-fabricante-descripcion"
             sx={{
                 "& .MuiBackdrop-root": {
                     backgroundColor: "RGBA(248, 248, 248, 0.6)",
@@ -73,17 +67,17 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                         padding: "1.25rem",
                         width: "40rem",
                         }}
-                        title="Formulario nuevo producto"
+                        title="Formulario nuevo fabricante"
                     >
-                        <Typography id="modal-formulario-producto-title" variant="h6" title="Form title" gutterBottom>
+                        <Typography id="modal-formulario-fabricante-title" variant="h6" title="Form title" gutterBottom>
                             {title}
                         </Typography>
                         <Typography 
-                            id="modal-formulario-producto-subtitle"
+                            id="modal-formulario-fabricante-subtitle"
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            Agregar un producto a la plataforma
+                            Agregar un fabricante a la plataforma
                         </Typography>
                         <form onSubmit={handleSubmit}>
                             <TextField
@@ -93,44 +87,16 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                                 value={formData.nombre}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="Nombre del producto"
+                                title="Nombre del fabricante"
                             />
                             <TextField
                                 fullWidth
-                                label="Valor Unitario ($COP)"
-                                name="valorUnitario"
-                                value={formData.valorUnitario}
+                                label="País"
+                                name="pais"
+                                value={formData.pais}
                                 onChange={handleChange}
                                 margin="normal"
-                                title="Valor unitario del producto"
-                            />
-                            <Select
-                                fullWidth
-                                labelId="fabricante-select-label"
-                                id="fabricante-select"
-                                name="fabricante"
-                                value={formData.id_fabricante}
-                                onChange={handleSelectChange}
-                                title="Fabricante del producto"
-                            >
-                                <MenuItem value="" disabled>
-                                    Seleccione un fabricante
-                                </MenuItem>
-                                {manufacturers.map((manufacturer) => (
-                                    <MenuItem key={manufacturer.id} value={manufacturer.id}>
-                                        {manufacturer.nombre}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            <TextField
-                                fullWidth
-                                label="Volumen"
-                                name="volumen"
-                                value={formData.volumen}
-                                onChange={handleChange}
-                                margin="normal"
-                                type="number"
-                                title="Volumen del producto"
+                                title="País del fabricante"
                             />
                             <Stack 
                                 direction={"row"} 
