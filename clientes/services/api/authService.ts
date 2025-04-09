@@ -29,7 +29,7 @@ export interface ClienteData {
 
 export const register = async (data: RegisterRequest): Promise<any> => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/cliente/crear`, data);
+        const response = await axios.post(`${API_BASE_URL}/crear`, data);
         return response.data;
     } catch (error) {
         console.error('Error durante el registro:', error);
@@ -39,7 +39,7 @@ export const register = async (data: RegisterRequest): Promise<any> => {
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     try {
-        const response = await axios.post<LoginResponse>(`${API_BASE_URL}/cliente/login`, data);
+        const response = await axios.post<LoginResponse>(`${API_BASE_URL}/login`, data);
         return response.data;
     } catch (error) {
         console.error('Error durante el login:', error);
@@ -52,7 +52,7 @@ export const getClientData = async (clienteId: string): Promise<ClienteData> => 
         if (!clienteId) {
             throw new Error('clienteId es undefined o null');
         }
-        const response = await axios.get<ClienteData>(`${API_BASE_URL}/cliente/${clienteId}`);
+        const response = await axios.get<ClienteData>(`${API_BASE_URL}/${clienteId}`);
         return response.data;
     } catch (error) {
         console.error('Error al obtener datos del cliente:', error);

@@ -68,7 +68,7 @@ describe('Inventory Service', () => {
             const result = await fetchInventory();
 
             // Assert
-            expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('/inventario/listar_inventarios'));
+            expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('/stock_listar_inventarios'));
             expect(result).toEqual(mockInventoryData);
             expect(result.length).toBe(3);
         });
@@ -80,7 +80,7 @@ describe('Inventory Service', () => {
 
             // Act & Assert
             await expect(fetchInventory()).rejects.toThrow(errorMessage);
-            expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('/inventario/listar_inventarios'));
+            expect(mockedAxios.get).toHaveBeenCalledWith(expect.stringContaining('/stock_listar_inventarios'));
         });
     });
 
