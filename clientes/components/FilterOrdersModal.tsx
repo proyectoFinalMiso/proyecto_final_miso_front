@@ -171,8 +171,9 @@ const FilterModal = ({
                                     <Text style={[
                                         styles.dateInputText,
                                         !tempDateRange.start && styles.placeholderText
-                                    ]}>
+                                    ]} testID="start-date-input">
                                         {tempDateRange.start || 'DD/MM/YYYY'}
+                                        
                                     </Text>
                                     <Ionicons name="calendar-outline" size={18} color={Colors.light.text} />
                                 </TouchableOpacity>

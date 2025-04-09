@@ -124,6 +124,7 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
                 </View>
             ) : (
                 <FlatList
+                    testID="orders-list"
                     data={orders}
                     renderItem={renderOrder}
                     keyExtractor={item => item.id}
