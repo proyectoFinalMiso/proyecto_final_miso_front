@@ -116,9 +116,12 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                         padding: "1.25rem",
                         width: "40rem",
                         }}
-                        title="Ingresar Lote"
+                        title="Formulario Ingresar Producto a Stock"
                     >
-                        <Typography id="modal-formulario-producto-title" variant="h6" title="Form title" gutterBottom>
+                        <Typography id="modal-formulario-producto-title"
+                                variant="h6"
+                                title="Form title"
+                                gutterBottom>
                             {title}
                         </Typography>
                         <Typography 

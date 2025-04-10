@@ -53,7 +53,7 @@ export const getProducts = async (): Promise<any[]> => {
         return data.body || [];
     } 
     catch (error) {
-        console.error("No ha sido posible listar los fabricantes", error)
+        console.error("No ha sido posible listar los productos", error)
         return []
     }
 }
