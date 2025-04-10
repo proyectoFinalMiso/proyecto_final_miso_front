@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "final-personal",
-    "slug": "final-personal",
+    "name": "clientes",
+    "slug": "clientes",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
