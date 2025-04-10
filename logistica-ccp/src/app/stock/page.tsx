@@ -25,14 +25,12 @@ declare module '@mui/material/Button' {
 
 const Stock: React.FC = () => {
 
-    const [isOpenStock, setIsOpenStock] = useState(false);
     const [isOpenProducto, setIsOpenProducto] = useState(false);
 
     return (
         <ThemeProvider theme={theme}>
             <Box>
                 <Grid container>
-                    <FormStock open={isOpenStock} onClose={() => setIsOpenStock(false)} title="Nuevo Stock"/>
                     <FormProduct open={isOpenProducto} onClose={() => setIsOpenProducto(false)} title="Nuevo Producto"/>
                     <Grid sx={{ direction: 'column' }} size="grow">
                         <PageTitle text="Stock" />
@@ -76,14 +74,6 @@ const Stock: React.FC = () => {
                                         startIcon={<AddIcon />}
                                     >
                                         Ingresar Producto
-                                    </Button>
-                                    <Button
-                                        onClick={() => setIsOpenStock(true)}
-                                        variant="contained"
-                                        color="cpp"
-                                        startIcon={<AddIcon />}
-                                    >
-                                        Registrar Stock
                                     </Button>
                                 </Stack>
                             </Grid>
