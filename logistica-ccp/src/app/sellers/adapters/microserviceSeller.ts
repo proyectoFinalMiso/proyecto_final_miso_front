@@ -31,9 +31,8 @@ export const createSeller = async (sellerData: {
 }
 
 export const getSellers = async (): Promise<any[]> => {
-    // const url = apiURI + '/api/vendedor/listar_vendedores'
+    const url = apiURI + '/api/vendedor/listar_vendedores'
 
-    const url = "http://127.0.0.1:3005/listar_vendedores"
     try {
         const response = await fetch(url, {
             method: 'GET',
