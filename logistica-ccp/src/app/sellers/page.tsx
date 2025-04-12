@@ -1,7 +1,8 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import styles from "./Seller.module.css"
+import DataTable from "../../../globalComponents/Datatable";
 import PageTitle from "../../../globalComponents/PageTitle";
 import FormSeller from "./FormSeller";
 
@@ -14,6 +15,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import AddIcon from '@mui/icons-material/Add';
 
+import { getSellers } from "./adapters/microserviceSeller";
+
 declare module '@mui/material/Button' {
     interface ButtonPropsColorOverrides {
         cpp: true;
@@ -21,9 +24,29 @@ declare module '@mui/material/Button' {
     }
 }
 
+interface Seller {
+    nombre: string;
+    email: string;
+}
+
 const Seller: React.FC = () => {
 
+    const tableSchema: GridColDef[] = [
+        { field: 'nombre', headerName: 'Nombre', flex: 1, headerClassName: styles.Header },
+        { field: 'email', headerName: 'Email', flex: 4, headerClassName: styles.Header },
+    ]
+
+    const[sellers, setSellers] = useState<Seller[]>([]);
     const [isOpen, setIsOpen] = useState(false);
+
+    const fetchSeller = async () => {
+            const productList = await getSellers();
+            setSellers(productList);
+        }
+    
+    useEffect(() => {
+            fetchSeller();
+        }, []);
 
     return (
         <ThemeProvider theme={theme}>
@@ -75,6 +98,9 @@ const Seller: React.FC = () => {
                                     </Button>
                                 </Stack>
                             </Grid>
+                        </Grid>
+                        <Grid size="grow" sx={{ margin: '1.25rem 6.25rem' }}>
+                            <DataTable columns={tableSchema} rows={sellers} />                        
                         </Grid>
                     </Grid>
                 </Grid>
