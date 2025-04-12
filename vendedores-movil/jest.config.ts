@@ -24,8 +24,8 @@ const config: Config = {
         '/coverage/',
         '/jest.config.ts',
         '/jest.setup.ts',
-        '/clientes/app/_layout.tsx',
-        '/clientes/app/index.tsx',
+        '/vendedores-movil/app/_layout.tsx',
+        '/vendedores-movil/clientes/app/index.tsx',
     ],
     coverageThreshold: {
         global: {

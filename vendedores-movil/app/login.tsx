@@ -33,12 +33,12 @@ export default function LoginScreen() {
   }, []);
 
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@ccp.com+$/;
     if (!email) {
       setEmailError('');
       return;
     }
-    setEmailError(emailRegex.test(email) ? '' : 'Email inválido');
+    setEmailError(emailRegex.test(email) ? '' : 'Email inválido. Debe ser un email de CCP.');
   };
 
   const handleLogin = async () => {
@@ -57,10 +57,6 @@ export default function LoginScreen() {
       }
       Alert.alert('Error', message);
     }
-  };
-
-  const handleRegister = () => {
-    router.push('/register')
   };
 
   return (
@@ -135,13 +131,6 @@ export default function LoginScreen() {
               )}
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={[styles.button, styles.secondaryButton]}
-              onPress={handleRegister}
-              disabled={isLoading}
-            >
-              <Text style={[styles.buttonText, styles.secondaryButtonText]}>Registrarse</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

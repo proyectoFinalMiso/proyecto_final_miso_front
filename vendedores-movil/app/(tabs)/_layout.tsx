@@ -3,7 +3,6 @@ import { Colors } from '../../constants/Colors';
 import { View, StyleSheet } from 'react-native';
 import HomeIcon from '../../assets/icons/HomeIcon';
 import CartIcon from '../../assets/icons/CartIcon';
-import OrdersIcon from '../../assets/icons/OrdersIcon';
 
 export default function TabLayout() {
   return (

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "vendedores-movil",
-    "slug": "vendedores-movil",
+    "name": "vendedores",
+    "slug": "vendedores",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

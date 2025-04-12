@@ -216,6 +216,10 @@ const OrderSummary = () => {
                         <Text style={styles.modalTitle}>Seleccionar Cliente</Text>
                         {isLoadingClients ? (
                             <ActivityIndicator size="large" color={Colors.light.button} />
+                        ) : clients.length === 0 ? (
+                            <View style={styles.emptyStateContainer}>
+                                <Text style={styles.emptyStateText}>No tienes clientes asignados</Text>
+                            </View>
                         ) : (
                             <FlatList
                                 data={clients}
@@ -358,6 +362,17 @@ const styles = StyleSheet.create({
         fontFamily: 'PlusJakartaSans_600SemiBold',
         color: Colors.light.text,
         marginBottom: 16,
+        textAlign: 'center',
+    },
+    emptyStateContainer: {
+        padding: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    emptyStateText: {
+        fontSize: 16,
+        fontFamily: 'PlusJakartaSans_400Regular',
+        color: '#666',
         textAlign: 'center',
     },
     clientList: {
