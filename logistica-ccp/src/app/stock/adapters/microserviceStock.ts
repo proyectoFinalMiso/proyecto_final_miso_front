@@ -38,6 +38,7 @@ export const insertStock = async (productData: { //'nombre', 'bodega', 'posicion
 
 export const getProducts = async (): Promise<any[]> => {
     const url = apiURI + '/api/productos/listar_productos'
+    
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -79,6 +80,31 @@ export const getBodega = async (): Promise<any[]> => {
     } 
     catch (error) {
         console.error("No ha sido posible listar las bodegas", error)
+        return []
+    }
+}
+
+export const getStock = async (): Promise<any[]> => {
+    const url = apiURI + '/api/bodega/stock_listar_inventarios'
+
+    // const url = 'http://127.0.0.1:3006/stock_listar_inventarios'
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+        });
+
+        if(!response.ok) {
+            const error_msg = await response.text()
+            throw new Error("No ha sido posible listar el inventario: " + error_msg)
+        }
+        
+        const data = await response.json()
+        console.log(data)
+        return data.body || [];
+    } 
+    catch (error) {
+        console.error("No ha sido posible listar el inventario", error)
         return []
     }
 }
