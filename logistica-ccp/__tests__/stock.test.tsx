@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import Stock from '@/app/stock/page'
 import fetchMock from 'jest-fetch-mock'
 import userEvent from '@testing-library/user-event'
@@ -26,6 +26,15 @@ describe('Vista de creación de stock', () => {
         render(<Stock />)
         const heading = screen.getByRole('heading', { level: 1 })
         expect(heading).toBeInTheDocument()
+    })
+
+    it('Renderizar tabla principal', async () => {
+        fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
+        render(<Stock />)
+        await waitFor(() => {
+            const table = screen.getByRole('grid')
+            expect(table).toBeInTheDocument()
+        })        
     })
 
     it('Renderizado de botones', () => {
