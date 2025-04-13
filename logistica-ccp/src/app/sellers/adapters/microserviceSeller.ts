@@ -4,6 +4,7 @@ const apiURI = "https://cr-bff-webapp-488938258128.us-central1.run.app"
 export const createSeller = async (sellerData: {
     nombre: string;
     email: string;
+    contrasena: string;
 }): Promise<void> => {
     const url = apiURI + '/api/vendedor/crear_vendedor'
     console.log(sellerData)

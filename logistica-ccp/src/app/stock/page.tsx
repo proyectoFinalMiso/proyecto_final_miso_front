@@ -42,7 +42,8 @@ const Stock: React.FC = () => {
         {field: 'posicion', headerName: 'Posición', flex: 1, headerClassName: styles.Header},
         {field: 'sku', headerName: 'SKU', flex: 1, headerClassName: styles.Header},
         {field: 'lote', headerName: 'Lote', flex: 1, headerClassName: styles.Header},
-        {field: 'cantidad', headerName: 'Cantidad', flex: 1, type: 'number', headerClassName: styles.Header},
+        {field: 'cantidadDisponible', headerName: 'Disponible', flex: 1, type: 'number', headerClassName: styles.Header},
+        {field: 'cantidadReservada', headerName: 'Reservado', flex: 1, type: 'number', headerClassName: styles.Header}
     ]
 
     const [stock, setStock] = useState<Stock[]>([])

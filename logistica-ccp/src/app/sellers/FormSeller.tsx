@@ -11,7 +11,7 @@ interface ModalFormProps {
 }
 
 export default function FormSeller({ open, onClose, title = "Formulario"}: ModalFormProps) {
-    const [formData, setFormData] = useState({nombre: "", email: ""});
+    const [formData, setFormData] = useState({nombre: "", email: "", password: ""});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +23,8 @@ export default function FormSeller({ open, onClose, title = "Formulario"}: Modal
         const newSeller = await createSeller(
             {
                 nombre: formData.nombre,
-                email: formData.email
+                email: formData.email,
+                contrasena: formData.password
             }
         );
         onClose();
@@ -84,6 +85,16 @@ export default function FormSeller({ open, onClose, title = "Formulario"}: Modal
                                 onChange={handleChange}
                                 margin="normal"
                                 title="email"
+                            />
+                            <TextField
+                                fullWidth
+                                label="Contraseña"
+                                name="password"
+                                type="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                margin="normal"
+                                title="seller-password"
                             />
                             <Stack 
                                 direction={"row"} 
