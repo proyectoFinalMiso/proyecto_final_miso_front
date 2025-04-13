@@ -18,5 +18,9 @@ export const Colors = {
         expandableDetailValue: '#454545',
         expandableQuantityButtonBorder: '#CACACA',
         cancelColor: '#B04A3C',
+        success: '#B8CC7A',
+        error: '#F44336',
+        warning: '#F4E59D',
+        info: '#9DD1F4',
     }
 }

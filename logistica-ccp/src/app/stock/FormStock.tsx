@@ -64,7 +64,7 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            AIngresar los datos del nuevo stock del producto
+                            Ingresar los datos del nuevo stock del producto
                         </Typography>
                         <form onSubmit={handleSubmit}>
                             <TextField

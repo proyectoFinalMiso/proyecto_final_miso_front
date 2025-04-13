@@ -1,4 +1,5 @@
 const apiURI = "https://cr-bff-webapp-488938258128.us-central1.run.app"
+// const apiURI = "http://192.168.2.8:3097"
 
 export const createProduct = async (productData: {
     nombre: string;
