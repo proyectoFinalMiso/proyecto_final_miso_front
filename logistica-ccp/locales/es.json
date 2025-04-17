@@ -1,0 +1,10 @@
+{
+    "Manufacturers": {
+        "new_manufacturer": "REGISTRAR PROVEEDOR",
+        "new_manufacturer_form_title": "Nuevo Proveedor",
+        "title": "Proveedores",
+        "table_col_1": "Proveedor",
+        "table_col_2": "País",
+        "table_col_3": "Acciones"
+    }    
+}
