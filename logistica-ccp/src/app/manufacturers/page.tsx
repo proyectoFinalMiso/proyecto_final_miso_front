@@ -9,7 +9,7 @@ import ProductsForm from "./manufacturerForm";
 
 import theme from "@/theme";
 import Grid from "@mui/material/Grid2";
-import { ThemeProvider, Box, Stack, InputAdornment, Button, TextField } from "@mui/material";
+import { ThemeProvider, Box, Stack, Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
 import AddIcon from '@mui/icons-material/Add';
@@ -71,7 +71,7 @@ const Products: React.FC = () => {
                                         color="cpp"
                                         startIcon={<AddIcon />}
                                     >
-                                        Registrar Fabricante
+                                    {translations('new_manufacturer')}
                                     </Button>
                                 </Stack>
                             </Grid>
