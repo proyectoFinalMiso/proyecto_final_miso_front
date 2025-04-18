@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import Products from '@/app/products/page'
+import Products from '@/app/[locale]/products/page'
 import userEvent from '@testing-library/user-event'
 import fetchMock from 'jest-fetch-mock'
-import * as microserviceProducts from '@/app/products/adapters/microserviceProducts'
+import * as microserviceProducts from '@/app/[locale]/products/adapters/microserviceProducts'
 
 describe('Vista de creación de productos', () => {
 

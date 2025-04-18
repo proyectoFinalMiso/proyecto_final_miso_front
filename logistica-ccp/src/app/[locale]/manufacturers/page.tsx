@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 import styles from "./Manufacturers.module.css"
 import DataTable from "../../../globalComponents/Datatable";
@@ -8,11 +9,9 @@ import ProductsForm from "./manufacturerForm";
 
 import theme from "@/theme";
 import Grid from "@mui/material/Grid2";
-import { ThemeProvider, Box, Stack, InputAdornment, Button, TextField } from "@mui/material";
+import { ThemeProvider, Box, Stack, Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
-import SearchIcon from '@mui/icons-material/Search';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
 import AddIcon from '@mui/icons-material/Add';
 
 import { getManufacturers } from "./adapters/microserviceProducts";
@@ -35,10 +34,12 @@ interface Product {
 }
 
 const Products: React.FC = () => {
+    const translations = useTranslations('Manufacturers')
+
     const tableSchema: GridColDef[] = [
-        { field: 'nombre', headerName: 'Fabricante', flex: 3, headerClassName: styles.Header },
-        { field: 'pais', headerName: 'País', flex: 1, headerClassName: styles.Header },
-        { field: 'acciones', headerName: 'Acciones', flex: 2, headerClassName: styles.Header },
+        { field: 'nombre', headerName: translations('table_col_1'), flex: 3, headerClassName: styles.Header },
+        { field: 'pais', headerName: translations('table_col_2'), flex: 1, headerClassName: styles.Header },
+        { field: 'acciones', headerName: translations('table_col_3'), flex: 2, headerClassName: styles.Header },
     ]
 
     const [manufacturers, setManufacturers] = useState<Product[]>([]);
@@ -58,9 +59,9 @@ const Products: React.FC = () => {
         <ThemeProvider theme={theme}>
             <Box>
                 <Grid container>
-                    <ProductsForm open={isOpen} onClose={() => setIsOpen(false)} onProductAdded={fetchProducts} title="Nuevo Fabricante"/>
+                    <ProductsForm open={isOpen} onClose={() => setIsOpen(false)} onProductAdded={fetchProducts}/>
                     <Grid sx={{ direction: 'column' }} size="grow">
-                        <PageTitle text="Fabricantes" />
+                        <PageTitle text={translations('title')} />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>
                             <Grid size="grow" sx={{ marginRight: '6.25rem' }}>
                                 <Stack spacing={2} direction="row" justifyContent={'flex-end'}>
@@ -70,7 +71,7 @@ const Products: React.FC = () => {
                                         color="cpp"
                                         startIcon={<AddIcon />}
                                     >
-                                        Registrar Fabricante
+                                    {translations('new_manufacturer')}
                                     </Button>
                                 </Stack>
                             </Grid>

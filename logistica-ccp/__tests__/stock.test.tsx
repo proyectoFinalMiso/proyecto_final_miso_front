@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import Stock from '@/app/stock/page'
+import Stock from '@/app/[locale]/stock/page'
 import fetchMock from 'jest-fetch-mock'
 import userEvent from '@testing-library/user-event'
-import * as microserviceStock from '@/app/stock/adapters/microserviceStock'
+import * as microserviceStock from '@/app/[locale]/stock/adapters/microserviceStock'
 
 describe('Vista de creación de stock', () => {
 

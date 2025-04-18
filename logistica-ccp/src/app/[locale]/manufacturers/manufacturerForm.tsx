@@ -4,11 +4,11 @@ import { Modal, Box, Select, Typography, TextField, Button, Stack, MenuItem, Inp
 import Grid from "@mui/material/Grid2";
 
 import { createManufacturer } from "./adapters/microserviceProducts";
+import { useTranslations } from "next-intl";
 
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
-    title?: string
     onProductAdded: () => void;
 }
 
@@ -18,8 +18,9 @@ interface Manufacturer {
     pais: string;
 }
 
-export default function ProductsForm({ open, onClose, title = "Formulario", onProductAdded }: ModalFormProps) {
+export default function ProductsForm({ open, onClose, onProductAdded }: ModalFormProps) {
     const [formData, setFormData] = useState({ nombre: "", pais: "" });
+    const translations = useTranslations('Manufacturers')
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -70,19 +71,19 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                         title="Formulario nuevo fabricante"
                     >
                         <Typography id="modal-formulario-fabricante-title" variant="h6" title="Form title" gutterBottom>
-                            {title}
+                            {translations('form_title')}
                         </Typography>
                         <Typography
                             id="modal-formulario-fabricante-subtitle"
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            Agregar un fabricante a la plataforma
+                            {translations('form_subtitle')}
                         </Typography>
                         <form onSubmit={handleSubmit} style={{ height: "20rem" }}>
                             <TextField
                                 fullWidth
-                                label="Nombre"
+                                label={translations('form_field_1_placeholder')}
                                 name="nombre"
                                 value={formData.nombre}
                                 onChange={handleChange}
@@ -91,7 +92,7 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                             />
                             <TextField
                                 fullWidth
-                                label="País"
+                                label={translations('form_field_2_placeholder')}
                                 name="pais"
                                 value={formData.pais}
                                 onChange={handleChange}
@@ -105,10 +106,10 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                                 sx={{ marginTop: "1.25rem", flexGrow: "1" }}
                             >
                                 <Button type="submit" variant="contained" color="cpp">
-                                    Confirmar
+                                    {translations('form_submit_button')}
                                 </Button>
                                 <Button onClick={onClose} variant="contained" color="error">
-                                    Cancelar
+                                    {translations('form_cancel_button')}
                                 </Button>
                             </Stack>
                         </form>
