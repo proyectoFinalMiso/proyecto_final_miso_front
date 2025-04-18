@@ -10,11 +10,14 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { usePathname, useRouter } from "next/navigation";
 
+import { useTranslations } from "next-intl";
+
 const COOKIE_NAME = 'NEXT_LOCALE'
 
 const Footer: React.FC = () => {
   const router = useRouter()
-  const pathname = usePathname(); 
+  const pathname = usePathname();
+  const translations = useTranslations('Footer')
 
   const [language, setLanguage] = useState('es');
   const [isMounted, setIsMounted] = useState(false);
@@ -24,7 +27,7 @@ const Footer: React.FC = () => {
 
     // Try to infer initial language from URL
     const localeFromUrl = pathname.split('/')[1];
-    if (['es', 'en-US', 'en-GB'].includes(localeFromUrl)) {
+    if (['es', 'en'].includes(localeFromUrl)) {
       setLanguage(localeFromUrl);
     }
   }, [pathname])
@@ -49,7 +52,7 @@ const Footer: React.FC = () => {
         <Divider flexItem />
         <Grid container sx={{ alignItems: "center" }}>
           <Grid size={6}>
-            <p className={`${styles.Copyright}`}>Copyright © 2025. Todos los derechos reservados. </p>
+            <p className={`${styles.Copyright}`}>{translations('copyright')}</p>
           </Grid>
           <Grid size={6}>
             <FormControl fullWidth>
@@ -65,9 +68,8 @@ const Footer: React.FC = () => {
                 disableUnderline
                 MenuProps={{ disablePortal: true }}
               >
-                <MenuItem value={"es"}>Español (Latinoamérica)</MenuItem>
-                <MenuItem value={"enUS"}>English (United States)</MenuItem>
-                <MenuItem value={"enGB"}>English (United Kingdom)</MenuItem>
+                <MenuItem value={"es"}>{translations('language_selector_1')}</MenuItem>
+                <MenuItem value={"en"}>{translations('language_selector_2')}</MenuItem>
               </Select>
             </FormControl>
           </Grid>

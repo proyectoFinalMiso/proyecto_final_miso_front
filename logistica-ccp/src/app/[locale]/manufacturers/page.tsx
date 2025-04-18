@@ -59,7 +59,7 @@ const Products: React.FC = () => {
         <ThemeProvider theme={theme}>
             <Box>
                 <Grid container>
-                    <ProductsForm open={isOpen} onClose={() => setIsOpen(false)} onProductAdded={fetchProducts} title={translations('new_manufacturer_form_title')}/>
+                    <ProductsForm open={isOpen} onClose={() => setIsOpen(false)} onProductAdded={fetchProducts}/>
                     <Grid sx={{ direction: 'column' }} size="grow">
                         <PageTitle text={translations('title')} />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>

@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import Sellers from '@/app/sellers/page'
+import Sellers from '@/app/[locale]/sellers/page'
 import userEvent from '@testing-library/user-event'
-import * as microserviceSeller from '@/app/sellers/adapters/microserviceSeller'
+import * as microserviceSeller from '@/app/[locale]/sellers/adapters/microserviceSeller'
 
 describe('Vista de creación de vendedores', () => {
     it('Validar renderizado de la vista', () => {

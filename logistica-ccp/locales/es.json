@@ -1,10 +1,26 @@
 {
+    "Footer": {
+        "copyright": "Copyright © 2025. Todos los derechos reservados.",
+        "language_selector_1": "Español (Latinoamérica)",
+        "language_selector_2": "Inglés (Estados Unidos)"
+    },
+    "Sidebar": {
+        "option_1": "Proveedores",
+        "option_2": "Productos",
+        "option_3": "Inventario",
+        "option_4": "Vendedores"
+    },
     "Manufacturers": {
-        "new_manufacturer": "REGISTRAR PROVEEDOR",
-        "new_manufacturer_form_title": "Nuevo Proveedor",
+        "new_manufacturer": "CREAR PROVEEDOR",
         "title": "Proveedores",
-        "table_col_1": "Proveedor",
+        "table_col_1": "Nombre",
         "table_col_2": "País",
-        "table_col_3": "Acciones"
-    }    
+        "table_col_3": "Acciones",
+        "form_title": "Nuevo Proveedor",
+        "form_subtitle": "Agregar un nuevo proveedor a la plataforma",
+        "form_field_1_placeholder": "Nombre",
+        "form_field_2_placeholder": "País",
+        "form_submit_button": "GUARDAR",
+        "form_cancel_button": "CANCELAR"
+    }       
 }

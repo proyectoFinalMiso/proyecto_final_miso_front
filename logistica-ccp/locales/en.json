@@ -1,0 +1,26 @@
+{
+    "Footer": {
+        "copyright": "Copyright © 2025. All rights reserved.",
+        "language_selector_1": "Spanish (Latin America)",
+        "language_selector_2": "English (United States)"
+    },
+    "Sidebar": {
+        "option_1": "Suppliers",
+        "option_2": "Products",
+        "option_3": "Stock",
+        "option_4": "Sellers"
+    },
+    "Manufacturers": {
+        "new_manufacturer": "CREATE SUPPLIER",
+        "title": "Suppliers",
+        "table_col_1": "Name",
+        "table_col_2": "Country",
+        "table_col_3": "Actions",
+        "form_title": "New Supplier",
+        "form_subtitle": "Add a new supplier to the platform",
+        "form_field_1_placeholder": "Name",
+        "form_field_2_placeholder": "Country",
+        "form_submit_button": "SUBMIT",
+        "form_cancel_button": "CANCEL"
+    }    
+}

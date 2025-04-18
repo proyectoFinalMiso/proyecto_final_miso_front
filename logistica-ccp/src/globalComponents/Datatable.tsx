@@ -23,9 +23,7 @@ export default function DataTable({ columns, rows }: DataTableProps) {
 
     const getLocaleText = () => {
         switch (locale) {
-            case 'en-US':
-                return enUS.components.MuiDataGrid.defaultProps.localeText;
-            case 'en-GB':
+            case 'en':
                 return enUS.components.MuiDataGrid.defaultProps.localeText;
             case 'es':
                 default:

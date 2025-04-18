@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import * as microserviceSeller from '@/app/sellers/adapters/microserviceSeller'
+import * as microserviceSeller from '@/app/[locale]/sellers/adapters/microserviceSeller'
 import fetchMock from 'jest-fetch-mock'
 
 describe('Interacción con microservicio de productos', () => {
