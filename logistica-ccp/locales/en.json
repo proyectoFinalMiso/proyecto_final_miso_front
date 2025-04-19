@@ -22,5 +22,21 @@
         "form_field_2_placeholder": "Country",
         "form_submit_button": "SUBMIT",
         "form_cancel_button": "CANCEL"
-    }    
+    },
+    "Products": {
+        "new_product": "CREATE PRODUCT",
+        "new_products_file": "LOAD FILE",
+        "title": "Products",
+        "table_col_1": "SKU",
+        "table_col_2": "Name",
+        "table_col_3": "Volume",
+        "table_col_4": "Provider",
+        "table_col_5": "Unit Cost",
+        "table_col_6": "Creation Date",
+        "form_file_title": "Product file upload",
+        "form_file_subtitle": "Create multiple products with a single file",
+        "form_file_dropzone_text": "Load or drag a .xlsx, .csv or .json file",
+        "form_file_button_submit": "SUBMIT",
+        "form_file_button_cancel": "CANCEL"
+    }
 }

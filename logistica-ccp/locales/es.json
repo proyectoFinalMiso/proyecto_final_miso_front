@@ -22,5 +22,21 @@
         "form_field_2_placeholder": "País",
         "form_submit_button": "GUARDAR",
         "form_cancel_button": "CANCELAR"
-    }       
+    },
+    "Products": {
+        "new_product": "CREAR PRODUCTO",
+        "new_products_file": "CARGAR CON ARCHIVO",
+        "title": "Productos",
+        "table_col_1": "SKU",
+        "table_col_2": "Nombre",
+        "table_col_3": "Volumen",
+        "table_col_4": "Proveedor",
+        "table_col_5": "Valor Unitario",
+        "table_col_6": "Fecha de Creación",
+        "form_file_title": "Carga de archivo",
+        "form_file_subtitle": "Agregar varios productos con un mismo archivo",
+        "form_file_dropzone_text": "Subir o arrastrar un archivo .xlsx, .csv o .json",
+        "form_file_button_submit": "CONFIRMAR",
+        "form_file_button_cancel": "CANCCELAR"
+    }
 }
