@@ -36,7 +36,14 @@
         "form_file_title": "Product file upload",
         "form_file_subtitle": "Create multiple products with a single file",
         "form_file_dropzone_text": "Load or drag a .xlsx, .csv or .json file",
-        "form_file_button_submit": "SUBMIT",
-        "form_file_button_cancel": "CANCEL"
+        "form_file_dropzone_drag": "Drop file here...",
+        "form_button_submit": "SUBMIT",
+        "form_button_cancel": "CANCEL",
+        "form_single_title": "Create product",
+        "form_single_subtitle": "Add a new product to the platform",
+        "form_single_field_1": "Name",
+        "form_single_field_2": "Unit Cost ($COP)",
+        "form_single_field_3": "Select a registered provider",
+        "form_single_field_4": "Volume (m3)"
     }
 }
