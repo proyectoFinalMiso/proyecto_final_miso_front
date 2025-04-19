@@ -1,10 +1,11 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import styles from "./Stock.module.css"
 import DataTable from "../../../globalComponents/Datatable";
 import PageTitle from "../../../globalComponents/PageTitle";
 import FormStock from "./FormStock";
+import FormProduct from "./FormProduct";
 
 import theme from "@/theme";
 import Grid from "@mui/material/Grid2";
@@ -15,6 +16,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import AddIcon from '@mui/icons-material/Add';
 
+import { getStock } from "./adapters/microserviceStock";
+
+
 declare module '@mui/material/Button' {
     interface ButtonPropsColorOverrides {
         cpp: true;
@@ -22,15 +26,43 @@ declare module '@mui/material/Button' {
     }
 }
 
-const Stock: React.FC = () => {
+interface Stock {
+    nombre: string;
+    bodega: string;
+    posicion: string;
+    sku: string;
+    lote: string;
+    cantidad: number;
+}
 
-    const [isOpen, setIsOpen] = useState(false);
+const Stock: React.FC = () => {
+    const tableSchema: GridColDef[] = [
+        {field: 'nombre', headerName: 'Nombre Producto', flex: 4, headerClassName: styles.Header},
+        {field: 'bodega', headerName: 'Bodega', flex: 1, headerClassName: styles.Header},
+        {field: 'posicion', headerName: 'Posición', flex: 1, headerClassName: styles.Header},
+        {field: 'sku', headerName: 'SKU', flex: 1, headerClassName: styles.Header},
+        {field: 'lote', headerName: 'Lote', flex: 1, headerClassName: styles.Header},
+        {field: 'cantidadDisponible', headerName: 'Disponible', flex: 1, type: 'number', headerClassName: styles.Header},
+        {field: 'cantidadReservada', headerName: 'Reservado', flex: 1, type: 'number', headerClassName: styles.Header}
+    ]
+
+    const [stock, setStock] = useState<Stock[]>([])
+    const [isOpenProducto, setIsOpenProducto] = useState(false);
+
+    const fetchStock = async () => {
+                const stockList = await getStock();
+                setStock(stockList);
+            }
+    
+    useEffect(() => {
+            fetchStock();
+        }, []);    
 
     return (
         <ThemeProvider theme={theme}>
             <Box>
                 <Grid container>
-                    <FormStock open={isOpen} onClose={() => setIsOpen(false)} title="Nuevo Stock"/>
+                    <FormProduct open={isOpenProducto} onClose={() => setIsOpenProducto(false)} title="Nuevo Producto"/>
                     <Grid sx={{ direction: 'column' }} size="grow">
                         <PageTitle text="Stock" />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>
@@ -67,15 +99,18 @@ const Stock: React.FC = () => {
                                         Filtrar
                                     </Button>
                                     <Button
-                                        onClick={() => setIsOpen(true)}
+                                        onClick={() => setIsOpenProducto(true)}
                                         variant="contained"
                                         color="cpp"
                                         startIcon={<AddIcon />}
                                     >
-                                        Registrar Stock
+                                        Ingresar Producto
                                     </Button>
                                 </Stack>
                             </Grid>
+                        </Grid>
+                        <Grid size="grow" sx={{ margin: '1.25rem 6.25rem' }}>
+                            <DataTable columns={tableSchema} rows={stock} />
                         </Grid>
                     </Grid>
                 </Grid>

@@ -13,6 +13,11 @@ const Sidebar: React.FC = () => {
         <h1 className="text-xl font-bold">CPP</h1>
         <nav className="mt-5">
           <ul>
+          <li className="mb-3">
+              <Link href="/manufacturers" className="hover:text-gray-300">
+                Fabricantes
+              </Link>
+            </li>
             <li className="mb-3">
               <Link href="/products" className="hover:text-gray-300">
                 Productos

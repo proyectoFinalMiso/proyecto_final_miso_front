@@ -29,7 +29,7 @@ jest.mock('../../components/OrderSummary', () => {
 });
 
 describe('CartScreen - Final', () => {
-    const product1: Product = { id: 'prod-abc', name: 'Final Item', price: 100 };
+    const product1: Product = { id: 'prod-abc', name: 'Final Item', price: 100, sku: 123456 };
 
     beforeEach(() => {
         jest.clearAllMocks();

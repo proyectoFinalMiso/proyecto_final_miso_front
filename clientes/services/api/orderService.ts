@@ -22,6 +22,23 @@ export interface OrderResponse {
     msg: string;
 }
 
+export interface Order {
+    cliente: string;
+    direccion: string;
+    estado: string;
+    fechaIngreso: string;
+    id: string;
+    latitud: number;
+    longitud: number;
+    packingList: string;
+    valorFactura: number;
+    vendedor: string;
+}
+
+export interface OrdersResponse {
+    pedidos: Order[];
+}
+
 export const sendOrder = async (
     items: CartItem[],
     clienteId: string,
@@ -56,6 +73,18 @@ export const sendOrder = async (
         return response.data;
     } catch (error) {
         console.error('Error sending order:', error);
+        throw error;
+    }
+};
+
+export const fetchClientOrders = async (clientId: string): Promise<OrdersResponse> => {
+    try {
+        const response = await axios.get<OrdersResponse>(
+            `${API_BASE_URL}/pedidos?cliente_id=${clientId}`
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching orders:', error);
         throw error;
     }
 }; 

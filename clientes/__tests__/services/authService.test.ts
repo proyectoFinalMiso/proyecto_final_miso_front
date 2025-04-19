@@ -55,7 +55,7 @@ describe('Auth Service', () => {
 
             // Assert
             expect(mockedAxios.post).toHaveBeenCalledWith(
-                expect.stringContaining('/cliente/login'),
+                expect.stringContaining('/login'),
                 mockLoginData
             );
             expect(result).toEqual(mockLoginResponse);
@@ -69,7 +69,7 @@ describe('Auth Service', () => {
             // Act & Assert
             await expect(login(mockLoginData)).rejects.toThrow(errorMessage);
             expect(mockedAxios.post).toHaveBeenCalledWith(
-                expect.stringContaining('/cliente/login'),
+                expect.stringContaining('/login'),
                 mockLoginData
             );
         });
@@ -87,7 +87,7 @@ describe('Auth Service', () => {
 
             // Assert
             expect(mockedAxios.post).toHaveBeenCalledWith(
-                expect.stringContaining('/cliente/crear'),
+                expect.stringContaining('/crear'),
                 mockRegisterData
             );
             expect(result).toEqual(mockRegisterResponse);
@@ -101,7 +101,7 @@ describe('Auth Service', () => {
             // Act & Assert
             await expect(register(mockRegisterData)).rejects.toThrow(errorMessage);
             expect(mockedAxios.post).toHaveBeenCalledWith(
-                expect.stringContaining('/cliente/crear'),
+                expect.stringContaining('/crear'),
                 mockRegisterData
             );
         });
@@ -119,7 +119,7 @@ describe('Auth Service', () => {
 
             // Assert
             expect(mockedAxios.get).toHaveBeenCalledWith(
-                expect.stringContaining('/cliente/123')
+                expect.stringContaining('/123')
             );
             expect(result).toEqual(mockClientData);
         });
@@ -138,7 +138,7 @@ describe('Auth Service', () => {
             // Act & Assert
             await expect(getClientData('123')).rejects.toThrow(errorMessage);
             expect(mockedAxios.get).toHaveBeenCalledWith(
-                expect.stringContaining('/cliente/123')
+                expect.stringContaining('/123')
             );
         });
     });

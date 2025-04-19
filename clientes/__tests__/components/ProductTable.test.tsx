@@ -33,8 +33,8 @@ const renderWithCartProvider = (ui: React.ReactElement) => {
 
 describe('ProductTable Component', () => {
     const mockProducts: Product[] = [
-        { id: '1', name: 'Producto 1', price: 10000 },
-        { id: '2', name: 'Producto 2', price: 20000 },
+        { id: '1', name: 'Producto 1', price: 10000, sku: 123456 },
+        { id: '2', name: 'Producto 2', price: 20000, sku: 123457 },
     ];
 
     const mockOnProductPress = jest.fn();

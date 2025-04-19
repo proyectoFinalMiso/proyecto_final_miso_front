@@ -4,9 +4,14 @@ import fetchMock from 'jest-fetch-mock'
 
 describe('Interacción con microservicio de inventarios', () => {
 
-    const sellerData = {
-        id_producto: '10024',
-        cantidad: 10
+    const productData = {
+        nombre: 'Producto A',
+        bodega: 'Calle 123',
+        posicion: 'posicion A',
+        lote: 'loteA',
+        cantidad: '10',
+        sku: 'skuA',
+        valorUnitario: '1000',
     }
 
     beforeEach(() => {
@@ -17,10 +22,10 @@ describe('Interacción con microservicio de inventarios', () => {
     it('Prueba correcta de API de crear vendedor', async () => {
         fetchMock.mockResponseOnce(JSON.stringify({ success: true }))
 
-        await microserviceStock.updateStock(sellerData)
+        await microserviceStock.insertStock(productData)
 
         expect(fetchMock).toHaveBeenCalledWith(
-            expect.stringContaining('/api/bodega/stock_ingresar_inventario'),
+            expect.stringContaining('/api/bodega/stock_crear_producto'),
             expect.objectContaining({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

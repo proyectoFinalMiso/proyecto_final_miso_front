@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal, Box, Typography, TextField, Button, Stack } from "@mui/material"
 import Grid from "@mui/material/Grid2";
 
-import { updateStock } from "./adapters/microserviceStock";
+// import { updateStock } from "./adapters/microserviceStock";
 
 interface ModalFormProps {
     open: boolean;
@@ -20,12 +20,12 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Formulario enviado:", formData)
-        const changeStock  = await updateStock(
-            {
-                id_producto: formData.id_producto,
-                cantidad: parseInt(formData.cantidad),
-            }
-        );
+        // const changeStock  = await updateStock(
+        //     {
+        //         id_producto: formData.id_producto,
+        //         cantidad: parseInt(formData.cantidad),
+        //     }
+        // );
         onClose();
     };
 
@@ -64,7 +64,7 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            AIngresar los datos del nuevo stock del producto
+                            Ingresar los datos del nuevo stock del producto
                         </Typography>
                         <form onSubmit={handleSubmit}>
                             <TextField
