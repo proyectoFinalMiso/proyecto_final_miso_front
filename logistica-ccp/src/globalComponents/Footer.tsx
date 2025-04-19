@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
         <Divider flexItem />
         <Grid container sx={{ alignItems: "center" }}>
           <Grid size={6}>
-            <p className={`${styles.Copyright}`}>{translations('copyright')}</p>
+            <p className={`${styles.Copyright}`} data-testid="copyright-title">{translations('copyright')}</p>
           </Grid>
           <Grid size={6}>
             <FormControl fullWidth>
