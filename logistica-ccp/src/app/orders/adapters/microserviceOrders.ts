@@ -1,5 +1,4 @@
 const apiURI = 'https://cr-bff-webapp-488938258128.us-central1.run.app';
-const pedidosUri = 'http://localhost:3002';
 
 export const getOrders = async (): Promise<any[]> => {
   const url =
@@ -25,8 +24,9 @@ export const getOrders = async (): Promise<any[]> => {
 };
 
 export const createDeliveryRoute = async (orderId: string): Promise<any[]> => {
-  /* const url = pedidosUri + '/api/gestorPedidos/pedido/ruta_de_entrega'; */
-  const url = pedidosUri + '/pedido/ruta_de_entrega';
+  /* const pedidosUri = 'http://localhost:3002'; */
+  /* const url = pedidosUri + '/pedido/ruta_de_entrega'; */
+  const url = apiURI + '/api/gestorPedidos/pedido/ruta_de_entrega';
   const body = {
     pedido_id: orderId,
   };
