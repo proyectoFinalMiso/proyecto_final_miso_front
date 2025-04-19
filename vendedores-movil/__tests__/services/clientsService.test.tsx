@@ -37,7 +37,7 @@ describe('clientsService', () => {
             // Check request
             expect(mockedAxios.get).toHaveBeenCalledTimes(1);
             expect(mockedAxios.get).toHaveBeenCalledWith(
-                `${API_BASE_URL}/?vendedor_id=${vendedorId}`
+                `${API_BASE_URL}/clientes?vendedor_id=${vendedorId}`
             );
 
             // Check result
