@@ -6,20 +6,21 @@ import Dropzone, { FileRejection, useDropzone } from "react-dropzone";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 import { createProductsWithFile } from "./adapters/microserviceProducts";
+import { useTranslations } from "next-intl";
 
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
-    title?: string
     onProductAdded: () => void;
 }
 
-export default function UploadProductsModal({ open, onClose, title = "Modal", onProductAdded }: ModalFormProps) {
+export default function UploadProductsModal({ open, onClose, onProductAdded }: ModalFormProps) {
 
     const [confirmDisabled, setConfirmDisabled] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
+    const translations = useTranslations('Products')
 
     const handleClose = async () => {
         setConfirmDisabled(true);
@@ -87,14 +88,14 @@ export default function UploadProductsModal({ open, onClose, title = "Modal", on
                         title="Modal de carga de productos"
                     >
                         <Typography id="modal-formulario-producto-title" variant="h6" title="Form title" gutterBottom>
-                            {title}
+                            {translations('form_file_title')}
                         </Typography>
                         <Typography
                             id="modal-formulario-producto-subtitle"
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            Agregar productos por medio de un archivo
+                            {translations('form_file_subtitle')}
                         </Typography>
                         
                         <Grid container sx={{ margin: "1.25rem 0" }}>
@@ -121,7 +122,7 @@ export default function UploadProductsModal({ open, onClose, title = "Modal", on
                                     <UploadFileIcon sx={{ height: "4rem", width: "100%" }} />
                                     <input {...getInputProps()} title="Espacio de envio de archivos"/>
                                     <Typography id="modal-carga-producto-dropzone" title="Dropzone" variant="body2">
-                                        {isDragActive ? "Suelta el archivo aquí..." : "Subir o arrastrar un archivo .xlsx, .csv o .json"}
+                                        {isDragActive ? translations('form_file_dropzone_drag') : translations('form_file_dropzone_text')}
                                     </Typography>
                                     {selectedFile && <Typography mt={1} variant="caption">{selectedFile.name}</Typography>}
                                 </Grid>
@@ -135,10 +136,10 @@ export default function UploadProductsModal({ open, onClose, title = "Modal", on
                             sx={{ marginTop: "1.25rem" }}
                         >
                             <Button disabled={confirmDisabled} type="submit" variant="contained" color="cpp" onClick={handleUpload}>
-                                {loading ? <CircularProgress size={24} color="inherit" /> : "Confirmar"}
+                                {loading ? <CircularProgress size={24} color="inherit" /> : translations('form_button_submit')}
                             </Button>
                             <Button onClick={onClose} variant="contained" color="error">
-                                Cancelar
+                                {translations('form_button_cancel')}
                             </Button>
                         </Stack>
                     </Grid>

@@ -8,14 +8,13 @@ import FormSeller from "./FormSeller";
 
 import theme from "@/theme";
 import Grid from "@mui/material/Grid2";
-import { ThemeProvider, Box, Stack, InputAdornment, Button, TextField } from "@mui/material";
+import { ThemeProvider, Box, Stack, Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
-import SearchIcon from '@mui/icons-material/Search';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import AddIcon from '@mui/icons-material/Add';
 
 import { getSellers } from "./adapters/microserviceSeller";
+import { useTranslations } from "next-intl";
 
 declare module '@mui/material/Button' {
     interface ButtonPropsColorOverrides {
@@ -30,10 +29,11 @@ interface Seller {
 }
 
 const Seller: React.FC = () => {
+    const t = useTranslations('Sellers')
 
     const tableSchema: GridColDef[] = [
-        { field: 'nombre', headerName: 'Nombre', flex: 1, headerClassName: styles.Header },
-        { field: 'email', headerName: 'Email', flex: 4, headerClassName: styles.Header },
+        { field: 'nombre', headerName: t('table_col_1'), flex: 1, headerClassName: styles.Header },
+        { field: 'email', headerName: t('table_col_2'), flex: 4, headerClassName: styles.Header },
     ]
 
     const[sellers, setSellers] = useState<Seller[]>([]);
@@ -52,49 +52,20 @@ const Seller: React.FC = () => {
         <ThemeProvider theme={theme}>
             <Box>
                 <Grid container>
-                    <FormSeller open={isOpen} onClose={() => setIsOpen(false)} title="Nuevo Vendedor"/>
+                    <FormSeller open={isOpen} onClose={() => setIsOpen(false)}/>
                     <Grid sx={{ direction: 'column' }} size="grow">
-                        <PageTitle text="Vendedores" />
+                        <PageTitle text={t('title')} />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>
-                            <Grid size="grow">
-                            <TextField fullWidth id="buscar-vendedor" className={styles.TextField}
-                                    placeholder="Buscar por Nombre o E-mail"
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <SearchIcon />
-                                                </InputAdornment>
-                                            )
-                                        }
-                                    }}
-                                    sx={{
-                                        "& .MuiInputBase-root": {
-                                            borderRadius: "16px",
-                                            height: "40px",
-                                        },
-                                        "& .MuiInputBase-input": {
-                                            height: "40px",
-                                            padding: "10px",
-                                        },
-                                    }} />
-                            </Grid>
                             <Grid size="grow" sx={{ marginRight: '6.25rem' }}>
                                 <Stack spacing={2} direction="row" justifyContent={'flex-end'}>
-                                    <Button
-                                        variant="outlined"
-                                        color="dark"
-                                        endIcon={<FilterListIcon />}
-                                    >
-                                        Filtrar
-                                    </Button>
                                     <Button
                                         onClick={() => setIsOpen(true)}
                                         variant="contained"
                                         color="cpp"
                                         startIcon={<AddIcon />}
+                                        data-testid="newSeller"
                                     >
-                                        Registrar Vendedor
+                                        {t('new_seller')}
                                     </Button>
                                 </Stack>
                             </Grid>

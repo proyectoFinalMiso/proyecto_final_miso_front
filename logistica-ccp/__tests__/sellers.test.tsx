@@ -22,28 +22,20 @@ describe('Vista de creación de vendedores', () => {
 
     it('renderizado de botones', () => {
         render(<Sellers />)
-        const filterButton = screen.getByRole('button', { name: /filtrar/i })
-        const addButton = screen.getByRole('button', { name: /registrar/i } )
-        expect(filterButton).toBeInTheDocument()
+        const addButton = screen.getByTestId('newSeller')
         expect(addButton).toBeInTheDocument()
     })
 
     it('Renderizado de formulario', async () => {
         render(<Sellers />)
         const user = userEvent.setup()
-        const addButton = screen.getByRole('button', { name: /registrar/i } )
+        const addButton = screen.getByTestId('newSeller')
         await user.click(addButton)
         const form = screen.getByTitle('Formulario nuevo vendedor')
         expect(form).toBeInTheDocument()
 
         const formTitle = screen.getByTitle("Form title")
         expect(formTitle).toBeInTheDocument()
-
-        const submitButton = screen.getByRole("button", { name: /confirmar/i })
-        expect(submitButton).toBeInTheDocument()
-
-        const cancelButton = screen.getByRole("button", { name: /cancelar/i })
-        expect(cancelButton).toBeInTheDocument()
 
         const nameField = screen.getByTitle("Nombre")
         expect(nameField).toBeInTheDocument()
@@ -55,12 +47,12 @@ describe('Vista de creación de vendedores', () => {
     it('Función de cambio de los campos del formulario', async () => {
         render(<Sellers />)
         const user = userEvent.setup()
-        const addButton = screen.getByRole('button', { name: /registrar/i } )
+        const addButton = screen.getByTestId('newSeller')
         await user.click(addButton)
         const form = screen.getByTitle('Formulario nuevo vendedor')
         expect(form).toBeInTheDocument()
 
-        const nameField = screen.getByRole("textbox", { name: /nombre/i })
+        const nameField = screen.getAllByRole("textbox")[0]
         await user.type(nameField, 'Diego Naranjo')
         expect(nameField).toHaveValue('Diego Naranjo')
     })

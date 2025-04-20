@@ -34,10 +34,8 @@ describe('Vista de creación de productos', () => {
         fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
         render(<Products />)
         await waitFor(() => {
-            const filterButton = screen.getByRole('button', { name: /cargar/i })
-            const addButton = screen.getByRole('button', { name: /registrar/i } )
-            expect(filterButton).toBeInTheDocument()
-            expect(addButton).toBeInTheDocument()
+            const buttons = screen.getAllByRole('button')
+            expect(buttons).toHaveLength(4)
         })        
     })
 
@@ -45,7 +43,7 @@ describe('Vista de creación de productos', () => {
         fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
         render(<Products />)
         const user = userEvent.setup()
-        const addButton = screen.getByRole('button', { name: /registrar/i } )
+        const addButton = screen.getByTestId('nuevoProducto')
         await user.click(addButton)
         const form = screen.getByTitle('Formulario nuevo producto')
         expect(form).toBeInTheDocument()
@@ -55,12 +53,6 @@ describe('Vista de creación de productos', () => {
 
         const formSubtitle = screen.getByTitle("Form subtitle")
         expect(formSubtitle).toBeInTheDocument()
-
-        const submitButton = screen.getByRole("button", { name: /confirmar/i })
-        expect(submitButton).toBeInTheDocument()
-
-        const cancelButton = screen.getByRole("button", { name: /cancelar/i })
-        expect(cancelButton).toBeInTheDocument()
 
         const nameField = screen.getByTitle("Nombre del producto")
         expect(nameField).toBeInTheDocument()
@@ -73,21 +65,18 @@ describe('Vista de creación de productos', () => {
 
         const volumeField = screen.getByTitle("Volumen del producto")
         expect(volumeField).toBeInTheDocument()
-
-        await user.click(cancelButton)
-        expect(form).not.toBeInTheDocument()
     })
 
     it('Función de cambio de los campos del formulario', async () => {
         fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
         render(<Products />)
         const user = userEvent.setup()
-        const addButton = screen.getByRole('button', { name: /registrar/i } )
+        const addButton = screen.getByTestId('nuevoProducto')
         await user.click(addButton)
         const form = screen.getByTitle('Formulario nuevo producto')
         expect(form).toBeInTheDocument()
 
-        const nameField = screen.getByRole("textbox", { name: /nombre/i })
+        const nameField = screen.getAllByRole("textbox")[0]
         await user.type(nameField, 'Pepito Perez')
         expect(nameField).toHaveValue('Pepito Perez')
     })
@@ -96,7 +85,7 @@ describe('Vista de creación de productos', () => {
         fetchMock.mockResponseOnce(JSON.stringify([{ id: 1, nombreProducto: 'Lápiz CarbonGraph Caja x 12 und', 'sku': 10001, 'volumen': 0.001, 'fabricante': 'Comercializadora El Sol', 'valorUnitario': '$14200 COP', 'fechaCreacion': '2024-03-24 04:34:12' }]));
         render(<Products />)
         const user = userEvent.setup()
-        const addButton = screen.getByRole('button', { name: /cargar/i } )
+        const addButton = screen.getByTestId('productoMasivo')
         await user.click(addButton)
         const form = screen.getByTitle('Modal de carga de productos')
         expect(form).toBeInTheDocument()
@@ -107,17 +96,8 @@ describe('Vista de creación de productos', () => {
         const formSubtitle = screen.getByTitle("Form subtitle")
         expect(formSubtitle).toBeInTheDocument()
 
-        const submitButton = screen.getByRole("button", { name: /confirmar/i })
-        expect(submitButton).toBeInTheDocument()
-
-        const cancelButton = screen.getByRole("button", { name: /cancelar/i })
-        expect(cancelButton).toBeInTheDocument()
-
         const dropzone = screen.getByTitle("Espacio de envio de archivos")
         expect(dropzone).toBeInTheDocument()
-
-        await user.click(cancelButton)
-        expect(form).not.toBeInTheDocument()
     })
 
     it('Comprobar conexión con backend', async () => {

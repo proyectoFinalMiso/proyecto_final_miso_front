@@ -4,11 +4,11 @@ import { Modal, Box, Select, Typography, TextField, Button, Stack, MenuItem, Inp
 import Grid from "@mui/material/Grid2";
 
 import { insertStock, getProducts, getBodega } from "./adapters/microserviceStock";
+import { useTranslations } from "next-intl";
 
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
-    title?: string
 }
 
 interface Product {
@@ -30,11 +30,12 @@ interface Bodega {
     longitude: string,
 }
 
-export default function FormStock({ open, onClose, title = "Formulario" }: ModalFormProps) {
+export default function FormStock({ open, onClose }: ModalFormProps) {
     
     const [formData, setFormData] = useState({id_producto: "", producto: "", bodega: "", posicion: "", lote: "", cantidad: "", sku: "", valorUnitario:""});
     const [products, setProducts] = useState<Product[]>([]);
     const [bodegas, setBodegas] = useState<Bodega[]>([]);
+    const t = useTranslations('Stock')
 
     useEffect(() => {
         getProducts().then(setProducts);
@@ -122,14 +123,14 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                                 variant="h6"
                                 title="Form title"
                                 gutterBottom>
-                            {title}
+                            {t('form_title')}
                         </Typography>
                         <Typography 
                             id="modal-formulario-producto-subtitle"
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            Ingresar un nuevo producto al Inventario
+                            {t('form_subtitle')}
                         </Typography>
                         <form onSubmit={handleSubmit}>
                             <Select
@@ -142,7 +143,7 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                                 title="Producto"
                             >
                                 <MenuItem value="" disabled>
-                                    Seleccionar un producto
+                                    {t('form_field_1')}
                                 </MenuItem>
                                 {products.map((product) => (
                                     <MenuItem key={product.id} value={product.id}>
@@ -152,7 +153,7 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                             </Select>
                             <TextField
                                 fullWidth
-                                label="Lote"
+                                label={t('form_field_2')}
                                 name="lote"
                                 value={formData.lote}
                                 onChange={handleChange}
@@ -161,7 +162,7 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                             />
                             <TextField
                                 fullWidth
-                                label="Cantidad"
+                                label={t('form_field_3')}
                                 name="cantidad"
                                 value={formData.cantidad}
                                 onChange={handleChange}
@@ -178,7 +179,7 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                                 title="Bodega"
                             >
                                 <MenuItem value="" disabled>
-                                    Seleccionar una bodega
+                                    {t('form_field_4')}
                                 </MenuItem>
                                 {bodegas.map((bodega) => (
                                     <MenuItem key={bodega.id} value={bodega.id}>
@@ -193,10 +194,10 @@ export default function FormStock({ open, onClose, title = "Formulario" }: Modal
                                 sx={{ marginTop: "1.25rem" }}
                             >
                                 <Button type="submit" variant="contained" color="cpp">
-                                    Confirmar
+                                    {t('form_button_submit')}
                                 </Button>
                                 <Button onClick={onClose} variant="contained" color="error">
-                                    Cancelar
+                                    {t('form_button_cancel')}
                                 </Button>
                             </Stack>
                         </form>
