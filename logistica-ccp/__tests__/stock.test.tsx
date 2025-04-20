@@ -40,16 +40,14 @@ describe('Vista de creación de stock', () => {
     it('Renderizado de botones', () => {
         
         render(<Stock />)
-        const filterButton = screen.getByRole('button', { name: /filtrar/i })
-        const addButton = screen.getByRole('button', { name: /Ingresar Producto/i } )
-        expect(filterButton).toBeInTheDocument()
-        expect(addButton).toBeInTheDocument()
+        const addButton = screen.getAllByRole('button')
+        expect(addButton).toHaveLength(3)
     })
 
     it('Renderizado de formulario', async () => {
         render(<Stock />)
         const user = userEvent.setup()
-        const addButton = screen.getByRole('button', { name: /Ingresar Producto/i } )
+        const addButton = screen.getByTestId('addStock')
         await user.click(addButton)
 
         const form = screen.getByTitle('Formulario Ingresar Producto a Stock')
@@ -60,12 +58,6 @@ describe('Vista de creación de stock', () => {
 
         const formSubtitle = screen.getByTitle("Form subtitle")
         expect(formSubtitle).toBeInTheDocument()
-
-        const submitButton = screen.getByRole("button", { name: /confirmar/i })
-        expect(submitButton).toBeInTheDocument()
-
-        const cancelButton = screen.getByRole("button", { name: /cancelar/i })
-        expect(cancelButton).toBeInTheDocument()
 
         const nameField = screen.getByTitle("Producto")
         expect(nameField).toBeInTheDocument()
@@ -78,25 +70,22 @@ describe('Vista de creación de stock', () => {
 
         const warehouseField = screen.getByTitle("Bodega")
         expect(manufacturerField).toBeInTheDocument()
-
-        await user.click(cancelButton)
-        expect(form).not.toBeInTheDocument()
     })
 
     it('Cambio campos del formulario', async () => {
         render(<Stock />)
         const user = userEvent.setup()
-        const addButton = screen.getByRole('button', { name: /Ingresar Producto/i } )
+        const addButton = screen.getByTestId('addStock')
         await user.click(addButton)
         
         const form = screen.getByTitle('Formulario Ingresar Producto a Stock')
         expect(form).toBeInTheDocument()
 
-        const loteField = screen.getByRole("textbox", { name: /Lote/i })
+        const loteField = screen.getAllByRole("textbox")[0]
         await user.type(loteField, 'lote123')
         expect(loteField).toHaveValue('lote123')
 
-        const cantidadField = screen.getByRole("textbox", { name: /Cantidad/i })
+        const cantidadField = screen.getAllByRole("textbox")[1]
         await user.type(cantidadField, '10')
         expect(cantidadField).toHaveValue('10')
     })

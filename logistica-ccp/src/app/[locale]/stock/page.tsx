@@ -73,6 +73,7 @@ const Stock: React.FC = () => {
                                         variant="contained"
                                         color="cpp"
                                         startIcon={<AddIcon />}
+                                        data-testid="addStock"
                                     >
                                         {t('store_product')}
                                     </Button>

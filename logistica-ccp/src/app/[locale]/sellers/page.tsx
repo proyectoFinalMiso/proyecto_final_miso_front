@@ -8,7 +8,7 @@ import FormSeller from "./FormSeller";
 
 import theme from "@/theme";
 import Grid from "@mui/material/Grid2";
-import { ThemeProvider, Box, Stack, InputAdornment, Button, TextField } from "@mui/material";
+import { ThemeProvider, Box, Stack, Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
 import AddIcon from '@mui/icons-material/Add';
@@ -63,6 +63,7 @@ const Seller: React.FC = () => {
                                         variant="contained"
                                         color="cpp"
                                         startIcon={<AddIcon />}
+                                        data-testid="newSeller"
                                     >
                                         {t('new_seller')}
                                     </Button>

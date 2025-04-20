@@ -76,6 +76,7 @@ const Products: React.FC = () => {
                                         variant="outlined"
                                         color="dark"
                                         endIcon={<FileUploadIcon />}
+                                        data-testid="productoMasivo"
                                     >
                                         {translations('new_products_file')}
                                     </Button>
@@ -84,6 +85,7 @@ const Products: React.FC = () => {
                                         variant="contained"
                                         color="cpp"
                                         startIcon={<AddIcon />}
+                                        data-testid="nuevoProducto"
                                     >
                                         {translations('new_product')}
                                     </Button>
