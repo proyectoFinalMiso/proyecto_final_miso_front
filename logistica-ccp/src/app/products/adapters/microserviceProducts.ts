@@ -100,8 +100,7 @@ export const createProductsWithFile = async (
 };
 
 export const getStore = async (value: string): Promise<any[]> => {
-  /* const url = apiURI + '/api/bodega/buscador_bodega'; */
-  const url = 'http://localhost:3006' + '/buscador_bodega';
+  const url = apiURI + '/api/bodega/buscador_bodega';
   const body = { clave: value };
   try {
     const response = await fetch(url, {

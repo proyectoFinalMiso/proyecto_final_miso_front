@@ -92,7 +92,7 @@ export default function LocationModal({
             sx={{ color: '#B0B0B0', marginBottom: '20px' }}
             title="Form subtitle"
           >
-            Sku del producto: {locationInfo.sku}
+            Sku del producto: {locationInfo?.sku || ''}
           </Typography>
           {loading ? (
             <div className="h-[14.25rem] w-full flex justify-center items-center">
@@ -106,7 +106,9 @@ export default function LocationModal({
                 height="300"
                 frameBorder="0"
                 style={{ border: 0, borderRadius: '8px' }}
-                src={`https://www.google.com/maps?q=${store[0].latitude},${store[0].longitude}&z=15&output=embed`}
+                src={`https://www.google.com/maps?q=${
+                  store[0]?.latitude || ''
+                },${store[0]?.longitude || ''}&z=15&output=embed`}
                 allowFullScreen
               />
             </div>
