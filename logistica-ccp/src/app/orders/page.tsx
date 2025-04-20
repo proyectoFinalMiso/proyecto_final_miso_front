@@ -6,19 +6,11 @@ import DataTable from '../../../globalComponents/Datatable';
 import PageTitle from '../../../globalComponents/PageTitle';
 import theme from '@/theme';
 import Grid from '@mui/material/Grid2';
-import {
-  ThemeProvider,
-  Box,
-  Stack,
-  InputAdornment,
-  Button,
-  TextField,
-} from '@mui/material';
+import { ThemeProvider, Box, InputAdornment, TextField } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
 import SearchIcon from '@mui/icons-material/Search';
 import RemoveRedEye from '@mui/icons-material/RemoveRedEye';
-import AddIcon from '@mui/icons-material/Add';
 import { getOrders } from './adapters/microserviceOrders';
 import RouteModal from './routeModal';
 
@@ -42,7 +34,7 @@ interface Order {
   direccion: string;
 }
 
-const Products: React.FC = () => {
+const Orders: React.FC = () => {
   const tableSchema: GridColDef[] = [
     {
       field: 'id',
@@ -213,4 +205,4 @@ const Products: React.FC = () => {
   );
 };
 
-export default Products;
+export default Orders;
