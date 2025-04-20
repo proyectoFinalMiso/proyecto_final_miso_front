@@ -3,15 +3,16 @@ import { Modal, Box, Typography, TextField, Button, Stack } from "@mui/material"
 import Grid from "@mui/material/Grid2";
 
 import { createSeller } from "./adapters/microserviceSeller";
+import { useTranslations } from "next-intl";
 
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
-    title?: string;
 }
 
-export default function FormSeller({ open, onClose, title = "Formulario"}: ModalFormProps) {
+export default function FormSeller({ open, onClose }: ModalFormProps) {
     const [formData, setFormData] = useState({nombre: "", email: "", password: ""});
+    const t = useTranslations('Sellers')
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -58,19 +59,19 @@ export default function FormSeller({ open, onClose, title = "Formulario"}: Modal
                         title="Formulario nuevo vendedor"
                     >
                         <Typography id="modal-form-seller-title" variant="h6" title="Form title" gutterBottom>
-                            {title}
+                            {t('form_title')}
                         </Typography>
                         <Typography 
                             id="modal-form-seller-subtitle"
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            Agregar vendedor
+                            {t('form_subtitle')}
                         </Typography>
                         <form onSubmit={handleSubmit}>
                             <TextField
                                     fullWidth
-                                    label="Nombre"
+                                    label={t('form_field_1')}
                                     name="nombre"
                                     value={formData.nombre}
                                     onChange={handleChange}
@@ -79,7 +80,7 @@ export default function FormSeller({ open, onClose, title = "Formulario"}: Modal
                                 />
                             <TextField
                                 fullWidth
-                                label="email"
+                                label={t('form_field_2')}
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
@@ -88,7 +89,7 @@ export default function FormSeller({ open, onClose, title = "Formulario"}: Modal
                             />
                             <TextField
                                 fullWidth
-                                label="Contraseña"
+                                label={t('form_field_3')}
                                 name="password"
                                 type="password"
                                 value={formData.password}
@@ -103,10 +104,10 @@ export default function FormSeller({ open, onClose, title = "Formulario"}: Modal
                                 sx={{ marginTop: "1.25rem" }}
                             >
                                 <Button type="submit" variant="contained" color="cpp">
-                                    Confirmar
+                                    {t('form_submit_button')}
                                 </Button>
                                 <Button onClick={onClose} variant="contained" color="error">
-                                    Cancelar
+                                    {t('form_cancel_button')}
                                 </Button>
                             </Stack>
                         </form>

@@ -45,5 +45,37 @@
         "form_single_field_2": "Unit Cost ($COP)",
         "form_single_field_3": "Select a registered provider",
         "form_single_field_4": "Volume (m3)"
+    },
+    "Sellers": {
+        "new_seller": "NEW SELLER",
+        "title": "Sellers",
+        "table_col_1": "Name",
+        "table_col_2": "Email",
+        "form_title": "New Seller",
+        "form_subtitle": "Register a new seller",
+        "form_field_1": "Name",
+        "form_field_2": "Email",
+        "form_field_3": "Password",
+        "form_submit_button": "SUBMIT",
+        "form_cancel_button": "CANCEL"
+    },
+    "Stock": {
+        "store_product": "STORE PRODUCT",
+        "title": "Stock",
+        "table_col_1":"Product",
+        "table_col_2":"Warehouse",
+        "table_col_3":"Position",
+        "table_col_4":"SKU",
+        "table_col_5":"Serial",
+        "table_col_6":"Available",
+        "table_col_7":"Reserved",
+        "form_title":"Store product",
+        "form_subtitle":"Add a new product delivery to stock",
+        "form_field_1":"Select existing product",
+        "form_field_2":"Serial",
+        "form_field_3":"Quantity",
+        "form_field_4":"Select a registered warehouse",
+        "form_button_submit":"SUBMIT",
+        "form_button_cancel":"CANCEL"
     }
 }
