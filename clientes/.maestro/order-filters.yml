@@ -1,0 +1,43 @@
+# Filter orders by price and date range and clear filters in the app
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "orders-icon"
+- tapOn:
+    id: "orders-icon"
+- assertVisible:
+    id: "order-row-.*"
+    index: 0
+- tapOn:
+    id: "filterButton"
+- assertVisible:
+    id: "filter-min-price-input"
+- tapOn:
+    id: "filter-min-price-input"
+- inputText: "1000"
+- tapOn:
+    id: "filter-max-price-input"
+- inputText: "2000"
+- tapOn:
+    id: "start-date-input"
+- tapOn:
+    id: "android:id/button1"
+- tapOn:
+    id: "end-date-input"
+- tapOn:
+    id: "android:id/button1"
+- assertVisible:
+    id: "filter-apply-button"
+- tapOn:
+    id: "filter-apply-button"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "clear-filters-button"
+- tapOn:
+    id: "clear-filters-button"
+- waitForAnimationToEnd
+- assertNotVisible:
+    id: "clear-filters-button"

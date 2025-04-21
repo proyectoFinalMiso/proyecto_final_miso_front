@@ -1,0 +1,17 @@
+# Search invalid orders in the app
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "orders-icon"
+- tapOn:
+    id: "orders-icon"
+- assertVisible:
+    id: "orders-list*"
+- tapOn:
+    id: "searchInput"
+- inputText: "Pedido Inexistente"
+- assertVisible:
+    id: "empty-orders"

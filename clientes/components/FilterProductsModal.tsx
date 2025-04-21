@@ -48,6 +48,8 @@ const FilterModal = ({
                                     placeholder="Mín"
                                     placeholderTextColor={Colors.light.searchHint}
                                     keyboardType="numeric"
+                                    testID="filter-min-price-input"
+                                    accessibilityLabel="Input precio mínimo"
                                 />
                             </View>
                             <View style={styles.priceInputWrapper}>
@@ -59,16 +61,28 @@ const FilterModal = ({
                                     placeholder="Máx"
                                     placeholderTextColor={Colors.light.searchHint}
                                     keyboardType="numeric"
+                                    testID="filter-max-price-input"
+                                    accessibilityLabel="Input precio máximo"
                                 />
                             </View>
                         </View>
                     </View>
 
                     <View style={styles.filterActions}>
-                        <TouchableOpacity style={styles.clearButton} onPress={onClear}>
+                        <TouchableOpacity
+                            style={styles.clearButton}
+                            onPress={onClear}
+                            testID="filter-clear-button"
+                            accessibilityLabel="Limpiar filtros"
+                        >
                             <Text style={styles.clearButtonText}>Limpiar</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.applyButton} onPress={onApply}>
+                        <TouchableOpacity
+                            style={styles.applyButton}
+                            onPress={onApply}
+                            testID="filter-apply-button"
+                            accessibilityLabel="Aplicar filtros"
+                        >
                             <Text style={styles.applyButtonText}>Aplicar</Text>
                         </TouchableOpacity>
                     </View>
@@ -184,4 +198,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default FilterModal; 
+export default FilterModal;

@@ -127,6 +127,8 @@ const OrderSummary = () => {
                     returnKeyType="done"
                     onSubmitEditing={Keyboard.dismiss}
                     blurOnSubmit={true}
+                    testID="addressInput"
+                    accessibilityLabel="addressInput"
                 />
                 {addressError ? <Text style={styles.errorText}>{addressError}</Text> : null}
             </View>
@@ -134,7 +136,7 @@ const OrderSummary = () => {
             <View style={styles.container}>
                 <View style={styles.totalContainer}>
                     <Text style={styles.totalLabel}>Total:</Text>
-                    <Text style={styles.totalValue}>${getTotal().toFixed(0)} COP</Text>
+                    <Text style={styles.totalValue} testID='order-total'>${getTotal().toFixed(0)} COP</Text>
                 </View>
                 <TouchableOpacity
                     style={[
@@ -143,6 +145,8 @@ const OrderSummary = () => {
                     ]}
                     onPress={handleFinishOrder}
                     disabled={isLoading || !isLoggedIn || !destino.trim() || (!isTestEnvironment && addressError !== '')}
+                    testID="finishOrderButton"
+                    accessibilityLabel="finishOrderButton"
                 >
                     {isLoading ? (
                         <ActivityIndicator size="small" color={Colors.light.buttonText} />

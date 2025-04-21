@@ -31,7 +31,7 @@ export default function TabLayout() {
         options={{
           title: 'Inicio',
           tabBarIcon: ({ focused, color }) => (
-            <View style={focused ? styles.activeIconBackground : styles.iconBackground}>
+            <View style={focused ? styles.activeIconBackground : styles.iconBackground} testID='home-icon' accessibilityLabel='home-icon'>
               <HomeIcon fill={color} />
             </View>
           ),
@@ -42,7 +42,7 @@ export default function TabLayout() {
         options={{
           title: 'Pedidos',
           tabBarIcon: ({ focused, color }) => (
-            <View style={focused ? styles.activeIconBackground : styles.iconBackground}>
+            <View style={focused ? styles.activeIconBackground : styles.iconBackground} testID='orders-icon' accessibilityLabel='orders-icon'>
               <OrdersIcon fill={color} />
             </View>
           ),
@@ -53,7 +53,7 @@ export default function TabLayout() {
         options={{
           title: 'Carrito',
           tabBarIcon: ({ focused, color }) => (
-            <View style={focused ? styles.activeIconBackground : styles.iconBackground}>
+            <View style={focused ? styles.activeIconBackground : styles.iconBackground} testID='cart-icon' accessibilityLabel='cart-icon'>
               <CartIcon fill={color} />
             </View>
           ),

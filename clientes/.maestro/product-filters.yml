@@ -1,0 +1,31 @@
+# Filter products by price range and clear filters in the app
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "product-row-.*"
+    index: 0
+- tapOn:
+    id: "filterButton"
+- assertVisible:
+    id: "filter-min-price-input"
+- tapOn:
+    id: "filter-min-price-input"
+- inputText: "1000"
+- tapOn:
+    id: "filter-max-price-input"
+- inputText: "2000"
+- assertVisible:
+    id: "filter-apply-button"
+- tapOn:
+    id: "filter-apply-button"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "clearFiltersButton"
+- tapOn:
+    id: "clearFiltersButton"
+- waitForAnimationToEnd
+- assertNotVisible:
+    id: "clearFiltersButton"

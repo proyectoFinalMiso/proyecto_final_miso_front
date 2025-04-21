@@ -1,0 +1,24 @@
+# Registering a new user in the app
+appId: com.proyecto_final_miso.clientes
+env:
+  EMAIL: ${'user_' + Date.now() + '@test.com'}
+---
+- launchApp
+- tapOn:
+    id: "loginRegisterButton"
+- waitForAnimationToEnd
+- tapOn:
+    id: "registerNameInput"
+- inputText: "Test User"
+- tapOn:
+    id: "registerEmailInput"
+- inputText: "${EMAIL}"
+- tapOn:
+    id: "registerPasswordInput"
+- inputText: "validPassword123"
+- hideKeyboard
+- tapOn:
+    id: "registerSubmitButton"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "homeScreenTitle"
