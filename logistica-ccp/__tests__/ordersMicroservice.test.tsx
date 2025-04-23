@@ -3,7 +3,7 @@ import fetchMock from 'jest-fetch-mock';
 import {
   getOrders,
   createDeliveryRoute,
-} from '@/app/orders/adapters/microserviceOrders';
+} from '@/app/[locale]/orders/adapters/microserviceOrders';
 
 describe('Interacción con microservicio de pedidos', () => {
   beforeEach(() => {

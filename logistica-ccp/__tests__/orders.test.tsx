@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import Orders from '@/app/orders/page';
+import Orders from '@/app/[locale]/orders/page';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
-import * as microserviceOrders from '@/app/orders/adapters/microserviceOrders';
+import * as microserviceOrders from '@/app/[locale]/orders/adapters/microserviceOrders';
 
-import RouteModal from '@/app/orders/routeModal';
-import { createDeliveryRoute } from '@/app/orders/adapters/microserviceOrders';
+import RouteModal from '@/app/[locale]/orders/routeModal';
+import { createDeliveryRoute } from '@/app/[locale]/orders/adapters/microserviceOrders';
 
 describe('Vista de pedidos', () => {
   beforeEach(() => {
