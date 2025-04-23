@@ -120,6 +120,8 @@ export default function RegisterScreen() {
                                         validateNombre(text);
                                     }}
                                     autoCapitalize="words"
+                                    testID='registerNameInput'
+                                    accessibilityLabel="registerNameInput"
                                 />
                             </View>
                             {nombreError ? <Text style={styles.errorText}>{nombreError}</Text> : null}
@@ -137,6 +139,8 @@ export default function RegisterScreen() {
                                     }}
                                     keyboardType="email-address"
                                     autoCapitalize="none"
+                                    testID='registerEmailInput'
+                                    accessibilityLabel="registerEmailInput"
                                 />
                             </View>
                             {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
@@ -153,10 +157,14 @@ export default function RegisterScreen() {
                                         validatePassword(text);
                                     }}
                                     secureTextEntry={!showPassword}
+                                    testID='registerPasswordInput'
+                                    accessibilityLabel="registerPasswordInput"
                                 />
                                 <TouchableOpacity
                                     style={styles.eyeIcon}
                                     onPress={() => setShowPassword(!showPassword)}
+                                    testID='togglePasswordVisibility'
+                                    accessibilityLabel="togglePasswordVisibility"
                                 >
                                     <Ionicons
                                         name={showPassword ? "eye-off-outline" : "eye-outline"}
@@ -173,6 +181,8 @@ export default function RegisterScreen() {
                                 style={[styles.button, styles.primaryButton, isLoading && styles.disabledButton]}
                                 onPress={handleRegister}
                                 disabled={isLoading}
+                                testID='registerSubmitButton'
+                                accessibilityLabel="registerSubmitButton"
                             >
                                 {isLoading ? (
                                     <ActivityIndicator color={Colors.light.buttonText} size="small" />
@@ -185,6 +195,8 @@ export default function RegisterScreen() {
                                 style={[styles.button, styles.secondaryButton]}
                                 onPress={handleBack}
                                 disabled={isLoading}
+                                testID='registerCancelButton'
+                                accessibilityLabel="registerCancelButton"
                             >
                                 <Text style={[styles.buttonText, styles.secondaryButtonText]}>Cancelar</Text>
                             </TouchableOpacity>

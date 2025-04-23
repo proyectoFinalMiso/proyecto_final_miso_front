@@ -1,0 +1,15 @@
+# Remove product from cart and assert empty cart message
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- runFlow: add-product-to-cart.yml
+- waitForAnimationToEnd
+- tapOn:
+    id: "product-row-.*"
+    index: 0
+- assertVisible:
+    id: "remove-product-.*"
+- tapOn:
+    id: "remove-product-.*"
+- assertVisible:
+    id: "empty-cart-message"

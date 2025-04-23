@@ -186,9 +186,9 @@ export default function OrdersScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.title}>Mis pedidos</Text>
+          <Text style={styles.title} testID='ordersTitle' accessibilityLabel='ordersTitle'>Mis pedidos</Text>
           {lastUpdated && (
-            <Text style={styles.lastUpdatedText}>{formattedLastUpdated}</Text>
+            <Text style={styles.lastUpdatedText} testID='last-updated-orders' accessibilityLabel='last-updated-orders'>{formattedLastUpdated}</Text>
           )}
         </View>
         <View style={styles.searchContainer}>
@@ -199,12 +199,14 @@ export default function OrdersScreen() {
               placeholderTextColor={Colors.light.searchHint}
               value={searchText}
               onChangeText={setSearchText}
+              testID='searchInput'
               accessibilityLabel="Buscar pedidos"
               accessibilityHint="Ingresa la dirección del pedido que buscas"
             />
             <TouchableOpacity
               style={[styles.filterButton, hasActiveFilters && styles.filterButtonActive]}
               onPress={openFilterModal}
+              testID="filterButton"
               accessibilityLabel="Filtrar pedidos"
               accessibilityHint="Abre el modal de filtrado"
             >
@@ -224,8 +226,8 @@ export default function OrdersScreen() {
                 {dateRange.start !== null && ` Desde: ${dateRange.start.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })}`}
                 {dateRange.end !== null && ` Hasta: ${dateRange.end.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })}`}
               </Text>
-              <TouchableOpacity onPress={clearFilters}>
-                <Ionicons name="close-circle" size={18} color={Colors.light.text} testID="clear-filters-button"/>
+              <TouchableOpacity onPress={clearFilters} testID="clear-filters-button" accessibilityLabel="Limpiar filtros">
+                <Ionicons name="close-circle" size={18} color={Colors.light.text}/>
               </TouchableOpacity>
             </View>
           )}

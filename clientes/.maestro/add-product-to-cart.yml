@@ -1,0 +1,34 @@
+# Add Product to Cart
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- tapOn:
+    id: "loginEmailInput"
+- inputText: "alvaro@test.com"
+- tapOn:
+    id: "loginPasswordInput"
+- inputText: "test"
+- hideKeyboard
+- tapOn:
+    id: "loginSubmitButton"
+- assertVisible:
+    id: "homeScreenTitle"
+- assertVisible:
+    id: "product-list"
+- assertVisible:
+    id: "product-row-.*"
+    index: 0
+- tapOn:
+    id: "product-row-.*"
+    index: 0
+- assertVisible:
+    id: "add-to-cart-button-.*"
+- tapOn:
+    id: "add-to-cart-button-.*"
+- tapOn:
+    id: "cart-icon"
+- assertVisible:
+    id: "cart-content"
+- assertVisible:
+    id: "product-row-.*"
+    index: 0

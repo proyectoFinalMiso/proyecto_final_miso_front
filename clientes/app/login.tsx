@@ -95,6 +95,8 @@ export default function LoginScreen() {
                 }}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                testID="loginEmailInput"
+                accessibilityLabel="loginEmailInput"
               />
             </View>
             {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
@@ -108,6 +110,8 @@ export default function LoginScreen() {
                 value={contrasena}
                 onChangeText={setContrasena}
                 secureTextEntry={!showPassword}
+                testID="loginPasswordInput"
+                accessibilityLabel="loginPasswordInput"
               />
               <TouchableOpacity
                 style={styles.eyeIcon}
@@ -127,6 +131,8 @@ export default function LoginScreen() {
               style={[styles.button, styles.primaryButton, isLoading && styles.disabledButton]}
               onPress={handleLogin}
               disabled={isLoading}
+              testID="loginSubmitButton"
+              accessibilityLabel="loginSubmitButton"
             >
               {isLoading ? (
                 <ActivityIndicator color={Colors.light.buttonText} size="small" />
@@ -139,6 +145,8 @@ export default function LoginScreen() {
               style={[styles.button, styles.secondaryButton]}
               onPress={handleRegister}
               disabled={isLoading}
+              testID="loginRegisterButton"
+              accessibilityLabel="loginRegisterButton"
             >
               <Text style={[styles.buttonText, styles.secondaryButtonText]}>Registrarse</Text>
             </TouchableOpacity>
@@ -250,4 +258,4 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
-}); 
+});

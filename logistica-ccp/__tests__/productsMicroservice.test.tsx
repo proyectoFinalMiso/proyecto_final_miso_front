@@ -1,6 +1,6 @@
-import '@testing-library/jest-dom';
-import * as microserviceProducts from '@/app/[locale]/products/adapters/microserviceProducts';
-import fetchMock from 'jest-fetch-mock';
+import '@testing-library/jest-dom'
+import * as microserviceProducts from '@/app/[locale]/products/adapters/microserviceProducts'
+import fetchMock from 'jest-fetch-mock'
 
 describe('Interacción con microservicio de productos', () => {
   const productData = {
