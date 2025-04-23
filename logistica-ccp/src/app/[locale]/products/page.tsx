@@ -18,6 +18,7 @@ import RemoveRedEye from '@mui/icons-material/RemoveRedEye';
 import AddIcon from '@mui/icons-material/Add';
 
 import { getProducts } from './adapters/microserviceProducts';
+import { useTranslations } from 'next-intl';
 import { getStock } from '../stock/adapters/microserviceStock';
 import LocationModal from './locationModal';
 
@@ -38,41 +39,43 @@ interface Product {
 }
 
 const Products: React.FC = () => {
+  const translations = useTranslations('Products');
+
   const tableSchema: GridColDef[] = [
     {
       field: 'sku',
-      headerName: 'SKU',
+      headerName: translations('table_col_1'),
       flex: 1,
       headerClassName: styles.Header,
     },
     {
       field: 'nombre',
-      headerName: 'Nombre Producto',
+      headerName: translations('table_col_2'),
       flex: 4,
       headerClassName: styles.Header,
     },
     {
       field: 'volumen',
-      headerName: 'Volumen',
+      headerName: translations('table_col_3'),
       flex: 1,
       type: 'number',
       headerClassName: styles.Header,
     },
     {
       field: 'fabricante',
-      headerName: 'Fabricante',
+      headerName: translations('table_col_4'),
       flex: 2,
       headerClassName: styles.Header,
     },
     {
       field: 'valorUnitario',
-      headerName: 'Valor Unitario',
+      headerName: translations('table_col_5'),
       flex: 1,
       headerClassName: styles.Header,
     },
     {
       field: 'fechaCreacion',
-      headerName: 'Fecha de Creación',
+      headerName: translations('table_col_6'),
       flex: 2,
       headerClassName: styles.Header,
     },
@@ -89,7 +92,6 @@ const Products: React.FC = () => {
           <RemoveRedEye
             sx={{ color: 'gray', cursor: 'pointer' }}
             onClick={() => {
-              console.log({ hasStock });
               setlocationModal({
                 sku: params?.row?.sku || '',
                 storeId: hasStock?.bodega || '',
@@ -119,7 +121,6 @@ const Products: React.FC = () => {
     sku: '',
     storeId: '',
   });
-
   const fetchProducts = async () => {
     const productList = await getProducts();
     setProducts(productList);
@@ -148,44 +149,19 @@ const Products: React.FC = () => {
             open={isOpen}
             onClose={() => setIsOpen(false)}
             onProductAdded={fetchProducts}
-            title="Nuevo Producto"
           />
           <UploadProductsModal
             open={openFileModal}
             onClose={() => setOpenFileModal(false)}
             onProductAdded={fetchProducts}
-            title="Nuevo Producto"
           />
           <Grid sx={{ direction: 'column' }} size="grow">
-            <PageTitle text="Productos" />
+            <PageTitle text={translations('title')} />
             <Grid
               container
               size="grow"
               sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}
             >
-              {/* <Grid size="grow">
-                                <TextField fullWidth id="buscar-producto" className={styles.TextField}
-                                    placeholder="Buscar por Nombre o SKU"
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <SearchIcon />
-                                                </InputAdornment>
-                                            )
-                                        }
-                                    }}
-                                    sx={{
-                                        "& .MuiInputBase-root": {
-                                            borderRadius: "16px",
-                                            height: "40px",
-                                        },
-                                        "& .MuiInputBase-input": {
-                                            height: "40px",
-                                            padding: "10px",
-                                        },
-                                    }} />
-                            </Grid> */}
               <Grid size="grow" sx={{ marginRight: '6.25rem' }}>
                 <Stack spacing={2} direction="row" justifyContent={'flex-end'}>
                   <Button
@@ -193,16 +169,18 @@ const Products: React.FC = () => {
                     variant="outlined"
                     color="dark"
                     endIcon={<FileUploadIcon />}
+                    data-testid="productoMasivo"
                   >
-                    Cargar con archivo
+                    {translations('new_products_file')}
                   </Button>
                   <Button
                     onClick={() => setIsOpen(true)}
                     variant="contained"
                     color="cpp"
                     startIcon={<AddIcon />}
+                    data-testid="nuevoProducto"
                   >
-                    Registrar Producto
+                    {translations('new_product')}
                   </Button>
                 </Stack>
               </Grid>

@@ -18,7 +18,7 @@ export interface ClientesResponse {
 // Fetch all seller's clients
 export const fetchClients = async (vendedorId: string): Promise<Cliente[]> => {
     try {
-        const response = await axios.get<ClientesResponse>(`${API_BASE_URL}/?vendedor_id=${vendedorId}`);
+        const response = await axios.get<ClientesResponse>(`${API_BASE_URL}/clientes?vendedor_id=${vendedorId}`);
         return response.data.clientes;
     } catch (error) {
         console.error('Error fetching available clients:', error);

@@ -1,0 +1,81 @@
+{
+    "Footer": {
+        "copyright": "Copyright © 2025. Todos los derechos reservados.",
+        "language_selector_1": "Español (Latinoamérica)",
+        "language_selector_2": "Inglés (Estados Unidos)"
+    },
+    "Sidebar": {
+        "option_1": "Proveedores",
+        "option_2": "Productos",
+        "option_3": "Inventario",
+        "option_4": "Vendedores"
+    },
+    "Manufacturers": {
+        "new_manufacturer": "CREAR PROVEEDOR",
+        "title": "Proveedores",
+        "table_col_1": "Nombre",
+        "table_col_2": "País",
+        "table_col_3": "Acciones",
+        "form_title": "Nuevo Proveedor",
+        "form_subtitle": "Agregar un nuevo proveedor a la plataforma",
+        "form_field_1_placeholder": "Nombre",
+        "form_field_2_placeholder": "País",
+        "form_submit_button": "GUARDAR",
+        "form_cancel_button": "CANCELAR"
+    },
+    "Products": {
+        "new_product": "CREAR PRODUCTO",
+        "new_products_file": "CARGAR CON ARCHIVO",
+        "title": "Productos",
+        "table_col_1": "SKU",
+        "table_col_2": "Nombre",
+        "table_col_3": "Volumen",
+        "table_col_4": "Proveedor",
+        "table_col_5": "Valor Unitario",
+        "table_col_6": "Fecha de Creación",
+        "form_file_title": "Carga de archivo",
+        "form_file_subtitle": "Agregar varios productos con un mismo archivo",
+        "form_file_dropzone_text": "Subir o arrastrar un archivo .xlsx, .csv o .json",
+        "form_file_dropzone_drag": "Soltar el archivo aquí...",
+        "form_button_submit": "CONFIRMAR",
+        "form_button_cancel": "CANCELAR",
+        "form_single_title": "Crear producto",
+        "form_single_subtitle": "Agregar un nuevo producto a la plataforma",
+        "form_single_field_1": "Nombre",
+        "form_single_field_2": "Valor Unitario ($COP)",
+        "form_single_field_3": "Seleccione un proveedor registrado",
+        "form_single_field_4": "Volumen (m3)"
+    },
+    "Sellers": {
+        "new_seller": "NUEVO VENDEDOR",
+        "title": "Vendedores",
+        "table_col_1": "Nombre",
+        "table_col_2": "Correo Electrónico",
+        "form_title": "Nuevo vendedor",
+        "form_subtitle": "Registrar un nuevo vendedor",
+        "form_field_1": "Nombre",
+        "form_field_2": "Correo electrónico",
+        "form_field_3": "Contraseña",
+        "form_submit_button": "GUARDAR",
+        "form_cancel_button": "CANCELAR"
+    },
+    "Stock": {
+        "store_product": "ALMACENAR PRODUCTO",
+        "title": "Inventario",
+        "table_col_1":"Producto",
+        "table_col_2":"Bodega",
+        "table_col_3":"Posición",
+        "table_col_4":"SKU",
+        "table_col_5":"Lote",
+        "table_col_6":"Disponible",
+        "table_col_7":"Reservado",
+        "form_title":"Almacenar producto",
+        "form_subtitle":"Ingresar un nuevo lote de productos al inventario",
+        "form_field_1":"Seleccionar un producto existente",
+        "form_field_2":"Lote",
+        "form_field_3":"Cantidad",
+        "form_field_4":"Seleccionar una bodega registrada",
+        "form_button_submit":"CONFIRMAR",
+        "form_button_cancel":"CANCELAR"
+    }
+}

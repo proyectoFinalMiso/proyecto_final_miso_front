@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { SelectChangeEvent } from "@mui/material";
-import { Modal, Box, Select, Typography, TextField, Button, Stack, MenuItem, InputLabel } from "@mui/material"
+import { Modal, Box, Select, Typography, TextField, Button, Stack, MenuItem } from "@mui/material"
 import Grid from "@mui/material/Grid2";
 
 import { createProduct, getManufacturers } from "./adapters/microserviceProducts";
+import { useTranslations } from "next-intl";
 
 interface ModalFormProps {
     open: boolean;
     onClose: () => void;
-    title?: string
     onProductAdded: () => void;
 }
 
@@ -17,9 +17,10 @@ interface Manufacturer {
     nombre: string;
 }
 
-export default function ProductsForm({ open, onClose, title = "Formulario", onProductAdded }: ModalFormProps) {
+export default function ProductsForm({ open, onClose, onProductAdded }: ModalFormProps) {
     const [formData, setFormData] = useState({ nombre: "", valorUnitario: "", id_fabricante: "", volumen: "" });
     const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
+    const translations = useTranslations('Products')
 
     useEffect(() => {
         getManufacturers().then(setManufacturers);
@@ -76,19 +77,19 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                         title="Formulario nuevo producto"
                     >
                         <Typography id="modal-formulario-producto-title" variant="h6" title="Form title" gutterBottom>
-                            {title}
+                            {translations('form_single_title')}
                         </Typography>
                         <Typography 
                             id="modal-formulario-producto-subtitle"
                             sx={{ color: "#B0B0B0" }}
                             title="Form subtitle"
                         >
-                            Agregar un producto a la plataforma
+                            {translations('form_single_subtitle')}
                         </Typography>
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 fullWidth
-                                label="Nombre"
+                                label={translations('form_single_field_1')}
                                 name="nombre"
                                 value={formData.nombre}
                                 onChange={handleChange}
@@ -97,7 +98,7 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                             />
                             <TextField
                                 fullWidth
-                                label="Valor Unitario ($COP)"
+                                label={translations('form_single_field_2')}
                                 name="valorUnitario"
                                 value={formData.valorUnitario}
                                 onChange={handleChange}
@@ -114,7 +115,7 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                                 title="Fabricante del producto"
                             >
                                 <MenuItem value="" disabled>
-                                    Seleccione un fabricante
+                                    {translations('form_single_field_3')}
                                 </MenuItem>
                                 {manufacturers.map((manufacturer) => (
                                     <MenuItem key={manufacturer.id} value={manufacturer.id}>
@@ -124,7 +125,7 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                             </Select>
                             <TextField
                                 fullWidth
-                                label="Volumen"
+                                label={translations('form_single_field_4')}
                                 name="volumen"
                                 value={formData.volumen}
                                 onChange={handleChange}
@@ -139,10 +140,10 @@ export default function ProductsForm({ open, onClose, title = "Formulario", onPr
                                 sx={{ marginTop: "1.25rem" }}
                             >
                                 <Button type="submit" variant="contained" color="cpp">
-                                    Confirmar
+                                    {translations('form_button_submit')}
                                 </Button>
                                 <Button onClick={onClose} variant="contained" color="error">
-                                    Cancelar
+                                    {translations('form_button_cancel')}
                                 </Button>
                             </Stack>
                         </form>
