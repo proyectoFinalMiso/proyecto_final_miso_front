@@ -32,6 +32,11 @@ const Sidebar: React.FC = () => {
                 {translations("option_4")}
               </Link>
             </li>
+            <li className="mb-3">
+              <Link href="/orders" className="hover:text-gray-300">
+                Pedidos
+              </Link>
+            </li>
           </ul>
         </nav>
       </aside>

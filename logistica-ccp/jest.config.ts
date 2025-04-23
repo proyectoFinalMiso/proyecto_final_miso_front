@@ -7,9 +7,8 @@ import type { Config } from 'jest';
 import nextJest from 'next/jest.js';
 
 const createJestConfig = nextJest({
-  dir: './'
-}
-)
+  dir: './',
+});
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -30,7 +29,7 @@ const config: Config = {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -41,19 +40,14 @@ const config: Config = {
   // coverageProvider: "babel",
 
   // A list of reporter names that Jest uses when writing coverage reports
-  coverageReporters: [
-    "json",
-    "lcov",
-    "text",
-    "json-summary"
-  ],
+  coverageReporters: ['json', 'lcov', 'text', 'json-summary'],
 
   // An object that configures minimum threshold enforcement for coverage results
   coverageThreshold: {
     global: {
       statements: 70,
       lines: 70,
-    }
+    },
   },
 
   // A path to a custom dependency extractor
@@ -100,7 +94,7 @@ const config: Config = {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  moduleNameMapper: {"^@/(.*)$": "<rootDir>/src/$1"},
+  moduleNameMapper: { '^@/(.*)$': '<rootDir>/src/$1' },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -147,7 +141,7 @@ const config: Config = {
   //setupFiles: ['<rootDir>/jest.setup.ts'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -156,7 +150,7 @@ const config: Config = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
