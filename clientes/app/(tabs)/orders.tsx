@@ -227,7 +227,7 @@ export default function OrdersScreen() {
                 {dateRange.end !== null && ` Hasta: ${dateRange.end.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })}`}
               </Text>
               <TouchableOpacity onPress={clearFilters} testID="clear-filters-button" accessibilityLabel="Limpiar filtros">
-                <Ionicons name="close-circle" size={18} color={Colors.light.text} testID="clear-filters-button"/>
+                <Ionicons name="close-circle" size={18} color={Colors.light.text}/>
               </TouchableOpacity>
             </View>
           )}

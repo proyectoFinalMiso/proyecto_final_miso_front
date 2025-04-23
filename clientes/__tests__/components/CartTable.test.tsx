@@ -24,8 +24,8 @@ const renderWithProvider = (component: React.ReactElement) => {
 };
 
 describe('CartTable', () => {
-    const product1: Product = { id: '1', name: 'Producto 1', price: 10000 };
-    const product2: Product = { id: '2', name: 'Producto 2', price: 20000 };
+    const product1: Product = { id: '1', name: 'Producto 1', price: 10000, sku: 10001 };
+    const product2: Product = { id: '2', name: 'Producto 2', price: 20000, sku: 10002 };
 
     it('should render empty cart message when cart is empty', () => {
         const { getByTestId } = renderWithProvider(<CartTable />);
@@ -57,7 +57,7 @@ describe('CartTable', () => {
 
         expect(queryByTestId(`expanded-content-${product1.id}`)).toBeNull();
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         expect(getByTestId(`expanded-content-${product1.id}`)).toBeTruthy();
     });
@@ -70,10 +70,10 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
         expect(getByTestId(`expanded-content-${product1.id}`)).toBeTruthy();
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
         expect(queryByTestId(`expanded-content-${product1.id}`)).toBeNull();
     });
 
@@ -85,7 +85,7 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         expect(getByTestId(`quantity-${product1.id}`).props.children).toBe(1);
 
@@ -102,7 +102,7 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         expect(getByTestId(`quantity-${product1.id}`).props.children).toBe(3);
 
@@ -119,7 +119,7 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         expect(getByTestId(`quantity-${product1.id}`).props.children).toBe(1);
 
@@ -136,7 +136,7 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         fireEvent.press(getByTestId(`remove-product-${product1.id}`));
 
