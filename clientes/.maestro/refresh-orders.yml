@@ -1,0 +1,23 @@
+# Refresh the order list in the app
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "orders-icon"
+- tapOn:
+    id: "orders-icon"
+- assertVisible:
+    id: "orders-list"
+- assertVisible:
+    id: "last-updated-orders"
+- swipe:
+   from: 
+     id: "order-row-.*"
+     index: 0
+   direction: DOWN
+- assertVisible:
+    id: "orders-list"
+- assertVisible:
+    id: "last-updated-orders"

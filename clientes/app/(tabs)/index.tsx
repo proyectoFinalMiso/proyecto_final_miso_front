@@ -135,9 +135,11 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.title}>Ordena lo que gustes</Text>
+          <Text style={styles.title} testID="homeScreenTitle" accessibilityLabel='homeScreenTitle'>
+            Ordena lo que gustes
+          </Text>
           {lastUpdated && (
-            <Text style={styles.lastUpdatedText}>{formattedLastUpdated}</Text>
+            <Text style={styles.lastUpdatedText} testID='last-updated-text' accessibilityLabel='last-updated-text'>{formattedLastUpdated}</Text>
           )}
         </View>
         <View style={styles.searchContainer}>
@@ -148,12 +150,14 @@ export default function HomeScreen() {
               placeholderTextColor={Colors.light.searchHint}
               value={searchText}
               onChangeText={setSearchText}
+              testID='searchInput'
               accessibilityLabel="Buscar productos"
               accessibilityHint="Ingresa el nombre del producto que buscas"
             />
             <TouchableOpacity
               style={[styles.filterButton, hasActiveFilters && styles.filterButtonActive]}
               onPress={openFilterModal}
+              testID="filterButton"
               accessibilityLabel="Filtrar productos"
               accessibilityHint="Abre el modal de filtrado"
             >
@@ -171,7 +175,7 @@ export default function HomeScreen() {
                 {priceRange.min !== null && ` Precio mín: $${priceRange.min}`}
                 {priceRange.max !== null && ` Precio máx: $${priceRange.max}`}
               </Text>
-              <TouchableOpacity onPress={clearFilters}>
+              <TouchableOpacity onPress={clearFilters} accessibilityLabel="Limpiar filtros" testID='clearFiltersButton'>
                 <Ionicons name="close-circle" size={18} color={Colors.light.text} />
               </TouchableOpacity>
             </View>
@@ -283,4 +287,4 @@ const styles = StyleSheet.create({
     color: Colors.light.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
-}); 
+});

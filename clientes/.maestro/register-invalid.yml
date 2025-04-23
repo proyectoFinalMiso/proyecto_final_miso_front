@@ -1,0 +1,21 @@
+# Registering a new user in the app with invalid data
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- tapOn:
+    id: "loginRegisterButton"
+- waitForAnimationToEnd
+- tapOn:
+    id: "registerNameInput"
+- inputText: "Test User"
+- tapOn:
+    id: "registerEmailInput"
+- inputText: "Email Test"
+- tapOn:
+    id: "registerPasswordInput"
+- inputText: "validPassword123"
+- hideKeyboard
+- tapOn:
+    id: "registerSubmitButton"
+- waitForAnimationToEnd
+- assertVisible: ERROR

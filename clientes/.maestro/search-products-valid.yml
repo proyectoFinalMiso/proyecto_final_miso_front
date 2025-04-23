@@ -1,0 +1,21 @@
+# Search products in the app
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "product-row-.*"
+    index: 1
+- copyTextFrom:
+    id: "product-row-.*"
+    index: 1
+- tapOn:
+    id: "searchInput"
+- inputText: ${maestro.copiedText}
+- assertVisible:
+    id: "product-row-.*"
+    index: 0
+- assertNotVisible:
+    id: "product-row-.*"
+    index: 1

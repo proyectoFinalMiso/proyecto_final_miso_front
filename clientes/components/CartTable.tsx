@@ -54,7 +54,7 @@ const CartTable = () => {
                     style={styles.productRow}
                     onPress={() => toggleExpand(item.product.id)}
                     activeOpacity={0.7}
-                    testID={`toggle-expand-${item.product.id}`}
+                    testID={`product-row-${item.product.id}`}
                 >
                     <Text style={styles.productName}>{item.product.name}</Text>
                     <View style={styles.chevronIconContainer}>
@@ -62,6 +62,7 @@ const CartTable = () => {
                             name={isExpanded ? 'chevron-up' : 'chevron-down'}
                             size={20}
                             color={Colors.light.text}
+                            accessibilityLabel={isExpanded ? 'Cerrar detalles' : 'Abrir detalles'}
                         />
                     </View>
                 </TouchableOpacity>

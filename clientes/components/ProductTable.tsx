@@ -92,6 +92,8 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
           style={styles.productRow}
           onPress={() => toggleExpand(item.id)}
           activeOpacity={0.7}
+          testID={`product-row-${item.id}`}
+          accessibilityLabel={`${item.name}`}
         >
           <Text style={styles.productName}>{item.name}</Text>
           <View style={styles.chevronIconContainer}>
@@ -99,6 +101,7 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
               name={isExpanded ? 'chevron-up' : 'chevron-down'}
               size={20}
               color={Colors.light.text}
+              accessibilityLabel={isExpanded ? "Contraer detalles" : "Expandir detalles"}
             />
           </View>
         </TouchableOpacity>
@@ -116,14 +119,22 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
                   style={styles.quantityButton}
                   onPress={() => decreaseQuantity(item.id)}
                   testID={`decrease-quantity-button-${item.id}`}
+                  accessibilityLabel={`Disminuir cantidad para ${item.name}`}
                 >
                   <Ionicons name="remove" size={12} color={Colors.light.text} />
                 </TouchableOpacity>
-                <Text style={styles.quantityText}>{quantity}</Text>
+                <Text
+                  style={styles.quantityText}
+                  testID={`quantity-text-${item.id}`}
+                  accessibilityLabel={`Cantidad actual ${quantity}`}
+                >
+                  {quantity}
+                </Text>
                 <TouchableOpacity
                   style={styles.quantityButton}
                   onPress={() => increaseQuantity(item.id)}
                   testID={`increase-quantity-button-${item.id}`}
+                  accessibilityLabel={`Aumentar cantidad para ${item.name}`}
                 >
                   <Ionicons name="add" size={12} color={Colors.light.text} />
                 </TouchableOpacity>
@@ -135,6 +146,7 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
                 style={styles.detailButton}
                 onPress={() => handleAddToCart(item, quantity)}
                 testID={`add-to-cart-button-${item.id}`}
+                accessibilityLabel={`Agregar ${quantity} de ${item.name} al carrito`}
               >
                 <Ionicons name="add" size={8} color={Colors.light.buttonText} />
                 <Text style={styles.detailButtonText}>Agregar al carrito</Text>
@@ -154,7 +166,13 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
 
       {products.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No hay productos disponibles</Text>
+          <Text
+            style={styles.emptyText}
+            testID="empty-product-list-text"
+            accessibilityLabel="No hay productos disponibles en este momento"
+          >
+            No hay productos disponibles
+          </Text>
         </View>
       ) : (
         <FlatList
@@ -163,6 +181,8 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
           keyExtractor={item => item.id}
           contentContainerStyle={styles.listContent}
           refreshControl={refreshControl}
+          testID="product-list"
+          accessibilityLabel="Lista de productos disponibles"
         />
       )}
     </View>

@@ -140,6 +140,8 @@ const FilterModal = ({
                                     placeholder="Mín"
                                     placeholderTextColor={Colors.light.searchHint}
                                     keyboardType="numeric"
+                                    testID="filter-min-price-input"
+                                    accessibilityLabel="Input precio mínimo"
                                 />
                                 {priceErrors.min ? <Text style={styles.errorText}>{priceErrors.min}</Text> : null}
                             </View>
@@ -152,6 +154,8 @@ const FilterModal = ({
                                     placeholder="Máx"
                                     placeholderTextColor={Colors.light.searchHint}
                                     keyboardType="numeric"
+                                    testID="filter-max-price-input"
+                                    accessibilityLabel="Input precio máximo"
                                 />
                                 {priceErrors.max ? <Text style={styles.errorText}>{priceErrors.max}</Text> : null}
                             </View>
@@ -189,7 +193,7 @@ const FilterModal = ({
                                     <Text style={[
                                         styles.dateInputText,
                                         !tempDateRange.end && styles.placeholderText
-                                    ]}>
+                                    ]} testID="end-date-input">
                                         {tempDateRange.end || 'DD/MM/YYYY'}
                                     </Text>
                                     <Ionicons name="calendar-outline" size={18} color={Colors.light.text} />
@@ -200,10 +204,10 @@ const FilterModal = ({
                     </View>
 
                     <View style={styles.filterActions}>
-                        <TouchableOpacity style={styles.clearButton} onPress={onClear}>
+                        <TouchableOpacity style={styles.clearButton} onPress={onClear} testID="filter-clear-button" accessibilityLabel="Limpiar filtros">
                             <Text style={styles.clearButtonText}>Limpiar</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.applyButton} onPress={handleApplyFilters}>
+                        <TouchableOpacity style={styles.applyButton} onPress={handleApplyFilters} testID="filter-apply-button" accessibilityLabel="Aplicar filtros">
                             <Text style={styles.applyButtonText}>Aplicar</Text>
                         </TouchableOpacity>
                     </View>

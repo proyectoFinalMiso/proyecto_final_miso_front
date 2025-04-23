@@ -1,0 +1,20 @@
+# See order details in the app
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "orders-icon"
+- tapOn:
+    id: "orders-icon"
+- assertVisible:
+    id: "orders-list"
+- assertVisible:
+    id: "order-row-.*"
+    index: 0
+- tapOn:
+    id: "order-row-.*"
+    index: 0
+- assertVisible:
+    id: "order-status-.*"

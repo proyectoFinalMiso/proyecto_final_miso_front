@@ -79,6 +79,8 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
                     style={styles.orderRow}
                     onPress={() => toggleExpand(item.id)}
                     activeOpacity={0.7}
+                    testID={`order-row-${item.id}`}
+                    accessibilityLabel={`${item.id}`}
                 >
                     <Text style={styles.orderAddress}>Pedido a {item.direccion}</Text>
                     <View style={styles.chevronIconContainer}>
@@ -86,6 +88,7 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
                             name={isExpanded ? 'chevron-up' : 'chevron-down'}
                             size={20}
                             color={Colors.light.text}
+                            accessibilityLabel={isExpanded ? 'close-details' : 'open-details'}
                         />
                     </View>
                 </TouchableOpacity>
@@ -101,7 +104,7 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
                             <Text style={styles.detailValue}>{formatDate(item.fechaIngreso)}</Text>
                         </View>
                         <View style={styles.detailRow}>
-                            <Text style={styles.detailLabel}>Estado</Text>
+                            <Text style={styles.detailLabel} testID={`order-status-${item.id}`}>Estado</Text>
                             <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.estado) }]}>
                                 <Text style={styles.statusText}>{item.estado}</Text>
                             </View>
@@ -119,7 +122,7 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
             </View>
 
             {orders.length === 0 ? (
-                <View style={styles.emptyContainer}>
+                <View style={styles.emptyContainer} testID="empty-orders" accessibilityLabel="No hay pedidos disponibles">
                     <Text style={styles.emptyText}>No hay pedidos disponibles</Text>
                 </View>
             ) : (

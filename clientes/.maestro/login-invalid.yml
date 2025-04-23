@@ -1,0 +1,14 @@
+# Login to the app unsuccessful
+appId: com.proyecto_final_miso.clientes
+---
+- launchApp
+- tapOn:
+    id: "loginEmailInput"
+- inputText: "alvaro@test.com"
+- tapOn:
+    id: "loginPasswordInput"
+- inputText: "alvaro"
+- hideKeyboard
+- tapOn:
+    id: "loginSubmitButton"
+- assertVisible: ERROR
