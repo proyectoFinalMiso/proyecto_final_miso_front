@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 
 import styles from './Orders.module.css';
-import DataTable from '../../../globalComponents/Datatable';
-import PageTitle from '../../../globalComponents/PageTitle';
+import DataTable from '../../globalComponents/Datatable';
+import PageTitle from '../../globalComponents/PageTitle';
 import theme from '@/theme';
 import Grid from '@mui/material/Grid2';
 import { ThemeProvider, Box, InputAdornment, TextField } from '@mui/material';

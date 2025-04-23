@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import styles from './Orders.module.css';
 import { GridColDef } from '@mui/x-data-grid';
 import { createDeliveryRoute } from './adapters/microserviceOrders';
-import DataTable from '../../../globalComponents/Datatable';
+import DataTable from '../../globalComponents/Datatable';
 interface ModalFormProps {
   open: boolean;
   onClose: () => void;
