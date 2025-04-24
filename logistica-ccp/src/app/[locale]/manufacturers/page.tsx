@@ -39,7 +39,7 @@ const Products: React.FC = () => {
     const tableSchema: GridColDef[] = [
         { field: 'nombre', headerName: translations('table_col_1'), flex: 3, headerClassName: styles.Header },
         { field: 'pais', headerName: translations('table_col_2'), flex: 1, headerClassName: styles.Header },
-        { field: 'acciones', headerName: translations('table_col_3'), flex: 2, headerClassName: styles.Header },
+        // { field: 'acciones', headerName: translations('table_col_3'), flex: 2, headerClassName: styles.Header },
     ]
 
     const [manufacturers, setManufacturers] = useState<Product[]>([]);

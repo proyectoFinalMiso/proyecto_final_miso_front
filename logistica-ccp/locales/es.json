@@ -8,7 +8,8 @@
         "option_1": "Proveedores",
         "option_2": "Productos",
         "option_3": "Inventario",
-        "option_4": "Vendedores"
+        "option_4": "Vendedores",
+        "option_5": "Pedidos"
     },
     "Manufacturers": {
         "new_manufacturer": "CREAR PROVEEDOR",
@@ -84,5 +85,23 @@
         "form_field_4":"Seleccionar una bodega registrada",
         "form_button_submit":"CONFIRMAR",
         "form_button_cancel":"CANCELAR"
+    },
+    "Orders": {
+        "title": "Pedidos",
+        "table_col_1": "ID",
+        "table_col_2": "Estado",
+        "table_col_3": "Creación",
+        "table_col_4": "Cliente",
+        "table_col_5": "Vendedor",
+        "table_col_6": "Latitud",
+        "table_col_7": "Longitud",
+        "table_col_8": "Ruta de entrega",
+        "route_modal_title": "Ruta de entrega",
+        "route_modal_order": "Pedido: ",
+        "route_modal_customer": "Cliente: ",
+        "route_modal_address": "Dirección: ",
+        "route_modal_table_col_1": "SKU",
+        "route_modal_table_col_2": "Bodega",
+        "button_close": "CERRAR"
     }
 }
