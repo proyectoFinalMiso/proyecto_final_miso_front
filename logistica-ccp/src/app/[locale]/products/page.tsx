@@ -36,6 +36,8 @@ interface Product {
   fabricante: string;
   valorUnitario: number;
   fechaCreacion: string;
+  existencia: number;
+  necesidad: number;
 }
 
 const Products: React.FC = () => {
@@ -81,7 +83,19 @@ const Products: React.FC = () => {
       valueFormatter: (value: string ) => {
         const date = new Date(value.toLocaleString());
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:00`;
-    }
+      }
+    },
+    {
+      field: 'existencia',
+      headerName: translations('table_col_7'),
+      flex: 1,
+      headerClassName: styles.Header,
+    },
+    {
+      field: 'necesidad',
+      headerName: translations('table_col_8'),
+      flex: 1,
+      headerClassName: styles.Header,
     },
     {
       field: 'verUbicacionGeografica',
