@@ -34,7 +34,7 @@ const Sidebar: React.FC = () => {
             </li>
             <li className="mb-3">
               <Link href="/orders" className="hover:text-gray-300">
-                Pedidos
+                {translations("option_5")}
               </Link>
             </li>
           </ul>

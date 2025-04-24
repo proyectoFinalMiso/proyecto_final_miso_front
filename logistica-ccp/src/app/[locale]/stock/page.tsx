@@ -64,7 +64,7 @@ const Stock: React.FC = () => {
                 <Grid container>
                     <FormProduct open={isOpenProducto} onClose={() => setIsOpenProducto(false)}/>
                     <Grid sx={{ direction: 'column' }} size="grow">
-                        <PageTitle text="Stock" />
+                        <PageTitle text={t('title')} />
                         <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>
                             <Grid size="grow" sx={{ marginRight: '6.25rem' }}>
                                 <Stack spacing={2} direction="row" justifyContent={'flex-end'}>
