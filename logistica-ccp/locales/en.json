@@ -33,6 +33,10 @@
         "table_col_4": "Provider",
         "table_col_5": "Unit Cost",
         "table_col_6": "Creation Date",
+        "table_col_7": "Stock",
+        "table_col_8": "Missing",
+        "table_col_9": "Location",
+        "table_tooltip": "There is not any stock for this product",
         "form_file_title": "Product file upload",
         "form_file_subtitle": "Create multiple products with a single file",
         "form_file_dropzone_text": "Load or drag a .xlsx, .csv or .json file",
@@ -44,7 +48,10 @@
         "form_single_field_1": "Name",
         "form_single_field_2": "Unit Cost ($COP)",
         "form_single_field_3": "Select a registered provider",
-        "form_single_field_4": "Volume (m3)"
+        "form_single_field_4": "Volume (m3)",
+        "location_modal_title": "Available locations",
+        "location_modal_subtitle": "Product's SKU: ",
+        "button_close": "CLOSE"
     },
     "Sellers": {
         "new_seller": "NEW SELLER",

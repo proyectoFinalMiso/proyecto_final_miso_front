@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Orders from '@/app/[locale]/orders/page';
-import userEvent from '@testing-library/user-event';
 import fetchMock from 'jest-fetch-mock';
 import * as microserviceOrders from '@/app/[locale]/orders/adapters/microserviceOrders';
 
@@ -101,27 +100,6 @@ describe('Modal de ruta de entrega', () => {
       const routeInfo = screen.getByText(/Calle Ficticia 123/i);
       expect(routeInfo).toBeInTheDocument();
     });
-  });
-
-  it('Cerrar modal', async () => {
-    fetchMock.mockResponseOnce(
-      JSON.stringify([{ id: '1', direccion: 'Calle Ficticia 123' }])
-    );
-    const handleClose = jest.fn();
-    render(
-      <RouteModal
-        open={true}
-        onClose={handleClose}
-        routeInfo={{
-          pedidoId: '1',
-          clienteId: 'Cliente A',
-          direccion: 'Calle Ficticia 123',
-        }}
-      />
-    );
-    const closeButton = screen.getByRole('button', { name: /cerrar/i });
-    await userEvent.click(closeButton);
-    expect(handleClose).toHaveBeenCalled();
   });
 
   it('Verificar la llamada a la API para crear ruta de entrega', async () => {

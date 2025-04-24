@@ -51,7 +51,7 @@ const Products: React.FC = () => {
     {
       field: 'nombre',
       headerName: translations('table_col_2'),
-      flex: 4,
+      flex: 3,
       headerClassName: styles.Header,
     },
     {
@@ -76,12 +76,16 @@ const Products: React.FC = () => {
     {
       field: 'fechaCreacion',
       headerName: translations('table_col_6'),
-      flex: 2,
+      flex: 1,
       headerClassName: styles.Header,
+      valueFormatter: (value: string ) => {
+        const date = new Date(value.toLocaleString());
+        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:00`;
+    }
     },
     {
       field: 'verUbicacionGeografica',
-      headerName: 'Ver Ubicación Geográfica',
+      headerName: translations('table_col_9'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'center',
@@ -100,7 +104,7 @@ const Products: React.FC = () => {
             }}
           />
         ) : (
-          <Tooltip title="Sin stock disponible">
+          <Tooltip title={translations('table_tooltip')}>
             <ReportGmailerrorredOutlinedIcon
               sx={{ color: '#C62828' }}
               fontSize="small"

@@ -32,7 +32,11 @@
         "table_col_3": "Volumen",
         "table_col_4": "Proveedor",
         "table_col_5": "Valor Unitario",
-        "table_col_6": "Fecha de Creación",
+        "table_col_6": "Creación",
+        "table_col_7": "Inventario",
+        "table_col_8": "Faltante",
+        "table_col_9": "Ubicación",
+        "table_tooltip": "No hay unidades de este producto en inventario",
         "form_file_title": "Carga de archivo",
         "form_file_subtitle": "Agregar varios productos con un mismo archivo",
         "form_file_dropzone_text": "Subir o arrastrar un archivo .xlsx, .csv o .json",
@@ -44,7 +48,10 @@
         "form_single_field_1": "Nombre",
         "form_single_field_2": "Valor Unitario ($COP)",
         "form_single_field_3": "Seleccione un proveedor registrado",
-        "form_single_field_4": "Volumen (m3)"
+        "form_single_field_4": "Volumen (m3)",
+        "location_modal_title": "Ubicaciones disponibles",
+        "location_modal_subtitle": "SKU del producto : ",
+        "button_close": "CERRAR"
     },
     "Sellers": {
         "new_seller": "NUEVO VENDEDOR",
