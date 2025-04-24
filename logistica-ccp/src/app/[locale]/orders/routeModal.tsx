@@ -89,7 +89,7 @@ export default function RouteModal({
           display: 'flex',
           flexDirection: 'column',
         }}
-        title={t('route_modal_title')}
+        title='Modal ruta de entrega'
       >
         <Typography
           id="modal-formulario-route-title"

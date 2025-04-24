@@ -76,7 +76,7 @@ describe('Modal de ruta de entrega', () => {
       />
     );
     await waitFor(() => {
-      const modal = screen.getByTitle(/ruta de entrega/i);
+      const modal = screen.getByTitle('Modal ruta de entrega');
       expect(modal).toBeInTheDocument();
     });
   });
