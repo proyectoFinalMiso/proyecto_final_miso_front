@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Modal,
   Box,
@@ -7,6 +9,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useState, useEffect } from 'react';
+import { useTheme } from '@mui/material/styles';
 import { getStore } from './adapters/microserviceProducts';
 import { useTranslations } from 'next-intl';
 interface LocationModalProps {
@@ -43,6 +46,8 @@ export default function LocationModal({
     onClose();
   };
 
+  const theme = useTheme()
+
   return (
     <Modal
       open={open}
@@ -61,7 +66,7 @@ export default function LocationModal({
     >
       <Box
         sx={{
-          backgroundColor: 'white',
+          backgroundColor: theme.palette.background.paper,
           borderRadius: '16px',
           boxShadow: '3',
           direction: 'column',

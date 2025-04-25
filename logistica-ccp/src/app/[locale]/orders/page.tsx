@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import styles from './Orders.module.css';
 import DataTable from '../../../globalComponents/Datatable';
 import PageTitle from '../../../globalComponents/PageTitle';
-import theme from '@/theme';
 import Grid from '@mui/material/Grid2';
 import { ThemeProvider, Box, InputAdornment, TextField } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
@@ -137,7 +136,6 @@ const Orders: React.FC = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
       <Box>
         <Grid container>
           <RouteModal
@@ -163,7 +161,6 @@ const Orders: React.FC = () => {
           </Grid>
         </Grid>
       </Box>
-    </ThemeProvider>
   );
 };
 

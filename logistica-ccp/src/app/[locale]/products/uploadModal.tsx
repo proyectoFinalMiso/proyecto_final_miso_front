@@ -1,8 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
-import { CircularProgress, SelectChangeEvent } from "@mui/material";
-import { Modal, Box, Select, Typography, TextField, Button, Stack, MenuItem, InputLabel } from "@mui/material"
+'use client'
+
+import { useState, useCallback } from "react";
+import { useTheme } from '@mui/material/styles';
+import { CircularProgress } from "@mui/material";
+import { Modal, Box, Typography, Button, Stack } from "@mui/material"
 import Grid from "@mui/material/Grid2";
-import Dropzone, { FileRejection, useDropzone } from "react-dropzone";
+import { FileRejection, useDropzone } from "react-dropzone";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 import { createProductsWithFile } from "./adapters/microserviceProducts";
@@ -60,6 +63,8 @@ export default function UploadProductsModal({ open, onClose, onProductAdded }: M
         },
     });
 
+    const theme = useTheme()
+
     return (
         <Modal
             open={open}
@@ -76,7 +81,7 @@ export default function UploadProductsModal({ open, onClose, onProductAdded }: M
             <Box sx={{ height: "100%" }}>
                 <Grid container sx={{ height: "100%" }}>
                     <Grid sx={{
-                        backgroundColor: "white",
+                        backgroundColor: theme.palette.background.paper,
                         borderRadius: "16px",
                         boxShadow: "3",
                         direction: "column",
@@ -104,7 +109,7 @@ export default function UploadProductsModal({ open, onClose, onProductAdded }: M
                                 <Grid {...getRootProps()} sx={[{
                                     alignContent: "center",
                                     alignItems: "center",
-                                    background: "#F8F8F8",
+                                    background: theme.palette.background.default,
                                     border: "dashed",
                                     borderWidth: "1px",
                                     borderRadius: "6px",
@@ -116,7 +121,7 @@ export default function UploadProductsModal({ open, onClose, onProductAdded }: M
                                 },
                                 {
                                     "&:hover": {
-                                        backgroundColor: "#dddddd"
+                                        backgroundColor: theme.palette.background.paper
                                     }
                                 }]}>
                                     <UploadFileIcon sx={{ height: "4rem", width: "100%" }} />

@@ -1,9 +1,12 @@
-// components/Layout.tsx
+'use client'
 import Link from "next/link";
 import styles from "./Sidebar.module.css"
 import { useTranslations } from "next-intl";
+import { useThemeMode } from "../themeContext";
+import { Button } from "@mui/material";
 
 const Sidebar: React.FC = () => {
+  const { toggleTheme, mode } = useThemeMode();
   const translations = useTranslations('Sidebar')
 
   return (
@@ -12,7 +15,7 @@ const Sidebar: React.FC = () => {
         <h1 className="text-xl font-bold">CPP</h1>
         <nav className="mt-5">
           <ul>
-          <li className="mb-3">
+            <li className="mb-3">
               <Link href="/manufacturers" className="hover:text-gray-300">
                 {translations("option_1")}
               </Link>
@@ -38,6 +41,9 @@ const Sidebar: React.FC = () => {
               </Link>
             </li>
           </ul>
+          <Button onClick={toggleTheme} variant="outlined" className="mt-4">
+            Toggle {mode === 'light' ? 'Dark' : 'Light'} Mode
+          </Button>
         </nav>
       </aside>
     </div>

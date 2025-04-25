@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Modal,
   Box,
@@ -8,6 +10,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { useEffect, useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 import styles from './Orders.module.css';
 import { GridColDef } from '@mui/x-data-grid';
 import { createDeliveryRoute } from './adapters/microserviceOrders';
@@ -44,6 +47,8 @@ export default function RouteModal({
     onClose();
   };
 
+  const theme = useTheme()
+
   const tableSchema: GridColDef[] = [
     {
       field: 'id',
@@ -79,7 +84,7 @@ export default function RouteModal({
     >
       <Box
         sx={{
-          backgroundColor: 'white',
+          backgroundColor: theme.palette.background.paper,
           borderRadius: '16px',
           boxShadow: '3',
           direction: 'column',
