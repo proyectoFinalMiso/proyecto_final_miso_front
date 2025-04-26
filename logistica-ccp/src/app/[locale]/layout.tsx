@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Lexend_Deca, Plus_Jakarta_Sans } from "next/font/google";
 
 import { ThemeProvider } from "../../themeContext";
 
@@ -20,11 +20,18 @@ import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
-  weight: ['300', '400', '500', '700'],
+  weight: ['300', '400', '500', '700', '800'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-plus-jakarta',
 });
+
+const lexend = Lexend_Deca({
+  weight: ['500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-lexend-exa',
+})
 
 export const metadata: Metadata = {
   title: "Logística CPP",

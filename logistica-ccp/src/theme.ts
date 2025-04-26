@@ -1,9 +1,13 @@
 'use client';
 import { createTheme } from '@mui/material/styles';
 
-export const getDesignTokens = (mode: 'light' | 'dark' | 'contrast') => {
-  const baseMode: 'light' | 'dark' = mode === 'contrast' ? 'dark' : mode;
+export const getDesignTokens = (
+  mode: 'light' | 'dark' | 'contrast',
+  font: 'plusJakartaSans' | 'lexend',
+  fontSize: number
+) => {
 
+  const baseMode: 'light' | 'dark' = mode === 'contrast' ? 'dark' : mode;
   return {
     palette: {
       mode: baseMode,
@@ -34,9 +38,15 @@ export const getDesignTokens = (mode: 'light' | 'dark' | 'contrast') => {
       })
     },
     typography: {
-      fontFamily: 'Plus Jakarta Sans',
+      fontFamily: font === 'plusJakartaSans' ? 'Plus Jakarta Sans' : 'Lexend Deca',
+      fontSize,
+      fontWeight: font === 'plusJakartaSans' ? 500 : 700,
     },
   };
 };
 
-export const getTheme = (mode: 'light' | 'dark' | 'contrast') => createTheme(getDesignTokens(mode))
+export const getTheme = (
+  mode: 'light' | 'dark' | 'contrast',
+  font: 'plusJakartaSans' | 'lexend',
+  fontSize: number
+) => createTheme(getDesignTokens(mode, font, fontSize))
