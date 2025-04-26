@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Modal,
   Box,
@@ -7,7 +9,9 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useState, useEffect } from 'react';
+import { useTheme } from '@mui/material/styles';
 import { getStore } from './adapters/microserviceProducts';
+import { useTranslations } from 'next-intl';
 interface LocationModalProps {
   open: boolean;
   onClose: () => void;
@@ -18,11 +22,11 @@ interface LocationModalProps {
 export default function LocationModal({
   open,
   onClose,
-  title = 'Ubicación Geográfica del producto',
   locationInfo,
 }: LocationModalProps) {
   const [loading, setLoading] = useState(false);
   const [store, setStore] = useState<any[]>([]);
+  const t = useTranslations('Products')
 
   useEffect(() => {
     if (!open || !locationInfo.sku) return;
@@ -42,6 +46,8 @@ export default function LocationModal({
     onClose();
   };
 
+  const theme = useTheme()
+
   return (
     <Modal
       open={open}
@@ -60,7 +66,7 @@ export default function LocationModal({
     >
       <Box
         sx={{
-          backgroundColor: 'white',
+          backgroundColor: theme.palette.background.paper,
           borderRadius: '16px',
           boxShadow: '3',
           direction: 'column',
@@ -70,14 +76,14 @@ export default function LocationModal({
           display: 'flex',
           flexDirection: 'column',
         }}
-        title={title}
+        title={t('location_modal_title')}
       >
         <Box
           sx={{
             flex: '1',
             marginBottom: '20px',
           }}
-          title={title}
+          title={t('location_modal_title')}
         >
           <Typography
             id="modal-formulario-route-title"
@@ -85,14 +91,14 @@ export default function LocationModal({
             title="Form title"
             gutterBottom
           >
-            {title}
+            {t('location_modal_title')}
           </Typography>
           <Typography
             id="modal-formulario-route-subtitle"
             sx={{ color: '#B0B0B0', marginBottom: '20px' }}
             title="Form subtitle"
           >
-            Sku del producto: {locationInfo?.sku || ''}
+            {t('location_modal_subtitle')} {locationInfo?.sku || ''}
           </Typography>
           {loading ? (
             <div className="h-[14.25rem] w-full flex justify-center items-center">
@@ -116,7 +122,7 @@ export default function LocationModal({
         </Box>
         <Stack direction={'row'} spacing={4} justifyContent={'center'}>
           <Button onClick={onClose} variant="contained" color="error">
-            Cerrar
+            {t('button_close')}
           </Button>
         </Stack>
       </Box>

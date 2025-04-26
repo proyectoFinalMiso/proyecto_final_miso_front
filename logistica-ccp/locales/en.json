@@ -8,7 +8,17 @@
         "option_1": "Suppliers",
         "option_2": "Products",
         "option_3": "Stock",
-        "option_4": "Sellers"
+        "option_4": "Sellers",
+        "option_5": "Orders"
+    },
+    "ConfigMenu": {
+        "title": "Configuration",
+        "dark_mode": "Dark Theme",
+        "contrast_mode": "High Contrast",
+        "light_mode": "Light Theme",
+        "font_1": "Plus Jakarta Sans",
+        "font_2": "Lexend",
+        "font_size": "Font size: "
     },
     "Manufacturers": {
         "new_manufacturer": "CREATE SUPPLIER",
@@ -33,6 +43,10 @@
         "table_col_4": "Provider",
         "table_col_5": "Unit Cost",
         "table_col_6": "Creation Date",
+        "table_col_7": "Stock",
+        "table_col_8": "Missing",
+        "table_col_9": "Location",
+        "table_tooltip": "There is not any stock for this product",
         "form_file_title": "Product file upload",
         "form_file_subtitle": "Create multiple products with a single file",
         "form_file_dropzone_text": "Load or drag a .xlsx, .csv or .json file",
@@ -44,7 +58,10 @@
         "form_single_field_1": "Name",
         "form_single_field_2": "Unit Cost ($COP)",
         "form_single_field_3": "Select a registered provider",
-        "form_single_field_4": "Volume (m3)"
+        "form_single_field_4": "Volume (m3)",
+        "location_modal_title": "Available locations",
+        "location_modal_subtitle": "Product's SKU: ",
+        "button_close": "CLOSE"
     },
     "Sellers": {
         "new_seller": "NEW SELLER",
@@ -77,5 +94,23 @@
         "form_field_4":"Select a registered warehouse",
         "form_button_submit":"SUBMIT",
         "form_button_cancel":"CANCEL"
+    },
+    "Orders": {
+        "title": "Orders",
+        "table_col_1": "ID",
+        "table_col_2": "Status",
+        "table_col_3": "Creation Date",
+        "table_col_4": "Customer",
+        "table_col_5": "Seller",
+        "table_col_6": "Latitude",
+        "table_col_7": "Longitude",
+        "table_col_8": "Delivery Route",
+        "route_modal_title": "Delivery Route",
+        "route_modal_order": "Order: ",
+        "route_modal_customer": "Customer: ",
+        "route_modal_address": "Address: ",
+        "route_modal_table_col_1": "SKU",
+        "route_modal_table_col_2": "Warehouse",
+        "button_close": "CLOSE"
     }
 }

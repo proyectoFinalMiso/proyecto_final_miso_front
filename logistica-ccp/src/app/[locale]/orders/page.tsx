@@ -4,15 +4,14 @@ import { useState, useEffect } from 'react';
 import styles from './Orders.module.css';
 import DataTable from '../../../globalComponents/Datatable';
 import PageTitle from '../../../globalComponents/PageTitle';
-import theme from '@/theme';
 import Grid from '@mui/material/Grid2';
 import { ThemeProvider, Box, InputAdornment, TextField } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
-import SearchIcon from '@mui/icons-material/Search';
 import RemoveRedEye from '@mui/icons-material/RemoveRedEye';
 import { getOrders } from './adapters/microserviceOrders';
 import RouteModal from './routeModal';
+import { useTranslations } from 'next-intl';
 
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
@@ -35,59 +34,60 @@ interface Order {
 }
 
 const Orders: React.FC = () => {
+  const t = useTranslations('Orders')
   const tableSchema: GridColDef[] = [
     {
       field: 'id',
-      headerName: 'Id Pedido',
+      headerName: t('table_col_1'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'left',
     },
     {
       field: 'estado',
-      headerName: 'Estado',
+      headerName: t('table_col_2'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'center',
     },
     {
       field: 'fechaIngreso',
-      headerName: 'Fecha Generación',
+      headerName: t('table_col_3'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'left',
     },
     {
       field: 'cliente',
-      headerName: 'Cliente',
+      headerName: t('table_col_4'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'left',
     },
     {
       field: 'vendedor',
-      headerName: 'Vendedor',
+      headerName: t('table_col_5'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'left',
     },
     {
       field: 'latitud',
-      headerName: 'Latitud',
+      headerName: t('table_col_6'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'center',
     },
     {
       field: 'longitud',
-      headerName: 'Longitud',
+      headerName: t('table_col_7'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'center',
     },
     {
       field: 'verRuta',
-      headerName: 'Ver Ruta de Entrega',
+      headerName: t('table_col_8'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'center',
@@ -122,16 +122,6 @@ const Orders: React.FC = () => {
     direccion: '',
   });
 
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const filteredOrders = (value: string) => {
-    setSearchTerm(value);
-    const filtered = allOrders.filter((order) =>
-      order.id.toLowerCase().includes(value.toLowerCase())
-    );
-    setOrders(filtered);
-  };
-
   const getOrderById = (id: string) =>
     allOrders.find((order) => order.id === id);
 
@@ -146,7 +136,6 @@ const Orders: React.FC = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
       <Box>
         <Grid container>
           <RouteModal
@@ -155,7 +144,7 @@ const Orders: React.FC = () => {
             routeInfo={modalRouteData}
           />
           <Grid sx={{ direction: 'column' }} size="grow">
-            <PageTitle text="Pedidos" />
+            <PageTitle text={t('title')} />
             <Grid
               container
               size="grow"
@@ -165,35 +154,6 @@ const Orders: React.FC = () => {
                 height: '40px',
               }}
             >
-              <Grid size="grow">
-                <TextField
-                  fullWidth
-                  id="buscar-producto"
-                  className={styles.TextField}
-                  placeholder="Buscar por ID"
-                  value={searchTerm}
-                  onChange={(e) => filteredOrders(e.target.value)}
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="end">
-                          <SearchIcon />
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
-                  sx={{
-                    '& .MuiInputBase-root': {
-                      borderRadius: '16px',
-                      height: '40px',
-                    },
-                    '& .MuiInputBase-input': {
-                      height: '40px',
-                      padding: '10px',
-                    },
-                  }}
-                />
-              </Grid>
             </Grid>
             <Grid size="grow" sx={{ margin: '1.25rem 6.25rem' }}>
               <DataTable columns={tableSchema} rows={orders} />
@@ -201,7 +161,6 @@ const Orders: React.FC = () => {
           </Grid>
         </Grid>
       </Box>
-    </ThemeProvider>
   );
 };
 

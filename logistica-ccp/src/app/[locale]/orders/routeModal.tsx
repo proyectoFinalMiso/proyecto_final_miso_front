@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Modal,
   Box,
@@ -8,23 +10,24 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { useEffect, useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 import styles from './Orders.module.css';
 import { GridColDef } from '@mui/x-data-grid';
 import { createDeliveryRoute } from './adapters/microserviceOrders';
 import DataTable from '../../../globalComponents/Datatable';
+import { useTranslations } from 'next-intl';
 interface ModalFormProps {
   open: boolean;
   onClose: () => void;
-  title?: string;
   routeInfo: { pedidoId: string; clienteId: string; direccion: string };
 }
 
 export default function RouteModal({
   open,
   onClose,
-  title = 'Ruta de entrega',
   routeInfo,
 }: ModalFormProps) {
+  const t = useTranslations('Orders')
   const [loading, setLoading] = useState(false);
   const [route, setRoute] = useState<any[]>([]);
   useEffect(() => {
@@ -44,17 +47,19 @@ export default function RouteModal({
     onClose();
   };
 
+  const theme = useTheme()
+
   const tableSchema: GridColDef[] = [
     {
       field: 'id',
-      headerName: 'ID',
+      headerName: t('route_modal_table_col_1'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'left',
     },
     {
       field: 'direccion',
-      headerName: 'Dirección de bodega',
+      headerName: t('route_modal_table_col_2'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'center',
@@ -79,7 +84,7 @@ export default function RouteModal({
     >
       <Box
         sx={{
-          backgroundColor: 'white',
+          backgroundColor: theme.palette.background.paper,
           borderRadius: '16px',
           boxShadow: '3',
           direction: 'column',
@@ -89,7 +94,7 @@ export default function RouteModal({
           display: 'flex',
           flexDirection: 'column',
         }}
-        title={title}
+        title='Modal ruta de entrega'
       >
         <Typography
           id="modal-formulario-route-title"
@@ -97,28 +102,28 @@ export default function RouteModal({
           title="Form title"
           gutterBottom
         >
-          {title}
+          {t('route_modal_title')}
         </Typography>
         <Typography
           id="modal-formulario-route-subtitle"
           sx={{ color: '#B0B0B0' }}
           title="Form subtitle"
         >
-          Pedido: {routeInfo.pedidoId}
+          {t('route_modal_order')} {routeInfo.pedidoId}
         </Typography>
         <Typography
           id="modal-formulario-route-subtitle"
           sx={{ color: '#B0B0B0' }}
           title="Form subtitle"
         >
-          Cliente: {routeInfo.clienteId}
+          {t('route_modal_customer')} {routeInfo.clienteId}
         </Typography>
         <Typography
           id="modal-formulario-route-subtitle"
           sx={{ color: '#B0B0B0' }}
           title="Form subtitle"
         >
-          Dirección: {routeInfo.direccion}
+          {t('route_modal_address')} {routeInfo.direccion}
         </Typography>
         <Box
           sx={{
@@ -147,7 +152,7 @@ export default function RouteModal({
         </Box>
         <Stack direction={'row'} spacing={4} justifyContent={'center'}>
           <Button onClick={onClose} variant="contained" color="error">
-            Cerrar
+            {t('button_close')}
           </Button>
         </Stack>
       </Box>
