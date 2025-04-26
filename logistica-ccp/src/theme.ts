@@ -18,11 +18,26 @@ export const getDesignTokens = (
         dropzone: '#F8F8F8',
         contrastText: '#FFF',
       },
+      ...(mode === 'light' && {
+        background: {
+          default: '#F8F8F8',
+          paper: '#FFFFFF',
+          dropzone: '#F8F8F8',
+          sidebar: '#496348',
+          tableHeader: '#496348'
+        },
+        text: {
+          primary: '#2E2E2E',
+          sidebar: '#FFFFFF'
+        }
+      }),
       ...(mode === 'dark' && {
         background: {
           default: '#121212',
           paper: '#1E1E1E',
           dropzone: '#262626',
+          sidebar: '#496348',
+          tableHeader: '#496348'
         },
       }),
       ...(mode === 'contrast' && {
@@ -30,6 +45,8 @@ export const getDesignTokens = (
           default: "#000000",
           paper: "#000000",
           dropzone: '#111111',
+          sidebar: "#000000",
+          tableHeader: '#000000'
         },
         text: {
           primary: '#FFFFFF',
@@ -40,7 +57,7 @@ export const getDesignTokens = (
     typography: {
       fontFamily: font === 'plusJakartaSans' ? 'Plus Jakarta Sans' : 'Lexend Deca',
       fontSize,
-      fontWeight: font === 'plusJakartaSans' ? 500 : 700,
+      fontWeight: font === 'plusJakartaSans' ? 500 : 500,
     },
   };
 };

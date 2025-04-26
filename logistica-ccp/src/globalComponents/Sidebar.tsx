@@ -5,18 +5,29 @@ import { useTranslations } from "next-intl";
 import Grid from "@mui/material/Grid2";
 
 import ConfigMenu from '../globalComponents/ConfigMenu'
-import { Box } from "@mui/material";
+import { useTheme } from "@mui/material";
 
 const Sidebar: React.FC = () => {
 
   if (typeof window !== 'undefined') { }
 
   const translations = useTranslations('Sidebar')
+  const theme = useTheme()
 
   return (
-    <div className={`${styles.Sidebar_body} flex`} data-testid="sidebar" title="CPP Menu">
+    <div 
+      className={`${styles.Sidebar_body} flex`} 
+      data-testid="sidebar" 
+      title="CPP Menu"
+      style={{ backgroundColor: theme.palette.background.sidebar, color: theme.palette.text.sidebar }}
+    >
       <aside className={`${styles.Sidebar}`}>
-        <Grid container direction='column' sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <Grid container direction='column' 
+        sx={{ 
+          height: '100%',
+          display: 'flex', 
+          flexDirection: 'column' 
+          }}>
 
           <Grid sx={{ marginBottom: '2rem' }}>
             <h1 className="text-xl font-bold">CPP</h1>

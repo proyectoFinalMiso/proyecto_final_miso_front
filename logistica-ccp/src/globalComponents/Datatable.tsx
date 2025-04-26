@@ -1,6 +1,6 @@
 'use client'
 
-import { Paper } from "@mui/material";
+import { Paper, useTheme } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { esES, enUS } from "@mui/x-data-grid/locales"
 import styles from './Datatable.module.css'
@@ -16,10 +16,10 @@ type DataTableProps = {
 export default function DataTable({ columns, rows }: DataTableProps) {
     const styledColumns = columns.map(col => ({
         ...col,
-        headerClassName: styles.Header
     }))
 
     const locale = useLocale()
+    const theme = useTheme()
 
     const getLocaleText = () => {
         switch (locale) {
@@ -34,10 +34,24 @@ export default function DataTable({ columns, rows }: DataTableProps) {
         <Paper sx={{ height: '100%', width: '100%', marginTop: '1.25rem', borderRadius: "16px" }}>
             <DataGrid
                 rows={rows}
-                columns={styledColumns}
+                columns={columns}
                 initialState={{ pagination: { paginationModel } }}
                 pageSizeOptions={[10, 20, 50, 100]}
-                sx={{ border: 0, borderRadius: "16px" }}
+                sx={{ 
+                    border: 0, 
+                    borderRadius: "16px",
+
+                    '& .MuiDataGrid-row--borderBottom': {
+                        background: `${theme.palette.background.tableHeader} !important`,
+                    },
+                    '& .MuiDataGrid-columnHeaderTitle': {
+                        color: theme.palette.text.sidebar,
+                    },
+                    '& .MuiDataGrid-columnHeader': {
+                        background: '#fff0',
+                        border: 'none !important'
+                    }
+                }}
                 getRowHeight={(params) => null}
                 localeText={getLocaleText()}
             />  

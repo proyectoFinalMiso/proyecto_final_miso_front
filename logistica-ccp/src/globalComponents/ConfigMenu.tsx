@@ -35,33 +35,47 @@ export default function ConfigMenu() {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem sx={{ borderRadius: '30px' }}>
+                <MenuItem>
                     <Grid direction="column" sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <Button onClick={toggleTheme} variant="outlined" className="mt-4">
+                        <Grid sx={{ marginBottom: '1.25rem' }}>
+                            <h2>Opciones</h2>
+                        </Grid>
+                        <Button onClick={toggleTheme} variant="outlined" sx={{ margin: '0.5rem 0' }}>
                             Toggle {mode === 'light' ? 'Dark' : 'Light'} Mode
                         </Button>
 
                         <Tooltip title={`Cambiar a ${font === 'plusJakartaSans' ? 'Lexend Deca' : 'Plus Jakarta Sans'}`}>
-                            <Button onClick={toggleFont} variant="outlined" className="mt-4">
+                            <Button onClick={toggleFont} variant="outlined" sx={{ margin: '0.5rem 0' }}>
                                 Toggle Font
                             </Button>
                         </Tooltip>
 
-                        <Button onClick={() => {
-                            setFontSize((s) => {
-                                const newSize = Math.max(s - 1, 10);
-                                localStorage.setItem('fontSize', newSize.toString());
-                                return newSize;
-                            });
-                        }}>A-</Button>
+                        <Stack direction="row" spacing={0} sx={{ alignItems: 'center', justifyContent: 'center', margin: '0.5rem 0' }}>
+                            <Button
+                                sx={{
+                                    padding: 0
+                                }}
+                                onClick={() => {
+                                    setFontSize((s) => {
+                                        const newSize = Math.max(s - 1, 10);
+                                        localStorage.setItem('fontSize', newSize.toString());
+                                        return newSize;
+                                    });
+                                }}>A-</Button>
 
-                        <Button onClick={() => {
-                            setFontSize((s) => {
-                                const newSize = Math.min(s + 1, 32);
-                                localStorage.setItem('fontSize', newSize.toString());
-                                return newSize;
-                            });
-                        }}>A+</Button>
+                            <Button
+                                sx={{
+                                    padding: 0
+                                }}
+
+                                onClick={() => {
+                                    setFontSize((s) => {
+                                        const newSize = Math.min(s + 1, 32);
+                                        localStorage.setItem('fontSize', newSize.toString());
+                                        return newSize;
+                                    });
+                                }}>A+</Button>
+                        </Stack>
 
                         <p style={{ fontSize }}>Current Font Size: {fontSize}px</p>
                     </Grid>
