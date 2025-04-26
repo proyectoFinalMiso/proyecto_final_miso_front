@@ -15,6 +15,32 @@ jest.mock('react-native/Libraries/LayoutAnimation/LayoutAnimation', () => ({
     },
 }));
 
+jest.mock('react-i18next', () => ({
+    useTranslation: jest.fn().mockReturnValue({
+        t: (key: string, options?: any) => {
+            const translations: Record<string, any> = {
+                'cartTable.title': 'Carrito de Compras',
+                'cartTable.empty': 'No hay productos en el carrito',
+                'cartTable.unitValue': 'Valor Unitario',
+                'cartTable.quantity': 'Cantidad',
+                'cartTable.subtotal': 'Subtotal',
+                'cartTable.action': 'Acción',
+                'cartTable.removeFromCart': 'Eliminar del carrito',
+                'cartTable.expandDetails': 'Abrir detalles',
+                'cartTable.collapseDetails': 'Cerrar detalles',
+                'cartTable.decreaseQuantity': (opts?: any) => `Disminuir cantidad para ${opts?.name || ''}`,
+                'cartTable.increaseQuantity': (opts?: any) => `Aumentar cantidad para ${opts?.name || ''}`,
+                'cartTable.currentQuantity': (opts?: any) => `Cantidad actual ${opts?.quantity || ''}`,
+            };
+            const value = translations[key];
+            if (typeof value === 'function') {
+                return value(options);
+            }
+            return value || key;
+        }
+    })
+}));
+
 const renderWithProvider = (component: React.ReactElement) => {
     return render(
         <CartProvider>
@@ -158,4 +184,4 @@ const TestCartAdder = ({ products, quantities = [] }: { products: Product[], qua
     }, []);
 
     return null;
-}; 
+};

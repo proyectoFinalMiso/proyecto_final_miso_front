@@ -7,10 +7,13 @@ import FilterModal from '../../components/FilterProductsModal';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ErrorDisplay from '../../components/ErrorDisplay';
 import { fetchAvailableInventory, mapInventoryToProducts } from '../../services/api/inventoryService';
+import { useTranslation } from 'react-i18next';
 
 const AUTO_REFRESH_INTERVAL = 30000;
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
+
   // API data
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -39,12 +42,12 @@ export default function HomeScreen() {
       setProducts(mappedProducts);
       setLastUpdated(new Date());
     } catch (err) {
-      setError('No se pudieron cargar los productos. Por favor intente de nuevo.');
+      setError(t('home.loadError', 'No se pudieron cargar los productos. Por favor intente de nuevo.'));
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
     }
-  }, []);
+  }, [t]);
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
@@ -78,7 +81,7 @@ export default function HomeScreen() {
     const max = tempPriceRange.max.trim() === '' ? null : Number(tempPriceRange.max);
 
     if (min !== null && max !== null && min > max) {
-      alert("El precio mínimo no puede ser mayor que el precio máximo.");
+      alert(t('home.priceRangeError', 'El precio mínimo no puede ser mayor que el precio máximo.'));
       return;
     }
 
@@ -112,13 +115,13 @@ export default function HomeScreen() {
   const hasActiveFilters = priceRange.min !== null || priceRange.max !== null;
 
   const formattedLastUpdated = lastUpdated
-    ? `Última actualización: ${lastUpdated.toLocaleTimeString()}`
+    ? t('home.lastUpdated', { time: lastUpdated.toLocaleTimeString() })
     : '';
 
   if (isLoading) {
     return (
       <SafeAreaView style={styles.container}>
-        <LoadingIndicator message="Cargando productos..." />
+        <LoadingIndicator message={t('home.loading', 'Cargando productos...')} />
       </SafeAreaView>
     );
   }
@@ -136,7 +139,7 @@ export default function HomeScreen() {
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.title} testID="homeScreenTitle" accessibilityLabel='homeScreenTitle'>
-            Ordena lo que gustes
+            {t('home.title')}
           </Text>
           {lastUpdated && (
             <Text style={styles.lastUpdatedText} testID='last-updated-text' accessibilityLabel='last-updated-text'>{formattedLastUpdated}</Text>
@@ -146,20 +149,20 @@ export default function HomeScreen() {
           <View style={styles.searchRow}>
             <TextInput
               style={styles.searchInput}
-              placeholder="Busca productos..."
+              placeholder={t('home.searchProducts')}
               placeholderTextColor={Colors.light.searchHint}
               value={searchText}
               onChangeText={setSearchText}
               testID='searchInput'
-              accessibilityLabel="Buscar productos"
-              accessibilityHint="Ingresa el nombre del producto que buscas"
+              accessibilityLabel={t('common.search')}
+              accessibilityHint={t('home.searchHint', 'Ingresa el nombre del producto que buscas')}
             />
             <TouchableOpacity
               style={[styles.filterButton, hasActiveFilters && styles.filterButtonActive]}
               onPress={openFilterModal}
               testID="filterButton"
-              accessibilityLabel="Filtrar productos"
-              accessibilityHint="Abre el modal de filtrado"
+              accessibilityLabel={t('home.filterProducts', 'Filtrar productos')}
+              accessibilityHint={t('home.filterHint', 'Abre el modal de filtrado')}
             >
               <Ionicons
                 name="filter-outline"
@@ -171,11 +174,11 @@ export default function HomeScreen() {
           {hasActiveFilters && (
             <View style={styles.activeFiltersContainer}>
               <Text style={styles.activeFiltersText}>
-                Filtros activos:
-                {priceRange.min !== null && ` Precio mín: $${priceRange.min}`}
-                {priceRange.max !== null && ` Precio máx: $${priceRange.max}`}
+                {t('home.filters')}
+                {priceRange.min !== null && ` ${t('products.minPrice', 'Precio mín')}: $${priceRange.min}`}
+                {priceRange.max !== null && ` ${t('products.maxPrice', 'Precio máx')}: $${priceRange.max}`}
               </Text>
-              <TouchableOpacity onPress={clearFilters} accessibilityLabel="Limpiar filtros" testID='clearFiltersButton'>
+              <TouchableOpacity onPress={clearFilters} accessibilityLabel={t('home.clearFilters', 'Limpiar filtros')} testID='clearFiltersButton'>
                 <Ionicons name="close-circle" size={18} color={Colors.light.text} />
               </TouchableOpacity>
             </View>

@@ -10,7 +10,8 @@ import {
 } from '@expo-google-fonts/plus-jakarta-sans';
 import { CartProvider } from '../contexts/CartContext';
 import { AuthProvider } from '../contexts/AuthContext';
-
+import '../utils/i18n';
+import { initializeLanguage } from '../utils/i18n';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,9 +24,14 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
+    const initialize = async () => {
+      await initializeLanguage();
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    initialize();
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {

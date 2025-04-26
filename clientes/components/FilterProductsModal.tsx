@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Modal, Pressable, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants/Colors';
+import { useTranslation } from 'react-i18next';
 
 type FilterModalProps = {
     visible: boolean;
@@ -20,6 +21,8 @@ const FilterModal = ({
     onApply,
     onClear,
 }: FilterModalProps) => {
+    const { t } = useTranslation();
+
     return (
         <Modal
             visible={visible}
@@ -30,39 +33,39 @@ const FilterModal = ({
             <Pressable style={styles.modalOverlay} onPress={onClose} testID="modal-overlay">
                 <View style={styles.modalContent} onStartShouldSetResponder={() => true}>
                     <View style={styles.modalHeader}>
-                        <Text style={styles.modalTitle}>Filtrar productos</Text>
+                        <Text style={styles.modalTitle}>{t('home.filterProducts')}</Text>
                         <TouchableOpacity onPress={onClose} testID="modal-close-button">
                             <Ionicons name="close" size={24} color={Colors.light.text} />
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.filterSection}>
-                        <Text style={styles.filterSectionTitle}>Precio</Text>
+                        <Text style={styles.filterSectionTitle}>{t('products.price')}</Text>
                         <View style={styles.priceInputsContainer}>
                             <View style={styles.priceInputWrapper}>
-                                <Text style={styles.priceInputLabel}>Mínimo</Text>
+                                <Text style={styles.priceInputLabel}>{t('products.minPrice')}</Text>
                                 <TextInput
                                     style={styles.priceInput}
                                     value={tempPriceRange.min}
                                     onChangeText={(text) => onTempPriceChange('min', text)}
-                                    placeholder="Mín"
+                                    placeholder={t('filters.min', 'Mín')}
                                     placeholderTextColor={Colors.light.searchHint}
                                     keyboardType="numeric"
                                     testID="filter-min-price-input"
-                                    accessibilityLabel="Input precio mínimo"
+                                    accessibilityLabel={t('filters.minPriceInput', 'Input precio mínimo')}
                                 />
                             </View>
                             <View style={styles.priceInputWrapper}>
-                                <Text style={styles.priceInputLabel}>Máximo</Text>
+                                <Text style={styles.priceInputLabel}>{t('products.maxPrice')}</Text>
                                 <TextInput
                                     style={styles.priceInput}
                                     value={tempPriceRange.max}
                                     onChangeText={(text) => onTempPriceChange('max', text)}
-                                    placeholder="Máx"
+                                    placeholder={t('filters.max', 'Máx')}
                                     placeholderTextColor={Colors.light.searchHint}
                                     keyboardType="numeric"
                                     testID="filter-max-price-input"
-                                    accessibilityLabel="Input precio máximo"
+                                    accessibilityLabel={t('filters.maxPriceInput', 'Input precio máximo')}
                                 />
                             </View>
                         </View>
@@ -73,17 +76,17 @@ const FilterModal = ({
                             style={styles.clearButton}
                             onPress={onClear}
                             testID="filter-clear-button"
-                            accessibilityLabel="Limpiar filtros"
+                            accessibilityLabel={t('home.clearFilters')}
                         >
-                            <Text style={styles.clearButtonText}>Limpiar</Text>
+                            <Text style={styles.clearButtonText}>{t('common.cancel')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.applyButton}
                             onPress={onApply}
                             testID="filter-apply-button"
-                            accessibilityLabel="Aplicar filtros"
+                            accessibilityLabel={t('filters.applyFilters', 'Aplicar filtros')}
                         >
-                            <Text style={styles.applyButtonText}>Aplicar</Text>
+                            <Text style={styles.applyButtonText}>{t('filters.apply', 'Aplicar')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

@@ -4,8 +4,10 @@ import { Colors } from '../../constants/Colors';
 import CartTable from '../../components/CartTable';
 import OrderSummary from '../../components/OrderSummary';
 import { useCart } from '../../contexts/CartContext';
+import { useTranslation } from 'react-i18next';
 
 export default function CartScreen() {
+  const { t } = useTranslation();
   const { items } = useCart();
 
   return (
@@ -16,7 +18,7 @@ export default function CartScreen() {
       >
         <View style={styles.content} testID="cart-content">
           <View style={styles.header}>
-            <Text style={styles.title}>Carrito de compras</Text>
+            <Text style={styles.title}>{t('cart.title')}</Text>
           </View>
           <CartTable />
         </View>

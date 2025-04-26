@@ -13,6 +13,28 @@ jest.mock('@react-native-community/datetimepicker', () => {
     return MockDateTimePicker;
 });
 
+jest.mock('react-i18next', () => ({
+    useTranslation: jest.fn().mockReturnValue({
+        t: (key: string, options?: any) => {
+            const translations: Record<string, any> = {
+                'filterOrdersModal.title': 'Filtrar pedidos',
+                'filterOrdersModal.totalValue': 'Valor total',
+                'filterOrdersModal.min': 'Mínimo',
+                'filterOrdersModal.max': 'Máximo',
+                'filterOrdersModal.minPlaceholder': 'Mín',
+                'filterOrdersModal.maxPlaceholder': 'Máx',
+                'filterOrdersModal.date': 'Fecha',
+                'filterOrdersModal.from': 'Desde',
+                'filterOrdersModal.to': 'Hasta',
+                'filterOrdersModal.datePlaceholder': 'DD/MM/YYYY',
+                'filterOrdersModal.clear': 'Limpiar',
+                'filterOrdersModal.apply': 'Aplicar',
+            };
+            return translations[key] || key;
+        }
+    })
+}));
+
 describe('FilterOrdersModal Component', () => {
     const mockOnClose = jest.fn();
     const mockOnTempPriceChange = jest.fn();
@@ -165,4 +187,4 @@ describe('FilterOrdersModal Component', () => {
 
         expect(mockOnApply).toHaveBeenCalledTimes(2);
     });
-}); 
+});
