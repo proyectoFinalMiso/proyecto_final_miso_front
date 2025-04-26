@@ -48,8 +48,11 @@ export default function DataTable({ columns, rows }: DataTableProps) {
                         color: theme.palette.text.sidebar,
                     },
                     '& .MuiDataGrid-columnHeader': {
-                        background: '#fff0',
+                        background: '#fff0 !important',
                         border: 'none !important'
+                    },
+                    '& .MuiSvgIcon-root': {
+                        color: theme.palette.text.sidebar,
                     }
                 }}
                 getRowHeight={(params) => null}

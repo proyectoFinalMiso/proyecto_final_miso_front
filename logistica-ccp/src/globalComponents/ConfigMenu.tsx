@@ -2,6 +2,7 @@ import { Button, Menu, MenuItem, Stack, Tooltip, Box } from '@mui/material'
 import Grid from "@mui/material/Grid2";
 import { useState, MouseEvent } from 'react';
 import { useThemeMode } from "../themeContext";
+import { useTranslations } from 'next-intl';
 
 declare module '@mui/material/Button' {
     interface ButtonPropsColorOverrides {
@@ -24,6 +25,8 @@ export default function ConfigMenu() {
 
     const { toggleTheme, mode, toggleFont, font, setFontSize, fontSize } = useThemeMode();
 
+    const t = useTranslations('ConfigMenu')
+
     return (
         <Grid container sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <Button variant="text" color='dark' onClick={handleClick}>
@@ -38,15 +41,15 @@ export default function ConfigMenu() {
                 <MenuItem>
                     <Grid direction="column" sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Grid sx={{ marginBottom: '1.25rem' }}>
-                            <h2>Opciones</h2>
+                            <h2>{t('title')}</h2>
                         </Grid>
                         <Button onClick={toggleTheme} variant="outlined" sx={{ margin: '0.5rem 0' }}>
-                            Toggle {mode === 'light' ? 'Dark' : 'Light'} Mode
+                           {mode === 'light' ? t('light_mode') : mode === 'dark' ? t('dark_mode') : t('contrast_mode')}
                         </Button>
 
                         <Tooltip title={`Cambiar a ${font === 'plusJakartaSans' ? 'Lexend Deca' : 'Plus Jakarta Sans'}`}>
                             <Button onClick={toggleFont} variant="outlined" sx={{ margin: '0.5rem 0' }}>
-                                Toggle Font
+                                {font === 'plusJakartaSans' ? t('font_1') : t('font_2')}
                             </Button>
                         </Tooltip>
 

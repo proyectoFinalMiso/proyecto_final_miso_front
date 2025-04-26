@@ -11,6 +11,15 @@
         "option_4": "Vendedores",
         "option_5": "Pedidos"
     },
+    "ConfigMenu": {
+        "title": "Opciones",
+        "dark_mode": "Tema Oscuro",
+        "contrast_mode": "Alto Contraste",
+        "light_mode": "Tema Claro",
+        "font_1": "Plus Jakarta Sans",
+        "font_2": "Lexend",
+        "font_size": "Tamaño de letra: "
+    },
     "Manufacturers": {
         "new_manufacturer": "CREAR PROVEEDOR",
         "title": "Proveedores",
