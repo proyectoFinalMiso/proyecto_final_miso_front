@@ -13,14 +13,13 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants/Colors';
 import { useCart } from '../contexts/CartContext';
-
+import { useTranslation } from 'react-i18next';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 }
-
 
 export type Product = {
   id: string;
@@ -37,6 +36,7 @@ type ProductTableProps = {
 
 const ProductTable = ({ products, onProductPress, refreshControl }: ProductTableProps) => {
   const { addToCart } = useCart();
+  const { t } = useTranslation();
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
@@ -101,7 +101,7 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
               name={isExpanded ? 'chevron-up' : 'chevron-down'}
               size={20}
               color={Colors.light.text}
-              accessibilityLabel={isExpanded ? "Contraer detalles" : "Expandir detalles"}
+              accessibilityLabel={isExpanded ? t('productTable.collapseDetails', 'Contraer detalles') : t('productTable.expandDetails', 'Expandir detalles')}
             />
           </View>
         </TouchableOpacity>
@@ -109,24 +109,24 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
         {isExpanded && (
           <View style={styles.expandedContent}>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Valor Unitario</Text>
+              <Text style={styles.detailLabel}>{t('productTable.unitValue', 'Valor Unitario')}</Text>
               <Text style={styles.detailValue}>${item.price.toFixed(0)} COP</Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Cantidad</Text>
+              <Text style={styles.detailLabel}>{t('productTable.quantity', 'Cantidad')}</Text>
               <View style={styles.quantityContainer}>
                 <TouchableOpacity
                   style={styles.quantityButton}
                   onPress={() => decreaseQuantity(item.id)}
                   testID={`decrease-quantity-button-${item.id}`}
-                  accessibilityLabel={`Disminuir cantidad para ${item.name}`}
+                  accessibilityLabel={t('productTable.decreaseQuantity', { name: item.name, defaultValue: `Disminuir cantidad para ${item.name}` })}
                 >
                   <Ionicons name="remove" size={12} color={Colors.light.text} />
                 </TouchableOpacity>
                 <Text
                   style={styles.quantityText}
                   testID={`quantity-text-${item.id}`}
-                  accessibilityLabel={`Cantidad actual ${quantity}`}
+                  accessibilityLabel={t('productTable.currentQuantity', { quantity, defaultValue: `Cantidad actual ${quantity}` })}
                 >
                   {quantity}
                 </Text>
@@ -134,22 +134,22 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
                   style={styles.quantityButton}
                   onPress={() => increaseQuantity(item.id)}
                   testID={`increase-quantity-button-${item.id}`}
-                  accessibilityLabel={`Aumentar cantidad para ${item.name}`}
+                  accessibilityLabel={t('productTable.increaseQuantity', { name: item.name, defaultValue: `Aumentar cantidad para ${item.name}` })}
                 >
                   <Ionicons name="add" size={12} color={Colors.light.text} />
                 </TouchableOpacity>
               </View>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Acción</Text>
+              <Text style={styles.detailLabel}>{t('productTable.action', 'Acción')}</Text>
               <TouchableOpacity
                 style={styles.detailButton}
                 onPress={() => handleAddToCart(item, quantity)}
                 testID={`add-to-cart-button-${item.id}`}
-                accessibilityLabel={`Agregar ${quantity} de ${item.name} al carrito`}
+                accessibilityLabel={t('productTable.addToCart', { quantity, name: item.name, defaultValue: `Agregar ${quantity} de ${item.name} al carrito` })}
               >
                 <Ionicons name="add" size={8} color={Colors.light.buttonText} />
-                <Text style={styles.detailButtonText}>Agregar al carrito</Text>
+                <Text style={styles.detailButtonText}>{t('productTable.addToCartButton', 'Agregar al carrito')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -161,7 +161,7 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Productos</Text>
+        <Text style={styles.headerText}>{t('productTable.title', 'Productos')}</Text>
       </View>
 
       {products.length === 0 ? (
@@ -169,9 +169,9 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
           <Text
             style={styles.emptyText}
             testID="empty-product-list-text"
-            accessibilityLabel="No hay productos disponibles en este momento"
+            accessibilityLabel={t('productTable.empty', 'No hay productos disponibles en este momento')}
           >
-            No hay productos disponibles
+            {t('productTable.empty', 'No hay productos disponibles')}
           </Text>
         </View>
       ) : (
@@ -182,7 +182,7 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
           contentContainerStyle={styles.listContent}
           refreshControl={refreshControl}
           testID="product-list"
-          accessibilityLabel="Lista de productos disponibles"
+          accessibilityLabel={t('productTable.listLabel', 'Lista de productos disponibles')}
         />
       )}
     </View>

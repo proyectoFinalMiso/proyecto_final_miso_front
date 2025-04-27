@@ -8,6 +8,7 @@ import ErrorDisplay from '../../components/ErrorDisplay';
 import { fetchClientOrders, Order } from '../../services/api/orderService';
 import { useAuth } from '../../contexts/AuthContext';
 import OrderTable from '../../components/OrderTable';
+import { useTranslation } from 'react-i18next';
 
 const AUTO_REFRESH_INTERVAL = 30000;
 
@@ -23,6 +24,7 @@ const formatDate = (dateString: string) => {
 };
 
 export default function OrdersScreen() {
+  const { t } = useTranslation();
   const { clienteId } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -66,19 +68,19 @@ export default function OrdersScreen() {
       setError(null);
 
       if (!clienteId) {
-        throw new Error('No se encontró el ID del cliente');
+        throw new Error(t('orders.noClientId', 'No se encontró el ID del cliente'));
       }
 
       const response = await fetchClientOrders(clienteId);
       setOrders(response.pedidos);
       setLastUpdated(new Date());
     } catch (err) {
-      setError('No se pudieron cargar los pedidos. Por favor intente de nuevo.');
+      setError(t('orders.loadError', 'No se pudieron cargar los pedidos. Por favor intente de nuevo.'));
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
     }
-  }, [clienteId]);
+  }, [clienteId, t]);
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
@@ -112,7 +114,7 @@ export default function OrdersScreen() {
     const max = tempPriceRange.max.trim() === '' ? null : Number(tempPriceRange.max);
 
     if (min !== null && max !== null && min > max) {
-      alert("El valor mínimo no puede ser mayor que el valor máximo.");
+      alert(t('orders.priceRangeError', 'El valor mínimo no puede ser mayor que el valor máximo.'));
       return;
     }
 
@@ -122,7 +124,7 @@ export default function OrdersScreen() {
     const endDate = parseDateString(tempDateRange.end);
 
     if (startDate && endDate && startDate > endDate) {
-      alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+      alert(t('orders.dateRangeError', 'La fecha de inicio no puede ser mayor que la fecha de fin.'));
       return;
     }
 
@@ -163,13 +165,13 @@ export default function OrdersScreen() {
   const hasActiveFilters = priceRange.min !== null || priceRange.max !== null || dateRange.start !== null || dateRange.end !== null;
 
   const formattedLastUpdated = lastUpdated
-    ? `Última actualización: ${lastUpdated.toLocaleTimeString()}`
+    ? t('orders.lastUpdated', { time: lastUpdated.toLocaleTimeString() })
     : '';
 
   if (isLoading) {
     return (
       <SafeAreaView style={styles.container}>
-        <LoadingIndicator message="Cargando pedidos..." />
+        <LoadingIndicator message={t('orders.loading', 'Cargando pedidos...')} />
       </SafeAreaView>
     );
   }
@@ -186,7 +188,7 @@ export default function OrdersScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.title} testID='ordersTitle' accessibilityLabel='ordersTitle'>Mis pedidos</Text>
+          <Text style={styles.title} testID='ordersTitle' accessibilityLabel='ordersTitle'>{t('orders.title', 'Mis pedidos')}</Text>
           {lastUpdated && (
             <Text style={styles.lastUpdatedText} testID='last-updated-orders' accessibilityLabel='last-updated-orders'>{formattedLastUpdated}</Text>
           )}
@@ -195,20 +197,20 @@ export default function OrdersScreen() {
           <View style={styles.searchRow}>
             <TextInput
               style={styles.searchInput}
-              placeholder="Busca por dirección..."
+              placeholder={t('orders.searchOrders', 'Busca por dirección...')}
               placeholderTextColor={Colors.light.searchHint}
               value={searchText}
               onChangeText={setSearchText}
               testID='searchInput'
-              accessibilityLabel="Buscar pedidos"
-              accessibilityHint="Ingresa la dirección del pedido que buscas"
+              accessibilityLabel={t('orders.search', 'Buscar pedidos')}
+              accessibilityHint={t('orders.searchHint', 'Ingresa la dirección del pedido que buscas')}
             />
             <TouchableOpacity
               style={[styles.filterButton, hasActiveFilters && styles.filterButtonActive]}
               onPress={openFilterModal}
               testID="filterButton"
-              accessibilityLabel="Filtrar pedidos"
-              accessibilityHint="Abre el modal de filtrado"
+              accessibilityLabel={t('orders.filterOrders', 'Filtrar pedidos')}
+              accessibilityHint={t('orders.filterHint', 'Abre el modal de filtrado')}
             >
               <Ionicons
                 name="filter-outline"
@@ -220,13 +222,13 @@ export default function OrdersScreen() {
           {hasActiveFilters && (
             <View style={styles.activeFiltersContainer}>
               <Text style={styles.activeFiltersText}>
-                Filtros activos:
-                {priceRange.min !== null && ` Valor mín: $${priceRange.min}`}
-                {priceRange.max !== null && ` Valor máx: $${priceRange.max}`}
-                {dateRange.start !== null && ` Desde: ${dateRange.start.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })}`}
-                {dateRange.end !== null && ` Hasta: ${dateRange.end.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })}`}
+                {t('orders.filters', 'Filtros activos:')}
+                {priceRange.min !== null && ` ${t('products.minPrice', 'Valor mín')}: $${priceRange.min}`}
+                {priceRange.max !== null && ` ${t('products.maxPrice', 'Valor máx')}: $${priceRange.max}`}
+                {dateRange.start !== null && ` ${t('orders.from', 'Desde')}: ${dateRange.start.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })}`}
+                {dateRange.end !== null && ` ${t('orders.to', 'Hasta')}: ${dateRange.end.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })}`}
               </Text>
-              <TouchableOpacity onPress={clearFilters} testID="clear-filters-button" accessibilityLabel="Limpiar filtros">
+              <TouchableOpacity onPress={clearFilters} testID="clear-filters-button" accessibilityLabel={t('orders.clearFilters', 'Limpiar filtros')}>
                 <Ionicons name="close-circle" size={18} color={Colors.light.text}/>
               </TouchableOpacity>
             </View>
@@ -333,4 +335,4 @@ const styles = StyleSheet.create({
     color: Colors.light.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
-}); 
+});

@@ -97,6 +97,35 @@ jest.mock('@expo/vector-icons', () => ({
     Ionicons: 'Ionicons',
 }));
 
+// Mock i18n translation
+jest.mock('react-i18next', () => ({
+    useTranslation: jest.fn().mockReturnValue({
+        t: (key: string, options?: any) => {
+            const translations: Record<string, string> = {
+                'orders.noClientId': 'No se encontró el ID del cliente',
+                'orders.loadError': 'No se pudieron cargar los pedidos. Por favor intente de nuevo.',
+                'orders.lastUpdated': 'Última actualización: ' + (options?.time || ''),
+                'orders.loading': 'Cargando pedidos...',
+                'orders.title': 'Mis pedidos',
+                'orders.searchOrders': 'Busca por dirección...',
+                'orders.search': 'Buscar pedidos',
+                'orders.searchHint': 'Ingresa la dirección del pedido que buscas',
+                'orders.filterOrders': 'Filtrar pedidos',
+                'orders.filterHint': 'Abre el modal de filtrado',
+                'orders.filters': 'Filtros activos:',
+                'orders.from': 'Desde',
+                'orders.to': 'Hasta',
+                'orders.clearFilters': 'Limpiar filtros',
+                'orders.priceRangeError': 'El valor mínimo no puede ser mayor que el valor máximo.',
+                'orders.dateRangeError': 'La fecha de inicio no puede ser mayor que la fecha de fin.',
+                'products.minPrice': 'Valor mín',
+                'products.maxPrice': 'Valor máx',
+            };
+            return translations[key] || key;
+        }
+    })
+}));
+
 // Implement console mocks
 global.console = {
     ...global.console,
@@ -319,4 +348,4 @@ describe('OrdersScreen', () => {
             expect(lastCall.orders.length).toBe(2);
         });
     });
-}); 
+});

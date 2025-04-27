@@ -10,7 +10,7 @@ appId: com.proyecto_final_miso.clientes
     id: "addressInput"
 - tapOn:
     id: "addressInput"
-- inputText: "Cra 1 #1. Ciudad C"
+- inputText: "Cra 1 #1. Pasto"
 - assertVisible:
     id: "finishOrderButton"
 - tapOn:

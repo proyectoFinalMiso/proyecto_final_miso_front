@@ -13,6 +13,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants/Colors';
 import { Order } from '../services/api/orderService';
+import { useTranslation } from 'react-i18next';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -54,6 +55,7 @@ const formatDate = (dateString: string) => {
 };
 
 const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
+    const { t } = useTranslation();
     const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
     const toggleExpand = (orderId: string) => {
@@ -82,13 +84,13 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
                     testID={`order-row-${item.id}`}
                     accessibilityLabel={`${item.id}`}
                 >
-                    <Text style={styles.orderAddress}>Pedido a {item.direccion}</Text>
+                    <Text style={styles.orderAddress}>{t('orderTable.orderTo', 'Pedido a')} {item.direccion}</Text>
                     <View style={styles.chevronIconContainer}>
                         <Ionicons
                             name={isExpanded ? 'chevron-up' : 'chevron-down'}
                             size={20}
                             color={Colors.light.text}
-                            accessibilityLabel={isExpanded ? 'close-details' : 'open-details'}
+                            accessibilityLabel={isExpanded ? t('orderTable.closeDetails', 'close-details') : t('orderTable.openDetails', 'open-details')}
                         />
                     </View>
                 </TouchableOpacity>
@@ -96,17 +98,17 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
                 {isExpanded && (
                     <View style={styles.expandedContent}>
                         <View style={styles.detailRow}>
-                            <Text style={styles.detailLabel}>Valor Total</Text>
+                            <Text style={styles.detailLabel}>{t('orderTable.totalValue', 'Valor Total')}</Text>
                             <Text style={styles.detailValue}>${item.valorFactura} COP</Text>
                         </View>
                         <View style={styles.detailRow}>
-                            <Text style={styles.detailLabel}>Fecha</Text>
+                            <Text style={styles.detailLabel}>{t('orderTable.date', 'Fecha')}</Text>
                             <Text style={styles.detailValue}>{formatDate(item.fechaIngreso)}</Text>
                         </View>
                         <View style={styles.detailRow}>
-                            <Text style={styles.detailLabel} testID={`order-status-${item.id}`}>Estado</Text>
+                            <Text style={styles.detailLabel} testID={`order-status-${item.id}`}>{t('orderTable.status', 'Estado')}</Text>
                             <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.estado) }]}>
-                                <Text style={styles.statusText}>{item.estado}</Text>
+                                <Text style={styles.statusText}>{t(`orderTable.statuses.${item.estado}`, item.estado)}</Text>
                             </View>
                         </View>
                     </View>
@@ -118,12 +120,12 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.headerText}>Pedidos</Text>
+                <Text style={styles.headerText}>{t('orderTable.orders', 'Pedidos')}</Text>
             </View>
 
             {orders.length === 0 ? (
-                <View style={styles.emptyContainer} testID="empty-orders" accessibilityLabel="No hay pedidos disponibles">
-                    <Text style={styles.emptyText}>No hay pedidos disponibles</Text>
+                <View style={styles.emptyContainer} testID="empty-orders" accessibilityLabel={t('orderTable.noOrders', 'No hay pedidos disponibles')}>
+                    <Text style={styles.emptyText}>{t('orderTable.noOrders', 'No hay pedidos disponibles')}</Text>
                 </View>
             ) : (
                 <FlatList
@@ -242,4 +244,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default OrderTable; 
+export default OrderTable;

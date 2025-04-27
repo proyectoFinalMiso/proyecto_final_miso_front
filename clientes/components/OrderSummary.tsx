@@ -4,12 +4,14 @@ import { Colors } from '../constants/Colors';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { sendOrder } from '../services/api/orderService';
+import { useTranslation } from 'react-i18next';
 
 const isTestEnvironment = process.env.NODE_ENV === 'test';
 
 const OrderSummary = () => {
     const { getTotal, items, clearCart } = useCart();
     const { clienteData, isLoggedIn } = useAuth();
+    const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [destino, setDestino] = useState('');
     const [addressError, setAddressError] = useState('');
@@ -30,17 +32,17 @@ const OrderSummary = () => {
         const hasCity = address.includes('.') && /[\p{L}]+\.?\s*$/u.test(address);
 
         if (!hasStreetPattern) {
-            setAddressError('La dirección debe incluir una calle o carrera con número');
+            setAddressError(t('orderSummary.addressErrorStreet', 'La dirección debe incluir una calle o carrera con número'));
             return false;
         }
 
         if (!hasBuildingNumber) {
-            setAddressError('La dirección debe incluir un número de casa o edificio (Ej: # 45-67)');
+            setAddressError(t('orderSummary.addressErrorNumber', 'La dirección debe incluir un número de casa o edificio (Ej: # 45-67)'));
             return false;
         }
 
         if (!hasCity) {
-            setAddressError('La dirección debe incluir la ciudad después de un punto');
+            setAddressError(t('orderSummary.addressErrorCity', 'La dirección debe incluir la ciudad después de un punto'));
             return false;
         }
 
@@ -61,17 +63,17 @@ const OrderSummary = () => {
         Keyboard.dismiss();
 
         if (items.length === 0) {
-            Alert.alert('Error', 'No hay productos en el carrito');
+            Alert.alert(t('common.error', 'Error'), t('orderSummary.emptyCartError', 'No hay productos en el carrito'));
             return;
         }
 
         if (!clienteData) {
-            Alert.alert('Error', 'Debes iniciar sesión para realizar un pedido');
+            Alert.alert(t('common.error', 'Error'), t('orderSummary.notLoggedInError', 'Debes iniciar sesión para realizar un pedido'));
             return;
         }
 
         if (!destino.trim()) {
-            Alert.alert('Error', 'Debes proporcionar una dirección de entrega');
+            Alert.alert(t('common.error', 'Error'), t('orderSummary.emptyAddressError', 'Debes proporcionar una dirección de entrega'));
             return;
         }
 
@@ -90,10 +92,10 @@ const OrderSummary = () => {
             );
 
             Alert.alert(
-                'Éxito',
-                'El pedido se ha enviado correctamente',
+                t('orderSummary.successTitle', 'Éxito'),
+                t('orderSummary.successMessage', 'El pedido se ha enviado correctamente'),
                 [{
-                    text: 'OK',
+                    text: t('orderSummary.successOk', 'OK'),
                     onPress: () => {
                         clearCart();
                         setDestino('');
@@ -102,13 +104,13 @@ const OrderSummary = () => {
             );
 
         } catch (error) {
-            let errorMessage = 'Ocurrió un error al enviar el pedido';
+            let errorMessage = t('orderSummary.sendOrderError', 'Ocurrió un error al enviar el pedido');
 
             if (error instanceof Error) {
                 errorMessage += `: ${error.message}`;
             }
 
-            Alert.alert('Error', errorMessage);
+            Alert.alert(t('common.error', 'Error'), errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -117,10 +119,10 @@ const OrderSummary = () => {
     return (
         <View style={styles.mainContainer}>
             <View style={styles.addressContainer}>
-                <Text style={styles.addressLabel}>Dirección de entrega:</Text>
+                <Text style={styles.addressLabel}>{t('cart.shippingAddress', 'Dirección de entrega:')}</Text>
                 <TextInput
                     style={[styles.addressInput, addressError ? styles.errorInput : null]}
-                    placeholder="Ej: Calle 123 # 45-67, Apto 101. Ciudad de Bogotá"
+                    placeholder={t('cart.placeholderAddress', 'Ej: Calle 123 # 45-67, Apto 101. Ciudad de Bogotá')}
                     value={destino}
                     onChangeText={handleAddressChange}
                     editable={!isLoading}
@@ -135,7 +137,7 @@ const OrderSummary = () => {
 
             <View style={styles.container}>
                 <View style={styles.totalContainer}>
-                    <Text style={styles.totalLabel}>Total:</Text>
+                    <Text style={styles.totalLabel}>{t('cart.total', 'Total:')}</Text>
                     <Text style={styles.totalValue} testID='order-total'>${getTotal().toFixed(0)} COP</Text>
                 </View>
                 <TouchableOpacity
@@ -151,7 +153,7 @@ const OrderSummary = () => {
                     {isLoading ? (
                         <ActivityIndicator size="small" color={Colors.light.buttonText} />
                     ) : (
-                        <Text style={styles.buttonText}>Finalizar Pedido</Text>
+                        <Text style={styles.buttonText}>{t('cart.finishOrder', 'Finalizar Pedido')}</Text>
                     )}
                 </TouchableOpacity>
             </View>
