@@ -3,7 +3,6 @@
 import { Paper, useTheme } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { esES, enUS } from "@mui/x-data-grid/locales"
-import styles from './Datatable.module.css'
 import { useLocale } from "next-intl";
 
 const paginationModel = { page: 0, pageSize: 10 };

@@ -1,6 +1,18 @@
 'use client';
 import { createTheme } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+  interface TypeBackground {
+    sidebar: string;
+    dropzone: string;
+    tableHeader: string;
+  }
+
+  interface TypeText {
+    sidebar: string;
+  } 
+}
+
 export const getDesignTokens = (
   mode: 'light' | 'dark' | 'contrast',
   font: 'plusJakartaSans' | 'lexend',
