@@ -52,7 +52,7 @@ const Products: React.FC = () => {
     {
       field: 'nombre',
       headerName: translations('table_col_2'),
-      flex: 3,
+      flex: 4,
       headerClassName: styles.Header,
     },
     {
@@ -65,7 +65,7 @@ const Products: React.FC = () => {
     {
       field: 'fabricante',
       headerName: translations('table_col_4'),
-      flex: 2,
+      flex: 3,
       headerClassName: styles.Header,
     },
     {
@@ -77,11 +77,11 @@ const Products: React.FC = () => {
     {
       field: 'fechaCreacion',
       headerName: translations('table_col_6'),
-      flex: 1,
+      flex: 2,
       headerClassName: styles.Header,
       valueFormatter: (value: string) => {
         const date = new Date(value.toLocaleString());
-        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:00`;
+        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:00`;
       }
     },
     {

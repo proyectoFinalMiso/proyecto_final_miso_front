@@ -1,5 +1,18 @@
 const apiURI = 'https://cr-bff-webapp-488938258128.us-central1.run.app';
 
+interface Store {
+  direccion: String,
+  id: Number,
+  latitude: Number,
+  longitude: Number,
+  nombre: String,
+  posicion: Array<String>
+}
+
+interface Stores {
+  bodegas: Array<Store>
+}
+
 export const createProduct = async (productData: {
   nombre: string;
   valorUnitario: number;
@@ -98,7 +111,7 @@ export const createProductsWithFile = async (
   }
 };
 
-export const getStore = async (value: string): Promise<any[]> => {
+export const getStore = async (value: string): Promise<any> => {
   const url = apiURI + '/api/bodega/buscador_bodega';
   const body = { clave: value };
   try {
@@ -116,7 +129,6 @@ export const getStore = async (value: string): Promise<any[]> => {
     }
 
     const data = await response.json();
-    console.log({ data });
     return data || [];
   } catch (error) {
     console.error('No ha sido posible traer la bodega:', error);

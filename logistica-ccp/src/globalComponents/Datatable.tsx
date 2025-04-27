@@ -51,7 +51,7 @@ export default function DataTable({ columns, rows }: DataTableProps) {
                         border: 'none !important'
                     },
                     '& .MuiSvgIcon-root': {
-                        color: theme.palette.text.sidebar,
+                        color: theme.palette.text.primary,
                     }
                 }}
                 getRowHeight={(params) => null}

@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { getStore } from './adapters/microserviceProducts';
 import { useTranslations } from 'next-intl';
+
 interface LocationModalProps {
   open: boolean;
   onClose: () => void;
@@ -25,7 +26,7 @@ export default function LocationModal({
   locationInfo,
 }: LocationModalProps) {
   const [loading, setLoading] = useState(false);
-  const [store, setStore] = useState<any[]>([]);
+  const [store, setStore] = useState<any>({});
   const t = useTranslations('Products')
 
   useEffect(() => {
@@ -35,8 +36,7 @@ export default function LocationModal({
       setLoading(true);
       const response = await getStore(locationInfo.storeId);
       setLoading(false);
-      console.log({ response });
-      setStore(response);
+      setStore(response.bodegas);      
     };
 
     getStoreByKey();
