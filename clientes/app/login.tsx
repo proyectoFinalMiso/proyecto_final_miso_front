@@ -5,10 +5,12 @@ import { Colors } from '../constants/Colors';
 import { useAuth } from '../contexts/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
 import { preloadImage, getOptimizedImageProps } from '../utils/imageUtils';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginScreen() {
   const router = useRouter();
   const { login, isLoading } = useAuth();
+  const { t } = useTranslation();
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -38,12 +40,12 @@ export default function LoginScreen() {
       setEmailError('');
       return;
     }
-    setEmailError(emailRegex.test(email) ? '' : 'Email inválido');
+    setEmailError(emailRegex.test(email) ? '' : t('auth.invalidEmail'));
   };
 
   const handleLogin = async () => {
     if (!correo || !contrasena) {
-      Alert.alert('Error', 'Por favor, introduce correo y contraseña');
+      Alert.alert(t('common.error'), t('auth.requiredFields'));
       return;
     }
 
@@ -51,11 +53,11 @@ export default function LoginScreen() {
       await login({ correo, contrasena });
       router.replace('/(tabs)');
     } catch (error) {
-      let message = 'Error al iniciar sesión';
+      let message = t('auth.loginError');
       if (error instanceof Error) {
         message += `: ${error.message}`;
       }
-      Alert.alert('Error', message);
+      Alert.alert(t('common.error'), message);
     }
   };
 
@@ -79,14 +81,14 @@ export default function LoginScreen() {
           {...getOptimizedImageProps()}
         />
         <View style={styles.contentContainer}>
-          <Text style={styles.welcomeText}>Bienvenido</Text>
+          <Text style={styles.welcomeText}>{t('common.welcomeText')}</Text>
 
           <View style={styles.formContainer}>
             <View style={styles.inputContainer}>
               <Ionicons name="mail-outline" size={20} color="#888" style={styles.inputIcon} />
               <TextInput
                 style={[styles.input, emailError ? styles.inputError : null]}
-                placeholder="Correo electrónico"
+                placeholder={t('auth.email')}
                 placeholderTextColor="#888"
                 value={correo}
                 onChangeText={(text) => {
@@ -105,7 +107,7 @@ export default function LoginScreen() {
               <Ionicons name="lock-closed-outline" size={20} color="#888" style={styles.inputIcon} />
               <TextInput
                 style={styles.input}
-                placeholder="Contraseña"
+                placeholder={t('auth.password')}
                 placeholderTextColor="#888"
                 value={contrasena}
                 onChangeText={setContrasena}
@@ -137,7 +139,7 @@ export default function LoginScreen() {
               {isLoading ? (
                 <ActivityIndicator color={Colors.light.buttonText} size="small" />
               ) : (
-                <Text style={styles.buttonText}>Iniciar sesión</Text>
+                <Text style={styles.buttonText}>{t('common.login')}</Text>
               )}
             </TouchableOpacity>
 
@@ -148,7 +150,7 @@ export default function LoginScreen() {
               testID="loginRegisterButton"
               accessibilityLabel="loginRegisterButton"
             >
-              <Text style={[styles.buttonText, styles.secondaryButtonText]}>Registrarse</Text>
+              <Text style={[styles.buttonText, styles.secondaryButtonText]}>{t('common.register')}</Text>
             </TouchableOpacity>
           </View>
         </View>

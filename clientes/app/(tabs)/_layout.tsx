@@ -4,8 +4,11 @@ import { View, StyleSheet } from 'react-native';
 import HomeIcon from '../../assets/icons/HomeIcon';
 import CartIcon from '../../assets/icons/CartIcon';
 import OrdersIcon from '../../assets/icons/OrdersIcon';
+import SettingsIcon from '@/assets/icons/SettingsIcon';
+import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {
+  const { t } = useTranslation();
   return (
     <Tabs
       screenOptions={{
@@ -29,7 +32,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Inicio',
+          title: t('tab.home'),
           tabBarIcon: ({ focused, color }) => (
             <View style={focused ? styles.activeIconBackground : styles.iconBackground} testID='home-icon' accessibilityLabel='home-icon'>
               <HomeIcon fill={color} />
@@ -40,7 +43,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="orders"
         options={{
-          title: 'Pedidos',
+          title: t('tab.orders'),
           tabBarIcon: ({ focused, color }) => (
             <View style={focused ? styles.activeIconBackground : styles.iconBackground} testID='orders-icon' accessibilityLabel='orders-icon'>
               <OrdersIcon fill={color} />
@@ -51,10 +54,21 @@ export default function TabLayout() {
       <Tabs.Screen
         name="cart"
         options={{
-          title: 'Carrito',
+          title: t('tab.cart'),
           tabBarIcon: ({ focused, color }) => (
             <View style={focused ? styles.activeIconBackground : styles.iconBackground} testID='cart-icon' accessibilityLabel='cart-icon'>
               <CartIcon fill={color} />
+            </View>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: t('tab.settings'),
+          tabBarIcon: ({ focused, color }) => (
+            <View style={focused ? styles.activeIconBackground : styles.iconBackground} testID='settings-icon' accessibilityLabel='settings-icon'>
+              <SettingsIcon fill={color} />
             </View>
           ),
         }}
@@ -66,7 +80,7 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   activeIconBackground: {
     backgroundColor: Colors.light.tabActiveBackground,
-    borderRadius: 85, 
+    borderRadius: 85,
     padding: 8,
     width: 64,
     justifyContent: 'center',

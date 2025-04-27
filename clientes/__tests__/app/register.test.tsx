@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import RegisterScreen from '../../app/register';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 // Mock dependencies
 jest.mock('expo-router', () => ({
@@ -16,6 +17,29 @@ jest.mock('../../contexts/AuthContext', () => ({
 
 jest.mock('react-native/Libraries/Alert/Alert', () => ({
     alert: jest.fn()
+}));
+
+jest.mock('react-i18next', () => ({
+    useTranslation: jest.fn().mockReturnValue({
+        t: (key: string) => {
+            const translations: { [key: string]: string } = {
+                'common.register': 'Registrarse',
+                'common.cancel': 'Cancelar',
+                'common.error': 'Error',
+                'auth.email': 'Correo electrónico',
+                'auth.password': 'Contraseña',
+                'auth.fullName': 'Nombre completo',
+                'auth.createAccount': 'Crear cuenta',
+                'auth.invalidEmail': 'Email inválido',
+                'auth.shortPassword': 'Contraseña demasiado corta',
+                'auth.shortName': 'Nombre demasiado corto',
+                'auth.requiredFields': 'Por favor, completa todos los campos',
+                'auth.formErrors': 'Por favor, corrige los errores en el formulario',
+                'auth.registerError': 'Error al registrarse'
+            };
+            return translations[key] || key;
+        }
+    })
 }));
 
 jest.mock('@expo/vector-icons', () => ({

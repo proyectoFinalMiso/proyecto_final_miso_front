@@ -5,10 +5,12 @@ import { Colors } from '../constants/Colors';
 import { useAuth } from '../contexts/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
 import { preloadImage, getOptimizedImageProps } from '../utils/imageUtils';
+import { useTranslation } from 'react-i18next';
 
 export default function RegisterScreen() {
     const router = useRouter();
     const { register, isLoading } = useAuth();
+    const { t } = useTranslation();
     const [imageReady, setImageReady] = useState(false);
     const [imageLoading, setImageLoading] = useState(true);
 
@@ -42,7 +44,7 @@ export default function RegisterScreen() {
             setEmailError('');
             return;
         }
-        setEmailError(emailRegex.test(email) ? '' : 'Email inválido');
+        setEmailError(emailRegex.test(email) ? '' : t('auth.invalidEmail'));
     };
 
     const validateNombre = (name: string) => {
@@ -50,7 +52,7 @@ export default function RegisterScreen() {
             setNombreError('');
             return;
         }
-        setNombreError(name.length < 3 ? 'Nombre demasiado corto' : '');
+        setNombreError(name.length < 3 ? t('auth.shortName') : '');
     };
 
     const validatePassword = (pass: string) => {
@@ -58,17 +60,17 @@ export default function RegisterScreen() {
             setPasswordError('');
             return;
         }
-        setPasswordError(pass.length < 3 ? 'Contraseña demasiado corta' : '');
+        setPasswordError(pass.length < 3 ? t('auth.shortPassword') : '');
     };
 
     const handleRegister = async () => {
         if (!nombre || !correo || !contrasena) {
-            Alert.alert('Error', 'Por favor, completa todos los campos');
+            Alert.alert(t('common.error'), t('auth.requiredFields'));
             return;
         }
 
         if (emailError || nombreError || passwordError) {
-            Alert.alert('Error', 'Por favor, corrige los errores en el formulario');
+            Alert.alert(t('common.error'), t('auth.formErrors'));
             return;
         }
 
@@ -76,11 +78,11 @@ export default function RegisterScreen() {
             await register({ nombre, correo, contrasena });
             router.replace('/(tabs)');
         } catch (error) {
-            let message = 'Error al registrarse';
+            let message = t('auth.registerError');
             if (error instanceof Error) {
                 message += `: ${error.message}`;
             }
-            Alert.alert('Error', message);
+            Alert.alert(t('common.error'), message);
         }
     };
 
@@ -105,14 +107,14 @@ export default function RegisterScreen() {
                         {...getOptimizedImageProps()}
                     />
                     <View style={styles.contentContainer}>
-                        <Text style={styles.title}>Crear cuenta</Text>
+                        <Text style={styles.title}>{t('auth.createAccount')}</Text>
 
                         <View style={styles.formContainer}>
                             <View style={styles.inputContainer}>
                                 <Ionicons name="person-outline" size={20} color="#888" style={styles.inputIcon} />
                                 <TextInput
                                     style={[styles.input, nombreError ? styles.inputError : null]}
-                                    placeholder="Nombre completo"
+                                    placeholder={t('auth.fullName')}
                                     placeholderTextColor="#888"
                                     value={nombre}
                                     onChangeText={(text) => {
@@ -130,7 +132,7 @@ export default function RegisterScreen() {
                                 <Ionicons name="mail-outline" size={20} color="#888" style={styles.inputIcon} />
                                 <TextInput
                                     style={[styles.input, emailError ? styles.inputError : null]}
-                                    placeholder="Correo electrónico"
+                                    placeholder={t('auth.email')}
                                     placeholderTextColor="#888"
                                     value={correo}
                                     onChangeText={(text) => {
@@ -149,7 +151,7 @@ export default function RegisterScreen() {
                                 <Ionicons name="lock-closed-outline" size={20} color="#888" style={styles.inputIcon} />
                                 <TextInput
                                     style={[styles.input, passwordError ? styles.inputError : null]}
-                                    placeholder="Contraseña"
+                                    placeholder={t('auth.password')}
                                     placeholderTextColor="#888"
                                     value={contrasena}
                                     onChangeText={(text) => {
@@ -187,7 +189,7 @@ export default function RegisterScreen() {
                                 {isLoading ? (
                                     <ActivityIndicator color={Colors.light.buttonText} size="small" />
                                 ) : (
-                                    <Text style={styles.buttonText}>Registrarse</Text>
+                                    <Text style={styles.buttonText}>{t('common.register')}</Text>
                                 )}
                             </TouchableOpacity>
 
@@ -198,7 +200,7 @@ export default function RegisterScreen() {
                                 testID='registerCancelButton'
                                 accessibilityLabel="registerCancelButton"
                             >
-                                <Text style={[styles.buttonText, styles.secondaryButtonText]}>Cancelar</Text>
+                                <Text style={[styles.buttonText, styles.secondaryButtonText]}>{t('common.cancel')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

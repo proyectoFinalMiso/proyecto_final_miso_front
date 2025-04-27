@@ -15,7 +15,27 @@ jest.mock('react-native/Libraries/LayoutAnimation/LayoutAnimation', () => ({
     },
 }));
 
-// Reset the native date format to avoid locale issues in tests
+
+jest.mock('react-i18next', () => ({
+    useTranslation: jest.fn().mockReturnValue({
+        t: (key: string, options?: any) => {
+            const translations: Record<string, any> = {
+                'orderTable.orders': 'Pedidos',
+                'orderTable.noOrders': 'No hay pedidos disponibles',
+                'orderTable.orderTo': 'Pedido a',
+                'orderTable.totalValue': 'Valor Total',
+                'orderTable.date': 'Fecha',
+                'orderTable.status': 'Estado',
+                'orderTable.openDetails': 'Abrir detalles',
+                'orderTable.closeDetails': 'Cerrar detalles',
+                'orderTable.statuses.SOLICITADO': 'SOLICITADO',
+            };
+            return translations[key] || key;
+        }
+    })
+}));
+
+
 const originalDateToLocaleString = Date.prototype.toLocaleString;
 const mockToLocaleString = function (this: Date, locale?: string | string[], options?: Intl.DateTimeFormatOptions): string {
     if (locale === 'es-CO' && this.toString() !== 'Invalid Date') {
@@ -62,7 +82,7 @@ describe('OrderTable', () => {
     it('should render orders correctly', () => {
         const { getAllByText } = render(<OrderTable orders={mockOrders} />);
 
-        // Check if all orders are rendered
+
         expect(getAllByText(/Pedido a/)).toHaveLength(2);
         expect(getAllByText('Pedido a Calle 123 #45-67')).toBeTruthy();
         expect(getAllByText('Pedido a Avenida 78 #90-12')).toBeTruthy();
@@ -81,31 +101,29 @@ describe('OrderTable', () => {
     it('should expand order details when an order is pressed', () => {
         const { getByText, queryByText } = render(<OrderTable orders={[mockOrders[0]]} />);
 
-        // Initially, the details should not be visible
+
         expect(queryByText('$25000 COP')).toBeNull();
 
-        // Press the order row to expand
+
         fireEvent.press(getByText('Pedido a Calle 123 #45-67'));
 
-        // The details should now be visible
+
         expect(getByText('$25000 COP')).toBeTruthy();
         expect(getByText('Valor Total')).toBeTruthy();
         expect(getByText('Fecha')).toBeTruthy();
         expect(getByText('Estado')).toBeTruthy();
         expect(getByText('SOLICITADO')).toBeTruthy();
-        // Date formatting match
+
         expect(getByText('15/04/2023, 10:30')).toBeTruthy();
     });
 
     it('should collapse expanded order when pressed again', () => {
         const { getByText, queryByText } = render(<OrderTable orders={[mockOrders[0]]} />);
 
-        // Expand the order
         fireEvent.press(getByText('Pedido a Calle 123 #45-67'));
         expect(getByText('$25000 COP')).toBeTruthy();
 
-        // Press again to collapse
         fireEvent.press(getByText('Pedido a Calle 123 #45-67'));
         expect(queryByText('$25000 COP')).toBeNull();
     });
-}); 
+});
