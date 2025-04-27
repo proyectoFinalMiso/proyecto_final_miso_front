@@ -55,6 +55,21 @@
     "empty": "No products available",
     "listLabel": "List of available products"
   },
+  "productTable": {
+    "unitValue": "Unit Value",
+    "quantity": "Quantity",
+    "currentQuantity": "Current quantity {{quantity}}",
+    "action": "Action",
+    "addToCart": "Add to cart",
+    "addToCartButton": "Add to cart",
+    "title": "Products",
+    "empty": "No products available",
+    "listLabel": "List of available products",
+    "collapseDetails": "Collapse details",
+    "expandDetails": "Expand details",
+    "decreaseQuantity": "Decrease quantity",
+    "increaseQuantity": "Increase quantity"
+  },
   "filters": {
     "min": "Min",
     "max": "Max",

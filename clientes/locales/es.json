@@ -55,6 +55,21 @@
     "empty": "No hay productos disponibles",
     "listLabel": "Lista de productos disponibles"
   },
+  "productTable": {
+    "unitValue": "Valor Unitario",
+    "quantity": "Cantidad",
+    "currentQuantity": "Cantidad actual {{quantity}}",
+    "action": "Acción",
+    "addToCart": "Agregar al carrito",
+    "addToCartButton": "Agregar al carrito",
+    "title": "Productos",
+    "empty": "No hay productos disponibles",
+    "listLabel": "Lista de productos disponibles",
+    "collapseDetails": "Contraer detalles",
+    "expandDetails": "Expandir detalles",
+    "decreaseQuantity": "Disminuir cantidad",
+    "increaseQuantity": "Aumentar cantidad"
+  },
   "filters": {
     "min": "Mín",
     "max": "Máx",
