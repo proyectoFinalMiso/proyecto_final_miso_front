@@ -7,9 +7,8 @@ import PageTitle from '../../../globalComponents/PageTitle';
 import ProductsForm from './productsForm';
 import UploadProductsModal from './uploadModal';
 
-import theme from '@/theme';
 import Grid from '@mui/material/Grid2';
-import { ThemeProvider, Box, Stack, Button, Tooltip } from '@mui/material';
+import { Box, Stack, Button, Tooltip } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 
 import FileUploadIcon from '@mui/icons-material/FileUpload';
@@ -80,7 +79,7 @@ const Products: React.FC = () => {
       headerName: translations('table_col_6'),
       flex: 1,
       headerClassName: styles.Header,
-      valueFormatter: (value: string ) => {
+      valueFormatter: (value: string) => {
         const date = new Date(value.toLocaleString());
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:00`;
       }
@@ -155,61 +154,59 @@ const Products: React.FC = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box>
-        <Grid container>
-          <LocationModal
-            open={openLocationModal}
-            onClose={() => setOpenLocationModal(false)}
-            locationInfo={locationModal}
-          />
-          <ProductsForm
-            open={isOpen}
-            onClose={() => setIsOpen(false)}
-            onProductAdded={fetchProducts}
-          />
-          <UploadProductsModal
-            open={openFileModal}
-            onClose={() => setOpenFileModal(false)}
-            onProductAdded={fetchProducts}
-          />
-          <Grid sx={{ direction: 'column' }} size="grow">
-            <PageTitle text={translations('title')} />
-            <Grid
-              container
-              size="grow"
-              sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}
-            >
-              <Grid size="grow" sx={{ marginRight: '6.25rem' }}>
-                <Stack spacing={2} direction="row" justifyContent={'flex-end'}>
-                  <Button
-                    onClick={() => setOpenFileModal(true)}
-                    variant="outlined"
-                    color="dark"
-                    endIcon={<FileUploadIcon />}
-                    data-testid="productoMasivo"
-                  >
-                    {translations('new_products_file')}
-                  </Button>
-                  <Button
-                    onClick={() => setIsOpen(true)}
-                    variant="contained"
-                    color="cpp"
-                    startIcon={<AddIcon />}
-                    data-testid="nuevoProducto"
-                  >
-                    {translations('new_product')}
-                  </Button>
-                </Stack>
-              </Grid>
-            </Grid>
-            <Grid size="grow" sx={{ margin: '1.25rem 6.25rem' }}>
-              <DataTable columns={tableSchema} rows={products} />
+    <Box>
+      <Grid container>
+        <LocationModal
+          open={openLocationModal}
+          onClose={() => setOpenLocationModal(false)}
+          locationInfo={locationModal}
+        />
+        <ProductsForm
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          onProductAdded={fetchProducts}
+        />
+        <UploadProductsModal
+          open={openFileModal}
+          onClose={() => setOpenFileModal(false)}
+          onProductAdded={fetchProducts}
+        />
+        <Grid sx={{ direction: 'column' }} size="grow">
+          <PageTitle text={translations('title')} />
+          <Grid
+            container
+            size="grow"
+            sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}
+          >
+            <Grid size="grow" sx={{ marginRight: '6.25rem' }}>
+              <Stack spacing={2} direction="row" justifyContent={'flex-end'}>
+                <Button
+                  onClick={() => setOpenFileModal(true)}
+                  variant="outlined"
+                  color="dark"
+                  endIcon={<FileUploadIcon />}
+                  data-testid="productoMasivo"
+                >
+                  {translations('new_products_file')}
+                </Button>
+                <Button
+                  onClick={() => setIsOpen(true)}
+                  variant="contained"
+                  color="cpp"
+                  startIcon={<AddIcon />}
+                  data-testid="nuevoProducto"
+                >
+                  {translations('new_product')}
+                </Button>
+              </Stack>
             </Grid>
           </Grid>
+          <Grid size="grow" sx={{ margin: '1.25rem 6.25rem' }}>
+            <DataTable columns={tableSchema} rows={products} />
+          </Grid>
         </Grid>
-      </Box>
-    </ThemeProvider>
+      </Grid>
+    </Box>
   );
 };
 

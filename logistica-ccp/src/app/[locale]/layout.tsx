@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
-import { Plus_Jakarta_Sans } from "next/font/google";
-import { ThemeProvider } from "@mui/material/styles"
-import theme from "../../theme";
+import { Lexend_Deca, Plus_Jakarta_Sans } from "next/font/google";
+
+import { ThemeProvider } from "../../themeContext";
 
 // MUI components for building the base layout
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
+import { CssBaseline } from "@mui/material/";
 
 // Calling the components that are the base for the rest of the views
 import Footer from "../../globalComponents/Footer"
@@ -19,11 +20,18 @@ import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
-  weight: ['300', '400', '500', '700'],
+  weight: ['300', '400', '500', '700', '800'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-plus-jakarta',
 });
+
+const lexend = Lexend_Deca({
+  weight: ['500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-lexend-exa',
+})
 
 export const metadata: Metadata = {
   title: "Logística CPP",
@@ -35,9 +43,9 @@ export default async function LocaleLayout({
   params
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{locale: string}>
+  params: Promise<{ locale: string }>
 }>) {
-  const {locale} = await params;
+  const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
@@ -47,12 +55,13 @@ export default async function LocaleLayout({
       <body
         className={`${plusJakartaSans.variable} antialiased`}
       >
-        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>
+        <ThemeProvider>
+          <CssBaseline />
+          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container sx={{ flex: 1, minHeight: "100vh" }}>
                 <Grid size={2} sx={{ minWidth: "20rem", minHeight: "100vh", overflow: "auto", alignItems: "stretch" }}>
-                    <NextIntlClientProvider><Sidebar /></NextIntlClientProvider>
+                  <NextIntlClientProvider><Sidebar /></NextIntlClientProvider>
                 </Grid>
 
                 <Grid direction="column" sx={{ display: "flex", flexDirection: "column", flex: 1, minHeight: "100vh" }}>
@@ -67,8 +76,8 @@ export default async function LocaleLayout({
                 </Grid>
               </Grid>
             </Box>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+          </AppRouterCacheProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

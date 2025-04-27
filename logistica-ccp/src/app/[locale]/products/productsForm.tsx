@@ -1,4 +1,7 @@
+'use client'
+
 import { useState, useEffect } from "react";
+import { useTheme } from '@mui/material/styles';
 import { SelectChangeEvent } from "@mui/material";
 import { Modal, Box, Select, Typography, TextField, Button, Stack, MenuItem } from "@mui/material"
 import Grid from "@mui/material/Grid2";
@@ -49,6 +52,8 @@ export default function ProductsForm({ open, onClose, onProductAdded }: ModalFor
         setFormData((prev) => ({ ...prev, id_fabricante: e.target.value }));
     };
 
+    const theme = useTheme()
+
     return (
         <Modal
             open={open}
@@ -65,7 +70,7 @@ export default function ProductsForm({ open, onClose, onProductAdded }: ModalFor
             <Box sx={{ height: "100%" }}>
                 <Grid container sx={{ height: "100%" }}>
                     <Grid sx={{ 
-                        backgroundColor: "white", 
+                        backgroundColor: theme.palette.background.paper,
                         borderRadius: "16px",
                         boxShadow: "3",
                         direction: "column", 

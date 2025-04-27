@@ -11,6 +11,15 @@
         "option_4": "Sellers",
         "option_5": "Orders"
     },
+    "ConfigMenu": {
+        "title": "Configuration",
+        "dark_mode": "Dark Theme",
+        "contrast_mode": "High Contrast",
+        "light_mode": "Light Theme",
+        "font_1": "Plus Jakarta Sans",
+        "font_2": "Lexend",
+        "font_size": "Font size: "
+    },
     "Manufacturers": {
         "new_manufacturer": "CREATE SUPPLIER",
         "title": "Suppliers",
