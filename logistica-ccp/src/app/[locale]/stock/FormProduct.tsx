@@ -32,7 +32,7 @@ interface Bodega {
 
 export default function FormStock({ open, onClose }: ModalFormProps) {
     
-    const [formData, setFormData] = useState({id_producto: "", producto: "", bodega: "", posicion: "", lote: "", cantidad: "", sku: "", valorUnitario:""});
+    const [formData, setFormData] = useState({id_producto: "", nombre: "", bodega: "", lote: "", cantidad: "", sku: "", valorUnitario:"", volumen: ""});
     const [products, setProducts] = useState<Product[]>([]);
     const [bodegas, setBodegas] = useState<Bodega[]>([]);
     const t = useTranslations('Stock')
@@ -51,21 +51,20 @@ export default function FormStock({ open, onClose }: ModalFormProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Formulario enviado:", formData)
+        var requestData = {
+            nombre: formData.nombre, //nombre producto
+            bodega: formData.bodega, //id bodega
+            lote: formData.lote, //lote
+            cantidad: formData.cantidad, //cantidad
+            sku: formData.sku, //sku
+            valorUnitario: formData.valorUnitario, //valor unitario
+            volumen: formData.volumen //volumen
+        }
+        
         const changeStock  = await insertStock(
-            {
-                // id_producto: formData.id_producto,
-                // cantidad: parseInt(formData.cantidad),
-
-                nombre: formData.producto, //nombre producto
-                bodega: formData.bodega, //id bodega
-                posicion: "0317dd40-c3c9-46dc-bd65-a49e0cef27e4", //id posicion
-                lote: formData.lote, //lote
-                cantidad: formData.cantidad, //cantidad
-                sku: formData.sku, //sku
-                valorUnitario: formData.valorUnitario, //valor unitario
-            }
+                requestData
         );
+        console.log("Formulario enviado:", requestData)
         onClose();
     };
 
@@ -80,9 +79,10 @@ export default function FormStock({ open, onClose }: ModalFormProps) {
             setFormData((prev) => ({
                 ...prev,
                 id_producto: selectedProductId,
-                producto: selectedProduct.nombre,
+                nombre: selectedProduct.nombre,
                 sku: selectedProduct.sku,
                 valorUnitario: selectedProduct.valorUnitario,
+                volumen: selectedProduct.volumen
             }));
         }
         // setFormData((prev) => ({ ...prev, producto: e.target.value }));
@@ -182,7 +182,7 @@ export default function FormStock({ open, onClose }: ModalFormProps) {
                                     {t('form_field_4')}
                                 </MenuItem>
                                 {bodegas.map((bodega) => (
-                                    <MenuItem key={bodega.id} value={bodega.id}>
+                                    <MenuItem key={bodega.nombre} value={bodega.nombre}>
                                         {`${bodega.nombre}`}
                                     </MenuItem>
                                 ))}

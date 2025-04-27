@@ -7,11 +7,11 @@ describe('Interacción con microservicio de inventarios', () => {
     const productData = {
         nombre: 'Producto A',
         bodega: 'Calle 123',
-        posicion: 'posicion A',
         lote: 'loteA',
         cantidad: '10',
         sku: 'skuA',
         valorUnitario: '1000',
+        volumen: '0.002',
     }
 
     beforeEach(() => {
