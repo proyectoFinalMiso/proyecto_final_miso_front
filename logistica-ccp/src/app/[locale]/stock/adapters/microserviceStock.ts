@@ -9,9 +9,9 @@ export const insertStock = async (productData: { //'nombre', 'bodega', 'lote', '
     valorUnitario: string; //valor unitario
     volumen: string; //volumen
 }): Promise<void> => {
-    const url = apiURI + '/api/bodega/stock_crear_producto'
+    // const url = apiURI + '/api/bodega/stock_crear_producto'
 
-    // const url = 'http://127.0.0.1:3006/stock_crear_producto'
+    const url = 'http://127.0.0.1:3006/stock_crear_producto'
     
     try {
         const response = await fetch(url, {

@@ -54,8 +54,17 @@ const Stock: React.FC = () => {
     }
 
     useEffect(() => {
-        fetchStock();
-    }, []);
+            const fetchStock = async () => {
+                const stockList = await getStock();
+                setStock(stockList);
+            };
+
+            const interval = setInterval(() => {
+                fetchStock();
+            }, 30000);
+
+            return () => clearInterval(interval);
+        }, []);    
 
     return (
         <Box>
