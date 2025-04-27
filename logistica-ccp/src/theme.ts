@@ -18,7 +18,6 @@ export const getDesignTokens = (
   font: 'plusJakartaSans' | 'lexend',
   fontSize: number
 ) => {
-
   const baseMode: 'light' | 'dark' = mode === 'contrast' ? 'dark' : mode;
   return {
     palette: {
