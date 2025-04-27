@@ -1,13 +1,13 @@
 const apiURI = "https://cr-bff-webapp-488938258128.us-central1.run.app"
 
-export const insertStock = async (productData: { //'nombre', 'bodega', 'posicion', 'lote', 'cantidad', 'sku', 'valorUnitario'
+export const insertStock = async (productData: { //'nombre', 'bodega', 'lote', 'cantidad', 'sku', 'valorUnitario'
     nombre: string; //nombre producto
     bodega: string; //id bodega
-    posicion: string; //id posicion
     lote: string; //lote
     cantidad: string; //cantidad
     sku: string; //sku
     valorUnitario: string; //valor unitario
+    volumen: string; //volumen
 }): Promise<void> => {
     const url = apiURI + '/api/bodega/stock_crear_producto'
 
