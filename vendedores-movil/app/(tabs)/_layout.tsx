@@ -3,6 +3,7 @@ import { Colors } from '../../constants/Colors';
 import { View, StyleSheet } from 'react-native';
 import HomeIcon from '../../assets/icons/HomeIcon';
 import CartIcon from '../../assets/icons/CartIcon';
+import ClientIcon from '../../assets/icons/ClientIcon';
 
 export default function TabLayout() {
   return (
@@ -30,8 +31,27 @@ export default function TabLayout() {
         options={{
           title: 'Inicio',
           tabBarIcon: ({ focused, color }) => (
-            <View style={focused ? styles.activeIconBackground : styles.iconBackground}>
+            <View
+              style={
+                focused ? styles.activeIconBackground : styles.iconBackground
+              }
+            >
               <HomeIcon fill={color} />
+            </View>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="clients"
+        options={{
+          title: 'Cliente',
+          tabBarIcon: ({ focused, color }) => (
+            <View
+              style={
+                focused ? styles.activeIconBackground : styles.iconBackground
+              }
+            >
+              <ClientIcon fill={color} />
             </View>
           ),
         }}
@@ -41,7 +61,11 @@ export default function TabLayout() {
         options={{
           title: 'Carrito',
           tabBarIcon: ({ focused, color }) => (
-            <View style={focused ? styles.activeIconBackground : styles.iconBackground}>
+            <View
+              style={
+                focused ? styles.activeIconBackground : styles.iconBackground
+              }
+            >
               <CartIcon fill={color} />
             </View>
           ),
@@ -54,7 +78,7 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   activeIconBackground: {
     backgroundColor: Colors.light.tabActiveBackground,
-    borderRadius: 85, 
+    borderRadius: 85,
     padding: 8,
     width: 64,
     justifyContent: 'center',
