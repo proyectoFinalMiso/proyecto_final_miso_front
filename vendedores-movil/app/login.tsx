@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 export default function LoginScreen() {
   const router = useRouter();
   const { login, isLoading } = useAuth();
-  const [t] = useTranslation();
+  const { t } = useTranslation();
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [showPassword, setShowPassword] = useState(false);
