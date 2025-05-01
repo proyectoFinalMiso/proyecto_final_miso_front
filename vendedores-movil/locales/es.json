@@ -192,6 +192,14 @@
     "searchHint": "Ingresa el nombre del cliente que buscas"
 
   },
+  "clientDetails": {
+    "title": "Detalles del cliente",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "loadError": "No se pudieron cargar los detalles del cliente. Por favor intente de nuevo.",
+    "loading": "Cargando detalles del cliente...",
+    "notFound": "Cliente no encontrado"
+  },
   "tab": {
     "home": "Inicio",
     "orders": "Pedidos",
