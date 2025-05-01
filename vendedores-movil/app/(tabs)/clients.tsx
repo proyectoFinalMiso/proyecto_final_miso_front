@@ -7,17 +7,19 @@ import {
   View,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   RefreshControl,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ErrorDisplay from '../../components/ErrorDisplay';
 import ClientTable from '../../components/ClientsTable';
+import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 const ClientsScreen = () => {
   const sellerInfo = useAuth();
+  const router = useRouter();
+  const { t } = useTranslation();
   // API data
   const [clients, setClients] = useState<Cliente[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -46,7 +48,10 @@ const ClientsScreen = () => {
       setClients(clientsData);
     } catch (err) {
       setError(
-        'No se pudieron cargar los Clientes relacionados al vendedor. Por favor intente de nuevo.'
+        t(
+          'clients.loadError',
+          'No se pudieron cargar los clientes. Por favor intente de nuevo.'
+        )
       );
     } finally {
       setIsLoading(false);
@@ -69,7 +74,7 @@ const ClientsScreen = () => {
   if (isLoading) {
     return (
       <SafeAreaView style={styles.container}>
-        <LoadingIndicator message="Cargando clientes..." />
+        <LoadingIndicator message={t('clients.loading', 'Cargando clientes...')} />
       </SafeAreaView>
     );
   }
@@ -86,34 +91,25 @@ const ClientsScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.title}>Clientes</Text>
+          <Text style={styles.title}>{t('clients.title', 'Mis clientes')}</Text>
         </View>
         <View style={styles.searchContainer}>
           <View style={styles.searchRow}>
             <TextInput
               style={styles.searchInput}
-              placeholder="Busca clientes..."
+              placeholder={t('clients.search', 'Buscar clientes')}
               placeholderTextColor={Colors.light.searchHint}
               value={searchText}
               onChangeText={setSearchText}
-              accessibilityLabel="Buscar clientes"
-              accessibilityHint="Ingresa el nombre del cliente que buscas"
+              testID="searchInput"
+              accessibilityLabel={t('clients.search', 'Buscar clientes')}
+              accessibilityHint={t('clients.searchHint', 'Ingresa el nombre del cliente que buscas')}
             />
-            <TouchableOpacity
-              style={[styles.filterButton]}
-              accessibilityLabel="Filtrar clientes"
-              accessibilityHint="Abre el modal de filtrado"
-            >
-              <Ionicons
-                name="filter-outline"
-                size={22}
-                color={Colors.light.text}
-              />
-            </TouchableOpacity>
           </View>
         </View>
         <ClientTable
           clients={filteredClients}
+          onClientPress={(client) => router.push(`/clients/${client.id}`)}
           refreshControl={
             <RefreshControl
               refreshing={isRefreshing}

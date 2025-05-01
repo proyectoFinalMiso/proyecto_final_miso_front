@@ -26,10 +26,21 @@ export const fetchClients = async (vendedorId: string): Promise<Cliente[]> => {
     }
 };
 
+// Fetch a single client by ID
+export const fetchClientById = async (clientId: string): Promise<Cliente> => {
+    try {
+        const response = await axios.get<Cliente>(`${API_BASE_URL}/${clientId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching client by ID:', error);
+        throw error;
+    }
+};
+
 // Map API data to application Client model
 export const mapClientesToProducts = (clientesItems: Cliente[]) => {
     return clientesItems.map(item => ({
         id: item.id,
         name: item.nombre,
     }));
-}; 
+};
