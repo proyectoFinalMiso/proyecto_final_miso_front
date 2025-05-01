@@ -5,12 +5,14 @@ import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { sendOrder } from '../services/api/orderService';
 import { fetchClients, Cliente } from '../services/api/clientsService';
+import { useTranslation } from 'react-i18next';
 
 const isTestEnvironment = process.env.NODE_ENV === 'test';
 
 const OrderSummary = () => {
     const { getTotal, items, clearCart } = useCart();
     const { vendedorData, isLoggedIn } = useAuth();
+    const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [destino, setDestino] = useState('');
     const [addressError, setAddressError] = useState('');
@@ -33,7 +35,7 @@ const OrderSummary = () => {
             const clientsList = await fetchClients(vendedorData.id);
             setClients(clientsList);
         } catch (error) {
-            Alert.alert('Error', 'No se pudieron cargar los clientes');
+            Alert.alert(t('common.error', 'Error'), t('clientsModal.loadClientsError', 'No se pudieron cargar los clientes. Por favor intente de nuevo.'));
         } finally {
             setIsLoadingClients(false);
         }
@@ -55,17 +57,17 @@ const OrderSummary = () => {
         const hasCity = address.includes('.') && /[\p{L}]+\.?\s*$/u.test(address);
 
         if (!hasStreetPattern) {
-            setAddressError('La dirección debe incluir una calle o carrera con número');
+            setAddressError(t('orderSummary.addressErrorStreet', 'La dirección debe incluir una calle o carrera con número'));
             return false;
         }
 
         if (!hasBuildingNumber) {
-            setAddressError('La dirección debe incluir un número de casa o edificio (Ej: # 45-67)');
+            setAddressError(t('orderSummary.addressErrorNumber', 'La dirección debe incluir un número de casa o edificio (Ej: # 45-67)'));
             return false;
         }
 
         if (!hasCity) {
-            setAddressError('La dirección debe incluir la ciudad después de un punto');
+            setAddressError(t('orderSummary.addressErrorCity', 'La dirección debe incluir la ciudad después de un punto'));
             return false;
         }
 
@@ -86,22 +88,22 @@ const OrderSummary = () => {
         Keyboard.dismiss();
 
         if (items.length === 0) {
-            Alert.alert('Error', 'No hay productos en el carrito');
+            Alert.alert(t('common.error', 'Error'), t('orderSummary.emptyCartError', 'No hay productos en el carrito'));
             return;
         }
 
         if (!vendedorData) {
-            Alert.alert('Error', 'Debes iniciar sesión para realizar un pedido');
+            Alert.alert(t('common.error', 'Error'), t('orderSummary.notLoggedInError', 'Debes iniciar sesión para realizar un pedido'));
             return;
         }
 
         if (!selectedClient) {
-            Alert.alert('Error', 'Debes seleccionar un cliente');
+            Alert.alert(t('common.error', 'Error'), t('orderSummary.nottSelectedClientError', 'Debes seleccionar un cliente'));
             return;
         }
 
         if (!destino.trim()) {
-            Alert.alert('Error', 'Debes proporcionar una dirección de entrega');
+            Alert.alert(t('common.error', 'Error'), t('orderSummary.emptyAddressError', 'Debes proporcionar una dirección de entrega'));
             return;
         }
 
@@ -119,10 +121,10 @@ const OrderSummary = () => {
             );
 
             Alert.alert(
-                'Éxito',
-                'El pedido se ha enviado correctamente',
+                t('orderSummary.successTitle', 'Éxito'),
+                t('orderSummary.successMessage', 'El pedido se ha enviado correctamente'),
                 [{
-                    text: 'OK',
+                    text: t('orderSummary.successOk', 'OK'),
                     onPress: () => {
                         clearCart();
                         setDestino('');
@@ -132,13 +134,13 @@ const OrderSummary = () => {
             );
 
         } catch (error) {
-            let errorMessage = 'Ocurrió un error al enviar el pedido';
+            let errorMessage = t('orderSummary.sendOrderError', 'Ocurrió un error al enviar el pedido');
 
             if (error instanceof Error) {
                 errorMessage += `: ${error.message}`;
             }
 
-            Alert.alert('Error', errorMessage);
+            Alert.alert(t('common.error', 'Error'), errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -160,34 +162,40 @@ const OrderSummary = () => {
     return (
         <View style={styles.mainContainer}>
             <View style={styles.addressContainer}>
-                <Text style={styles.addressLabel}>Cliente:</Text>
+                <Text style={styles.addressLabel}>{t('orderSummary.client', 'Cliente')}</Text>
                 <TouchableOpacity
                     style={styles.clientSelector}
                     onPress={() => setIsClientModalVisible(true)}
+                    testID='clientSelector'
+                    accessibilityLabel="clientSelector"
                 >
                     <Text style={selectedClient ? styles.selectedClientText : styles.placeholderText}>
-                        {selectedClient ? `${selectedClient.nombre}  (${selectedClient.correo})` : 'Selecciona un cliente'}
+                        {selectedClient
+                            ? `${selectedClient.nombre}  (${selectedClient.correo})`
+                            : t('orderSummary.clientPlaceholder', 'Selecciona un cliente')}
                     </Text>
                 </TouchableOpacity>
 
-                <Text style={styles.addressLabel}>Dirección de entrega:</Text>
+                <Text style={styles.addressLabel}>{t('cart.shippingAddress', 'Dirección de entrega:')}</Text>
                 <TextInput
                     style={[styles.addressInput, addressError ? styles.errorInput : null]}
-                    placeholder="Ej: Calle 123 # 45-67, Apto 101. Ciudad de Bogotá"
+                    placeholder={t('cart.placeholderAddress', 'Ej: Calle 123 # 45-67, Apto 101. Ciudad de Bogotá')}
                     value={destino}
                     onChangeText={handleAddressChange}
                     editable={!isLoading}
                     returnKeyType="done"
                     onSubmitEditing={Keyboard.dismiss}
                     blurOnSubmit={true}
+                    testID="addressInput"
+                    accessibilityLabel="addressInput"
                 />
                 {addressError ? <Text style={styles.errorText}>{addressError}</Text> : null}
             </View>
 
             <View style={styles.container}>
                 <View style={styles.totalContainer}>
-                    <Text style={styles.totalLabel}>Total:</Text>
-                    <Text style={styles.totalValue}>${getTotal().toFixed(0)} COP</Text>
+                    <Text style={styles.totalLabel}>{t('cart.total', 'Total:')}</Text>
+                    <Text style={styles.totalValue} testID='order-total'>${getTotal().toFixed(0)} COP</Text>
                 </View>
                 <TouchableOpacity
                     style={[
@@ -196,11 +204,13 @@ const OrderSummary = () => {
                     ]}
                     onPress={handleFinishOrder}
                     disabled={isLoading || !isLoggedIn || !destino.trim() || !selectedClient || (!isTestEnvironment && addressError !== '')}
+                    testID="finishOrderButton"
+                    accessibilityLabel="finishOrderButton"
                 >
                     {isLoading ? (
                         <ActivityIndicator size="small" color={Colors.light.buttonText} />
                     ) : (
-                        <Text style={styles.buttonText}>Finalizar Pedido</Text>
+                        <Text style={styles.buttonText}>{t('cart.finishOrder', 'Finalizar Pedido')}</Text>
                     )}
                 </TouchableOpacity>
             </View>
@@ -213,12 +223,12 @@ const OrderSummary = () => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Seleccionar Cliente</Text>
+                        <Text style={styles.modalTitle} testID='modal-title'>{t('clientsModal.title', 'Selecciona un cliente')}</Text>
                         {isLoadingClients ? (
                             <ActivityIndicator size="large" color={Colors.light.button} />
                         ) : clients.length === 0 ? (
                             <View style={styles.emptyStateContainer}>
-                                <Text style={styles.emptyStateText}>No tienes clientes asignados</Text>
+                                <Text style={styles.emptyStateText} testID='empty-modal'>{t('clientsModal.empty', 'No tienes clientes asignados')}</Text>
                             </View>
                         ) : (
                             <FlatList
@@ -231,8 +241,10 @@ const OrderSummary = () => {
                         <TouchableOpacity
                             style={styles.closeButton}
                             onPress={() => setIsClientModalVisible(false)}
+                            testID='closeModalButton'
+                            accessibilityLabel="closeModalButton"
                         >
-                            <Text style={styles.closeButtonText}>Cerrar</Text>
+                            <Text style={styles.closeButtonText}>{t('clientsModal.close', 'Cerrar')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
