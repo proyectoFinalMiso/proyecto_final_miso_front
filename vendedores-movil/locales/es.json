@@ -9,7 +9,8 @@
     "language": "Idioma",
     "success": "Éxito",
     "confirm": "Confirmar",
-    "back": "Volver"
+    "back": "Volver",
+    "retry": "Reintentar"
   },
   "auth": {
     "email": "Correo electrónico",

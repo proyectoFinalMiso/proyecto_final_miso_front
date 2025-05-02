@@ -38,6 +38,8 @@ const ClientDetailsScreen = () => {
       }
       setError(null);
 
+      setIsLoading(true);
+
       const clientData = await fetchClientById(id as string);
       setClient(clientData.cliente);
       const visits = await fetchPastVisits(id as string);
