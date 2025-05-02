@@ -11,6 +11,7 @@ import {
 import { Colors } from '../constants/Colors';
 import { Visit } from '../services/api/clientsService';
 import { useTranslation } from 'react-i18next';
+import { getLocaleFromLanguage } from '../utils/localeUtils';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -24,19 +25,17 @@ type PlannedVisitsTableProps = {
 };
 
 const PlannedVisitsTable = ({ visits, refreshControl }: PlannedVisitsTableProps) => {
-  const { t } = useTranslation();
-  console.log('visits', visits);
+  const { t, i18n } = useTranslation();
 
   const formatDate = (dateString: string) => {
-    console.log(dateString);
     const date = new Date(dateString);
-    console.log(date);
-    return date.toLocaleString('es-CO', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
+    const locale = getLocaleFromLanguage(i18n.language);
+    return date.toLocaleString(locale, {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
     
@@ -50,13 +49,13 @@ const PlannedVisitsTable = ({ visits, refreshControl }: PlannedVisitsTableProps)
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText} testID="planned-visits-title">
-          {t('plannedVisits.title', 'Visitas programadas')}
+          {t('pastVisits.title', 'Visitas')}
         </Text>
       </View>
       {visits.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyText} testID="empty-planned-visits">
-            {t('plannedVisits.empty', 'No hay visitas programadas')}
+            {t('pastVisits.empty', 'No se encontraron visitas completadas para este cliente')}
           </Text>
         </View>
       ) : (

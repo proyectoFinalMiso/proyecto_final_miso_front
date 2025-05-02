@@ -93,13 +93,13 @@ export const sendVisit = async (clienteID:string, vendedorId: string, fecha: str
     }
 };
 
-// Fetch all planned visits for a specific client
-export const fetchPlannedVisits = async (clientId: string): Promise<Visit[]> => {
+// Fetch all past visits for a specific client
+export const fetchPastVisits = async (clientId: string): Promise<Visit[]> => {
     try {
-        const response = await axios.get<VisitsResponse>(`${API_BASE_URL}/visitas?cliente_id=${clientId}&estado=programada`);
+        const response = await axios.get<VisitsResponse>(`${API_BASE_URL}/visitas?cliente_id=${clientId}&estado=completada`);
         return response.data.visitas;
     } catch (error) {
-        console.error('Error fetching planned visits:', error);
+        console.error('Error fetching past visits:', error);
         throw error;
     }
 };
