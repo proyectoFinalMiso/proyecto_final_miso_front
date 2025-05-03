@@ -12,6 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants/Colors';
 import { useCart, CartItem } from '../contexts/CartContext';
+import { useTranslation } from 'react-i18next';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -21,6 +22,7 @@ if (Platform.OS === 'android') {
 
 const CartTable = () => {
     const { items, updateQuantity, removeFromCart, getTotal } = useCart();
+    const { t } = useTranslation();
     const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
     const toggleExpand = (productId: string) => {
@@ -54,7 +56,7 @@ const CartTable = () => {
                     style={styles.productRow}
                     onPress={() => toggleExpand(item.product.id)}
                     activeOpacity={0.7}
-                    testID={`toggle-expand-${item.product.id}`}
+                    testID={`product-row-${item.product.id}`}
                 >
                     <Text style={styles.productName}>{item.product.name}</Text>
                     <View style={styles.chevronIconContainer}>
@@ -62,6 +64,7 @@ const CartTable = () => {
                             name={isExpanded ? 'chevron-up' : 'chevron-down'}
                             size={20}
                             color={Colors.light.text}
+                            accessibilityLabel={isExpanded ? t('cartTable.collapseDetails', 'Cerrar detalles') : t('cartTable.expandDetails', 'Abrir detalles')}
                         />
                     </View>
                 </TouchableOpacity>
@@ -69,16 +72,17 @@ const CartTable = () => {
                 {isExpanded && (
                     <View style={styles.expandedContent} testID={`expanded-content-${item.product.id}`}>
                         <View style={styles.detailRow}>
-                            <Text style={styles.detailLabel}>Valor Unitario</Text>
+                            <Text style={styles.detailLabel}>{t('cartTable.unitValue', 'Valor Unitario')}</Text>
                             <Text style={styles.detailValue}>${item.product.price.toFixed(0)} COP</Text>
                         </View>
                         <View style={styles.detailRow}>
-                            <Text style={styles.detailLabel}>Cantidad</Text>
+                            <Text style={styles.detailLabel}>{t('cartTable.quantity', 'Cantidad')}</Text>
                             <View style={styles.quantityContainer}>
                                 <TouchableOpacity
                                     style={styles.quantityButton}
                                     onPress={() => decreaseQuantity(item.product.id, item.quantity)}
                                     testID={`decrease-quantity-${item.product.id}`}
+                                    accessibilityLabel={t('cartTable.decreaseQuantity', { name: item.product.name, defaultValue: `Disminuir cantidad para ${item.product.name}` })}
                                 >
                                     <Ionicons name="remove" size={12} color={Colors.light.text} />
                                 </TouchableOpacity>
@@ -87,20 +91,22 @@ const CartTable = () => {
                                     style={styles.quantityButton}
                                     onPress={() => increaseQuantity(item.product.id, item.quantity)}
                                     testID={`increase-quantity-${item.product.id}`}
+                                    accessibilityLabel={t('cartTable.increaseQuantity', { name: item.product.name, defaultValue: `Aumentar cantidad para ${item.product.name}` })}
                                 >
                                     <Ionicons name="add" size={12} color={Colors.light.text} />
                                 </TouchableOpacity>
                             </View>
                         </View>
                         <View style={styles.detailRow}>
-                            <Text style={styles.detailLabel}>Subtotal</Text>
+                            <Text style={styles.detailLabel}>{t('cartTable.subtotal', 'Subtotal')}</Text>
                             <Text style={styles.detailValue} testID={`subtotal-${item.product.id}`}>${(item.product.price * item.quantity).toFixed(0)} COP</Text>
                         </View>
                         <View style={styles.detailRow}>
-                            <Text style={styles.detailLabel}>Acción</Text>
+                            <Text style={styles.detailLabel}>{t('cartTable.action', 'Acción')}</Text>
                             <TouchableOpacity
                                 onPress={() => removeFromCart(item.product.id)}
                                 testID={`remove-product-${item.product.id}`}
+                                accessibilityLabel={t('cartTable.removeFromCart', { name: item.product.name, defaultValue: `Eliminar ${item.product.name} del carrito` })}
                             >
                                 <Ionicons name="trash" size={16} color={Colors.light.cancelColor} />
                             </TouchableOpacity>
@@ -114,12 +120,12 @@ const CartTable = () => {
     return (
         <View style={styles.container} testID="cart-table">
             <View style={styles.header}>
-                <Text style={styles.headerText}>Carrito de Compras</Text>
+                <Text style={styles.headerText}>{t('cartTable.title', 'Carrito de Compras')}</Text>
             </View>
 
             {items.length === 0 ? (
                 <View style={styles.emptyContainer} testID="empty-cart-message">
-                    <Text style={styles.emptyText}>No hay productos en el carrito</Text>
+                    <Text style={styles.emptyText}>{t('cartTable.empty', 'No hay productos en el carrito')}</Text>
                 </View>
             ) : (
                 <FlatList

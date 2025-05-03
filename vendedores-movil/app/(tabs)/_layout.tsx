@@ -1,11 +1,15 @@
-import { Tabs } from 'expo-router';
+import { Tabs, usePathname } from 'expo-router';
 import { Colors } from '../../constants/Colors';
 import { View, StyleSheet } from 'react-native';
 import HomeIcon from '../../assets/icons/HomeIcon';
 import CartIcon from '../../assets/icons/CartIcon';
 import ClientIcon from '../../assets/icons/ClientIcon';
+import SettingsIcon from '../../assets/icons/SettingsIcon';
+import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {
+  const { t } = useTranslation();
+  const pathname = usePathname();
   return (
     <Tabs
       screenOptions={{
@@ -29,7 +33,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Inicio',
+          title: t('tab.home'),
           tabBarIcon: ({ focused, color }) => (
             <View
               style={
@@ -42,24 +46,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="clients"
-        options={{
-          title: 'Cliente',
-          tabBarIcon: ({ focused, color }) => (
-            <View
-              style={
-                focused ? styles.activeIconBackground : styles.iconBackground
-              }
-            >
-              <ClientIcon fill={color} />
-            </View>
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="cart"
         options={{
-          title: 'Carrito',
+          title: t('tab.cart'),
           tabBarIcon: ({ focused, color }) => (
             <View
               style={
@@ -67,6 +56,41 @@ export default function TabLayout() {
               }
             >
               <CartIcon fill={color} />
+            </View>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="clients"
+        options={{
+          title: t('tab.clients'),
+          tabBarIcon: ({ color }) => {
+            const isClientsFocused = pathname === '/clients' || pathname.startsWith('/clients/');
+            return (
+              <View
+                style={
+                  isClientsFocused ? styles.activeIconBackground : styles.iconBackground
+                }
+              >
+                <ClientIcon fill={color} />
+              </View>
+            );
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="clients/[id]"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: t('tab.settings'),
+          tabBarIcon: ({ focused, color }) => (
+            <View style={focused ? styles.activeIconBackground : styles.iconBackground} testID='settings-icon' accessibilityLabel='settings-icon'>
+              <SettingsIcon fill={color} />
             </View>
           ),
         }}

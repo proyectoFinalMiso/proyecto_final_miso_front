@@ -15,6 +15,32 @@ jest.mock('react-native/Libraries/LayoutAnimation/LayoutAnimation', () => ({
     },
 }));
 
+jest.mock('react-i18next', () => ({
+    useTranslation: jest.fn().mockReturnValue({
+        t: (key: string, options?: any) => {
+            const translations: Record<string, any> = {
+                'cartTable.title': 'Carrito de Compras',
+                'cartTable.empty': 'No hay productos en el carrito',
+                'cartTable.unitValue': 'Valor Unitario',
+                'cartTable.quantity': 'Cantidad',
+                'cartTable.subtotal': 'Subtotal',
+                'cartTable.action': 'Acción',
+                'cartTable.removeFromCart': 'Eliminar del carrito',
+                'cartTable.expandDetails': 'Abrir detalles',
+                'cartTable.collapseDetails': 'Cerrar detalles',
+                'cartTable.decreaseQuantity': (opts?: any) => `Disminuir cantidad para ${opts?.name || ''}`,
+                'cartTable.increaseQuantity': (opts?: any) => `Aumentar cantidad para ${opts?.name || ''}`,
+                'cartTable.currentQuantity': (opts?: any) => `Cantidad actual ${opts?.quantity || ''}`,
+            };
+            const value = translations[key];
+            if (typeof value === 'function') {
+                return value(options);
+            }
+            return value || key;
+        }
+    })
+}));
+
 const renderWithProvider = (component: React.ReactElement) => {
     return render(
         <CartProvider>
@@ -57,7 +83,7 @@ describe('CartTable', () => {
 
         expect(queryByTestId(`expanded-content-${product1.id}`)).toBeNull();
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         expect(getByTestId(`expanded-content-${product1.id}`)).toBeTruthy();
     });
@@ -70,10 +96,10 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
         expect(getByTestId(`expanded-content-${product1.id}`)).toBeTruthy();
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
         expect(queryByTestId(`expanded-content-${product1.id}`)).toBeNull();
     });
 
@@ -85,7 +111,7 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         expect(getByTestId(`quantity-${product1.id}`).props.children).toBe(1);
 
@@ -102,7 +128,7 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         expect(getByTestId(`quantity-${product1.id}`).props.children).toBe(3);
 
@@ -119,7 +145,7 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         expect(getByTestId(`quantity-${product1.id}`).props.children).toBe(1);
 
@@ -136,7 +162,7 @@ describe('CartTable', () => {
             </>
         );
 
-        fireEvent.press(getByTestId(`toggle-expand-${product1.id}`));
+        fireEvent.press(getByTestId(`product-row-${product1.id}`));
 
         fireEvent.press(getByTestId(`remove-product-${product1.id}`));
 
@@ -158,4 +184,4 @@ const TestCartAdder = ({ products, quantities = [] }: { products: Product[], qua
     }, []);
 
     return null;
-}; 
+};
