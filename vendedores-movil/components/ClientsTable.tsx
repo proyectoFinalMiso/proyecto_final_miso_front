@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -8,11 +8,11 @@ import {
   UIManager,
   RefreshControlProps,
   TouchableOpacity,
-  LayoutAnimation,
 } from 'react-native';
 import { Colors } from '../constants/Colors';
 import { Cliente } from '../services/api/clientsService';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -20,62 +20,36 @@ if (Platform.OS === 'android') {
   }
 }
 
-type ProductTableProps = {
+type ClientTableProps = {
   clients: Cliente[];
-  onProductPress?: (client: Cliente) => void;
+  onClientPress?: (client: Cliente) => void;
   refreshControl?: React.ReactElement<RefreshControlProps>;
 };
 
 const ClientTable = ({
   clients,
-  onProductPress,
+  onClientPress,
   refreshControl,
-}: ProductTableProps) => {
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
-  const toggleExpand = (productId: string) => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-
-    setExpandedItems((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(productId)) {
-        newSet.delete(productId);
-      } else {
-        newSet.add(productId);
-      }
-      return newSet;
-    });
-  };
-  const renderProduct = ({ item }: { item: Cliente }) => {
-    const isExpanded = expandedItems.has(item.id);
+}: ClientTableProps) => {
+  const { t } = useTranslation();
+  const renderClient = ({ item }: { item: Cliente }) => {
     return (
-      <View style={styles.productContainer}>
+      <View style={styles.clientContainer}>
         <TouchableOpacity
-          style={styles.productRow}
-          onPress={() => toggleExpand(item.id)}
+          style={styles.clientRow}
+          onPress={() => onClientPress && onClientPress(item)}
           activeOpacity={0.7}
+          testID={`client-${item.id}`}
         >
-          <Text style={styles.productName}>{item.nombre}</Text>
-          <View style={styles.chevronIconContainer}>
+          <Text style={styles.clientName}>{item.nombre}</Text>
+          <View style={styles.eyeIconContainer}>
             <Ionicons
-              name={isExpanded ? 'eye' : 'eye-off'}
+              name="eye-outline"
               size={20}
               color={Colors.light.text}
             />
           </View>
         </TouchableOpacity>
-
-        {isExpanded && (
-          <View style={styles.expandedContent}>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Nombre:</Text>
-              <Text style={styles.detailValue}>{item.nombre}</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Correo:</Text>
-              <Text style={styles.detailValue}>{item.correo}</Text>
-            </View>
-          </View>
-        )}
       </View>
     );
   };
@@ -83,17 +57,16 @@ const ClientTable = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Clientes</Text>
+        <Text style={styles.headerText} testID='clients-title'>{t('clientsModal.clients', 'Clientes')}</Text>
       </View>
-
       {clients.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No hay Clientes disponibles</Text>
+          <Text style={styles.emptyText} testID='empty-clients'>{t('clientsModal.empty', 'No tienes clientes asignados')}</Text>
         </View>
       ) : (
         <FlatList
           data={clients}
-          renderItem={renderProduct}
+          renderItem={renderClient}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContent}
           refreshControl={refreshControl}
@@ -131,18 +104,18 @@ const styles = StyleSheet.create({
   listContent: {
     paddingBottom: 8,
   },
-  productContainer: {
+  clientContainer: {
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
-  productRow: {
+  clientRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 12,
   },
-  chevronIconContainer: {
+  eyeIconContainer: {
     backgroundColor: Colors.light.expandableButtonBackground,
     padding: 2,
     borderRadius: 8,
@@ -150,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  productName: {
+  clientName: {
     fontSize: 14,
     color: Colors.light.text,
     flex: 1,

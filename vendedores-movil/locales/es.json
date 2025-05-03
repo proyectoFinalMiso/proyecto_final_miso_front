@@ -6,7 +6,11 @@
     "register": "Registrarse",
     "cancel": "Cancelar",
     "error": "Error",
-    "language": "Idioma"
+    "language": "Idioma",
+    "success": "Éxito",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "retry": "Reintentar"
   },
   "auth": {
     "email": "Correo electrónico",
@@ -191,6 +195,34 @@
     "search": "Buscar clientes",
     "searchHint": "Ingresa el nombre del cliente que buscas"
 
+  },
+  "clientDetails": {
+    "title": "Detalles del cliente",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "loadError": "No se pudieron cargar los detalles del cliente. Por favor intente de nuevo.",
+    "loading": "Cargando detalles del cliente...",
+    "notFound": "Cliente no encontrado",
+    "registerVisit": "Registrar visita",
+    "registerVisitPrompt": "¿Desea registrar una nueva visita para este cliente?",
+    "pastVisits": "Visitas Pasadas"
+  },
+  "registerVisitModal": {
+    "title": "Registrar visita",
+    "status": "Estado",
+    "scheduled": "Programada",
+    "completed": "Completada",
+    "date": "Fecha",
+    "time": "Hora",
+    "register": "Registrar",
+    "sending": "Enviando...",
+    "success": "La visita se ha registrado correctamente",
+    "error": "Ocurrió un error al registrar la visita",
+    "invalidFutureDate": "Una visita programada debe tener fecha y hora en el futuro"
+  },
+  "pastVisits": {
+    "title": "Visitas",
+    "empty": "No se encontraron visitas completadas para este cliente"
   },
   "tab": {
     "home": "Inicio",

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { fetchClients, mapClientesToProducts, Cliente, ClientesResponse } from '../../services/api/clientsService';
+import { fetchClients, fetchClientById, mapClientesToProducts, Cliente, ClientesResponse } from '../../services/api/clientsService';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -65,6 +65,58 @@ describe('clientsService', () => {
         });
     });
 
+    describe('fetchClientById', () => {
+        it('should fetch a client by ID correctly', async () => {
+            // Mock response
+            const mockClient: Cliente = {
+                id: '1',
+                nombre: 'Cliente 1',
+                correo: 'cliente1@example.com'
+            };
+
+            const mockResponse = {
+                data: mockClient
+            };
+
+            mockedAxios.get.mockResolvedValueOnce(mockResponse);
+
+            // Test data
+            const clientId = '1';
+
+            // Call function
+            const result = await fetchClientById(clientId);
+
+            // Check request
+            expect(mockedAxios.get).toHaveBeenCalledTimes(1);
+            expect(mockedAxios.get).toHaveBeenCalledWith(
+                `${API_BASE_URL}/${clientId}`
+            );
+
+            // Check result
+            expect(result).toEqual(mockClient);
+        });
+
+        it('should throw error when client ID request fails', async () => {
+            const error = new Error('Client not found');
+            mockedAxios.get.mockRejectedValueOnce(error);
+
+            const clientId = 'non-existent-id';
+
+            await expect(
+                fetchClientById(clientId)
+            ).rejects.toThrow('Client not found');
+
+            // Verify console.error was called
+            const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+            try {
+                await fetchClientById(clientId).catch(() => { });
+                expect(consoleSpy).toHaveBeenCalled();
+            } finally {
+                consoleSpy.mockRestore();
+            }
+        });
+    });
+
     describe('mapClientesToProducts', () => {
         it('should map clients to products format correctly', () => {
             // Test data
@@ -88,4 +140,4 @@ describe('clientsService', () => {
             expect(result).toEqual([]);
         });
     });
-}); 
+});

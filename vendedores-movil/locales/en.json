@@ -6,7 +6,11 @@
     "register": "Register",
     "cancel": "Cancel",
     "error": "Error",
-    "language": "Language"
+    "language": "Language",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "retry": "Retry"
   },
   "auth": {
     "email": "Email",
@@ -189,6 +193,33 @@
     "loading": "Loading clients...",
     "search": "Search clients",
     "searchHint": "Enter the name of the client you are looking for"
+  },
+  "clientDetails": {
+    "title": "Client details",
+    "name": "Name",
+    "email": "Email",
+    "loadError": "Could not load client details. Please try again.",
+    "loading": "Loading client details...",
+    "notFound": "Client not found",
+    "registerVisit": "Register visit",
+    "pastVisits": "Past visits"
+  },
+  "registerVisitModal": {
+    "title": "Register visit",
+    "status": "Status",
+    "scheduled": "Scheduled",
+    "completed": "Completed",
+    "date": "Date",
+    "time": "Time",
+    "register": "Register",
+    "sending": "Sending...",
+    "success": "Visit registered successfully",
+    "error": "An error occurred while registering the visit",
+    "invalidFutureDate": "A scheduled visit cannot be in the past"
+  },
+  "pastVisits": {
+    "title": "Visits",
+    "empty": "No completed visits found for this client"
   },
   "tab": {
     "home": "Home",

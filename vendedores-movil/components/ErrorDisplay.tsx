@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants/Colors';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorDisplayProps {
     message?: string;
@@ -12,13 +13,17 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
     message = 'Ha ocurrido un error al cargar los datos.',
     onRetry,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <View style={styles.container}>
             <Ionicons name="alert-circle" size={50} color={Colors.light.cancelColor} />
             <Text style={styles.message}>{message}</Text>
             {onRetry && (
                 <TouchableOpacity style={styles.retryButton} onPress={onRetry}>
-                    <Text style={styles.retryText}>Reintentar</Text>
+                    <Text style={styles.retryText}>
+                        {t('common.retry', 'Reintentar')}
+                    </Text>
                 </TouchableOpacity>
             )}
         </View>
