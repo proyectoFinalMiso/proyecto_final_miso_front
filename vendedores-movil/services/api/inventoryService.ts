@@ -48,6 +48,7 @@ export const mapInventoryToProducts = (inventoryItems: InventoryItem[]) => {
         id: item.id,
         name: item.nombre,
         price: item.valorUnitario,
-        sku: item.sku
+        sku: item.sku,
+        availableQuantity: item.cantidadDisponible,
     }));
 }; 

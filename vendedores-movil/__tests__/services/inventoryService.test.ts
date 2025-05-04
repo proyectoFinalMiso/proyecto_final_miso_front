@@ -126,7 +126,8 @@ describe('Inventory Service', () => {
                 id: '1',
                 name: 'Product 1',
                 price: 100,
-                sku: 101
+                sku: 101,
+                availableQuantity: 10
             });
 
             // Check all items are mapped correctly

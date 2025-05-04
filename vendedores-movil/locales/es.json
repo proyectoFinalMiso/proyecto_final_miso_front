@@ -72,7 +72,8 @@
     "collapseDetails": "Contraer detalles",
     "expandDetails": "Expandir detalles",
     "decreaseQuantity": "Disminuir cantidad",
-    "increaseQuantity": "Aumentar cantidad"
+    "increaseQuantity": "Aumentar cantidad",
+    "stock": "Inventario"
   },
   "filters": {
     "min": "Mín",

@@ -25,7 +25,8 @@ export type Product = {
   id: string;
   name: string;
   price: number;
-  sku: number
+  sku: number,
+  availableQuantity: number;
 };
 
 type ProductTableProps = {
@@ -108,6 +109,10 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
 
         {isExpanded && (
           <View style={styles.expandedContent}>
+            <View style={styles.detailRow}>
+              <Text style={styles.detailLabel}>{t('productTable.stock', 'Inventario')}</Text>
+              <Text style={styles.detailValue}>{item.availableQuantity}</Text>
+            </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>{t('productTable.unitValue', 'Valor Unitario')}</Text>
               <Text style={styles.detailValue}>${item.price.toFixed(0)} COP</Text>
