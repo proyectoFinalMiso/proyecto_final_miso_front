@@ -203,7 +203,13 @@
     "loading": "Loading client details...",
     "notFound": "Client not found",
     "registerVisit": "Register visit",
-    "pastVisits": "Past visits"
+    "pastVisits": "Past visits",
+    "uploadVideo": "Request Recommendation",
+    "videoUpload": "Upload video",
+    "selectVideoSource": "Select how to upload the video",
+    "fromGallery": "Gallery",
+    "recordNew": "Record",
+    "uploading": "Uploading video..."
   },
   "registerVisitModal": {
     "title": "Register visit",

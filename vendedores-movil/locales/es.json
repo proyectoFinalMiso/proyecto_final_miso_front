@@ -206,7 +206,13 @@
     "notFound": "Cliente no encontrado",
     "registerVisit": "Registrar visita",
     "registerVisitPrompt": "¿Desea registrar una nueva visita para este cliente?",
-    "pastVisits": "Visitas Pasadas"
+    "pastVisits": "Visitas Pasadas",
+    "uploadVideo": "Solicitar Recomendación",
+    "videoUpload": "Subir video",
+    "selectVideoSource": "Selecciona cómo desea subir el video",
+    "fromGallery": "Galería",
+    "recordNew": "Grabar",
+    "uploading": "Subiendo video..."
   },
   "registerVisitModal": {
     "title": "Registrar visita",
