@@ -142,26 +142,36 @@ const ClientDetailsScreen = () => {
             </View>
             <View style={styles.actionButtonsContainer}>
               <TouchableOpacity 
-                style={styles.registerVisitButton}
+                style={[styles.actionButton, styles.visitButtonStyle]}
                 onPress={handleRegisterVisit}
                 testID="register-visit-button"
                 accessibilityLabel={t('clientDetails.registerVisit', 'Registrar Visita')}
               >
-                <Ionicons name="calendar-outline" size={20} color={Colors.light.buttonText} />
-                <Text style={styles.registerVisitText}>
+                <Ionicons 
+                  name="calendar-outline" 
+                  size={24} 
+                  color={Colors.light.buttonText} 
+                  style={styles.actionButtonIcon}
+                />
+                <Text style={styles.actionButtonText}>
                   {t('clientDetails.registerVisit', 'Registrar Visita')}
                 </Text>
               </TouchableOpacity>
               
               <TouchableOpacity 
-                style={styles.videoButton}
+                style={[styles.actionButton, styles.videoButtonStyle]}
                 onPress={handleVideoUpload}
                 testID="upload-video-button"
                 accessibilityLabel={t('clientDetails.uploadVideo', 'Solicitar Recomendación')}
               >
-                <Ionicons name="videocam-outline" size={20} color={Colors.light.buttonText} />
-                <Text style={styles.videoButtonText}>
-                  {t('clientDetails.uploadVideo', 'Solicitar Recomendación')}
+                <Ionicons 
+                  name="videocam-outline" 
+                  size={24} 
+                  color={Colors.light.buttonText} 
+                  style={styles.actionButtonIcon}
+                />
+                <Text style={styles.actionButtonText}>
+                  {t('clientDetails.uploadVideo', 'Recomendar')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -294,29 +304,40 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   actionButtonsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  videoButton: {
-    backgroundColor: Colors.light.primary,
-    borderRadius: 69,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  
-  videoButtonText: {
-    color: Colors.light.buttonText,
-    fontSize: 14,
-    fontWeight: '600',
-    fontFamily: 'PlusJakartaSans_600SemiBold',
-    marginLeft: 8,
-  },
+  flexDirection: 'row',
+  marginTop: 16,
+  justifyContent: 'space-evenly', // Evenly space the buttons
+},
+
+// Create a new button style that's more compact with icon above text
+actionButton: {
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: 12,
+  borderRadius: 12,
+  width: '45%', // Each button takes up 45% of the width
+},
+
+// Create specific styles for each button type
+visitButtonStyle: {
+  backgroundColor: Colors.light.button,
+},
+
+videoButtonStyle: {
+  backgroundColor: Colors.light.primary,
+},
+
+actionButtonIcon: {
+  marginBottom: 4, // Space between icon and text
+},
+
+actionButtonText: {
+  color: Colors.light.buttonText,
+  fontSize: 14,
+  fontWeight: '600',
+  fontFamily: 'PlusJakartaSans_600SemiBold',
+  textAlign: 'center',
+},
 });
 
 export default ClientDetailsScreen;

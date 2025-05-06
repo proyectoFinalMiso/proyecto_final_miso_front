@@ -163,7 +163,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
               disabled={isUploading}
               testID="record-video-button"
             >
-              <Ionicons name="videocam-outline" size={24} color={Colors.light.buttonText} />
+              <Ionicons name="videocam-outline" size={24} color={Colors.light.text} />
               <Text style={styles.modalButtonText}>
                 {t('clientDetails.recordNew', 'Grabar')}
               </Text>
@@ -246,7 +246,9 @@ const styles = StyleSheet.create({
   },
   
   cameraButton: {
-    backgroundColor: Colors.light.button,
+    backgroundColor: Colors.light.backgroundLogin,
+    borderWidth: 1,
+    borderColor: Colors.light.borderWidget,
   },
   
   modalButtonText: {
