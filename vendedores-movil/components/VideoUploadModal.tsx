@@ -13,6 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
 import { Colors } from '../constants/Colors';
 import LoadingIndicator from './LoadingIndicator';
+import { uploadClientVideo } from '@/services/api/clientsService';
 
 interface VideoUploadModalProps {
   visible: boolean;
@@ -97,12 +98,8 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
   const uploadVideo = async (videoUri: string) => {
     setIsUploading(true);
     try {
-      // Here you would implement your API call to upload the video
-      // For example:
-      // await uploadClientVideo(clientId, videoUri, vendedorId);
-      
-      // Simulating an upload with a delay
       await new Promise(resolve => setTimeout(resolve, 2000));
+      // await uploadClientVideo(clientId, videoUri, vendedorId);
       
       Alert.alert(
         t('common.success', 'Éxito'),
@@ -151,7 +148,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
               disabled={isUploading}
               testID="pick-gallery-button"
             >
-              <Ionicons name="images-outline" size={24} color={Colors.light.text} />
+              <Ionicons name="images-outline" size={24} color={Colors.light.buttonText} />
               <Text style={styles.modalButtonText}>
                 {t('clientDetails.fromGallery', 'Galería')}
               </Text>
@@ -163,7 +160,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
               disabled={isUploading}
               testID="record-video-button"
             >
-              <Ionicons name="videocam-outline" size={24} color={Colors.light.text} />
+              <Ionicons name="videocam-outline" size={24} color={Colors.light.buttonText} />
               <Text style={styles.modalButtonText}>
                 {t('clientDetails.recordNew', 'Grabar')}
               </Text>
@@ -240,22 +237,18 @@ const styles = StyleSheet.create({
   },
   
   galleryButton: {
-    backgroundColor: Colors.light.backgroundLogin,
-    borderWidth: 1,
-    borderColor: Colors.light.borderWidget,
+    backgroundColor: Colors.light.button,
   },
   
   cameraButton: {
-    backgroundColor: Colors.light.backgroundLogin,
-    borderWidth: 1,
-    borderColor: Colors.light.borderWidget,
+    backgroundColor: Colors.light.button,
   },
   
   modalButtonText: {
     fontSize: 16,
     fontFamily: 'PlusJakartaSans_500Medium',
     marginLeft: 8,
-    color: Colors.light.text,
+    color: Colors.light.buttonText,
   },
 });
 

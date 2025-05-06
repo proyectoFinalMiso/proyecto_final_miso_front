@@ -306,19 +306,17 @@ const styles = StyleSheet.create({
   actionButtonsContainer: {
   flexDirection: 'row',
   marginTop: 16,
-  justifyContent: 'space-evenly', // Evenly space the buttons
+  justifyContent: 'space-evenly',
 },
 
-// Create a new button style that's more compact with icon above text
 actionButton: {
   alignItems: 'center',
   justifyContent: 'center',
   padding: 12,
   borderRadius: 12,
-  width: '45%', // Each button takes up 45% of the width
+  width: '45%',
 },
 
-// Create specific styles for each button type
 visitButtonStyle: {
   backgroundColor: Colors.light.button,
 },
@@ -328,7 +326,7 @@ videoButtonStyle: {
 },
 
 actionButtonIcon: {
-  marginBottom: 4, // Space between icon and text
+  marginBottom: 4,
 },
 
 actionButtonText: {

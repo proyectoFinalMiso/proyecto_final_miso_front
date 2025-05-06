@@ -46,6 +46,11 @@ export interface VisitsResponse {
     msg?: string;
 }
 
+export interface VideoUploadResponse {
+    body: any;
+    msg: string;
+}
+
 // Fetch all seller's clients
 export const fetchClients = async (vendedorId: string): Promise<Cliente[]> => {
     try {
@@ -102,4 +107,41 @@ export const fetchPastVisits = async (clientId: string): Promise<Visit[]> => {
         console.error('Error fetching past visits:', error);
         throw error;
     }
+};
+
+// Upload a video for a specific client
+export const uploadClientVideo = async (
+  clientId: string,
+  videoUri: string,
+  vendedorId: string
+): Promise<VideoUploadResponse> => {
+  try {
+    const formData = new FormData();
+    
+    const filename = videoUri.split('/').pop() || 'video.mp4';
+    
+    formData.append('video', {
+      uri: videoUri,
+      name: filename,
+      type: 'video/mp4',
+    } as any);
+    
+    formData.append('vendedor_id', vendedorId);
+    formData.append('cliente_id', clientId);
+    
+    const response = await axios.post<VideoUploadResponse>(
+      `${API_BASE_URL}/${clientId}/videos`, 
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error uploading video:', error);
+    throw error;
+  }
 };
