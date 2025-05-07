@@ -9,7 +9,8 @@
         "option_2": "Productos",
         "option_3": "Inventario",
         "option_4": "Vendedores",
-        "option_5": "Pedidos"
+        "option_5": "Pedidos",
+        "option_6": "Plan de ventas"
     },
     "ConfigMenu": {
         "title": "Opciones",
@@ -112,5 +113,26 @@
         "route_modal_table_col_1": "SKU",
         "route_modal_table_col_2": "Bodega",
         "button_close": "CERRAR"
+    },
+    "Sales": {
+        "title": "Plan de ventas",
+        "table_col_1": "ID",
+        "table_col_2": "Estado",
+        "table_col_3": "Fecha Inicio",
+        "table_col_4": "Fecha Fin",
+        "table_col_5": "Meta",
+        "table_col_6": "Productos",
+        "Report": "Reporte",
+        "modal_title": "Reporte Plan de Ventas",
+        "modal_subtitle": "Reporte de Ventas para el periodo: ",
+        "modal_button_close": "CERRAR",
+
+        "route_modal_title": "Delivery Route",
+        "route_modal_order": "Order: ",
+        "route_modal_customer": "Customer: ",
+        "route_modal_address": "Address: ",
+        "route_modal_table_col_1": "SKU",
+        "route_modal_table_col_2": "Warehouse",
+        "button_close": "CLOSE"
     }
 }

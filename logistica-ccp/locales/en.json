@@ -9,7 +9,8 @@
         "option_2": "Products",
         "option_3": "Stock",
         "option_4": "Sellers",
-        "option_5": "Orders"
+        "option_5": "Orders",
+        "option_6": "Sales Planning"
     },
     "ConfigMenu": {
         "title": "Configuration",
@@ -105,6 +106,27 @@
         "table_col_6": "Latitude",
         "table_col_7": "Longitude",
         "table_col_8": "Delivery Route",
+        "route_modal_title": "Delivery Route",
+        "route_modal_order": "Order: ",
+        "route_modal_customer": "Customer: ",
+        "route_modal_address": "Address: ",
+        "route_modal_table_col_1": "SKU",
+        "route_modal_table_col_2": "Warehouse",
+        "button_close": "CLOSE"
+    },
+    "Sales": {
+        "title": "Sales Planning",
+        "table_col_1": "ID",
+        "table_col_2": "Status",
+        "table_col_3": "Creation Date",
+        "table_col_4": "End Date",
+        "table_col_5": "Goal",
+        "table_col_6": "Products",
+        "Report": "Report",
+        "modal_title": "Sales Report",
+        "modal_subtitle": "Sales report for the period: ",
+        "modal_button_close": "CLOSE",
+
         "route_modal_title": "Delivery Route",
         "route_modal_order": "Order: ",
         "route_modal_customer": "Customer: ",
