@@ -27,8 +27,8 @@ describe('PastVisitsTable', () => {
   it('renders correctly with a list of visits (default to Spanish)', () => {
     renderWithProviders(<PastVisitsTable visits={mockVisits} />);
     expect(screen.getByTestId('planned-visits-title')).toBeTruthy();
-    expect(screen.getByText(/15 de enero de 2024, 05:00/)).toBeTruthy();
-    expect(screen.getByText(/20 de enero de 2024, 09:30/)).toBeTruthy();
+    expect(screen.getByText(/15 de enero de 2024, 10:00\s*a\.\s*m\./i)).toBeTruthy();
+    expect(screen.getByText(/20 de enero de 2024, 02:30\s*p\.\s*m\./i)).toBeTruthy();
   });
 
   it('renders correctly with an empty list of visits (default to Spanish)', () => {
@@ -51,15 +51,15 @@ describe('PastVisitsTable', () => {
   it('formats and displays visit dates correctly for es locale', () => {
     i18n.changeLanguage('es');
     renderWithProviders(<PastVisitsTable visits={mockVisits} />);
-    expect(screen.getByText(/15 de enero de 2024, 05:00/)).toBeTruthy();
-    expect(screen.getByText(/20 de enero de 2024, 09:30/)).toBeTruthy();
+    expect(screen.getByText(/15 de enero de 2024, 10:00\s*a\.\s*m\./i)).toBeTruthy();
+    expect(screen.getByText(/20 de enero de 2024, 02:30\s*p\.\s*m\./i)).toBeTruthy();
   });
 
   it('formats and displays visit dates correctly for en locale', () => {
     i18n.changeLanguage('en');
     renderWithProviders(<PastVisitsTable visits={mockVisits} />);
-    expect(screen.getByText(/January 15, 2024 at 05:00/)).toBeTruthy(); 
-    expect(screen.getByText(/January 20, 2024 at 09:30/)).toBeTruthy();
+    expect(screen.getByText(/January 15, 2024 at 10:00\s*AM/i)).toBeTruthy(); 
+    expect(screen.getByText(/January 20, 2024 at 02:30\s*PM/i)).toBeTruthy();
     expect(screen.getByText('Visits')).toBeTruthy();
     renderWithProviders(<PastVisitsTable visits={emptyVisits} />);
     expect(screen.getByText('No completed visits found for this client')).toBeTruthy();
