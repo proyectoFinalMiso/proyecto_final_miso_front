@@ -47,8 +47,13 @@ export interface VisitsResponse {
 }
 
 export interface VideoUploadResponse {
-    body: any;
-    msg: string;
+    message: string;
+    messageId: string;
+}
+
+export interface SignedUrlResponse {
+    signedUrl: string;
+    gcsPath: string;
 }
 
 // Fetch all seller's clients
@@ -109,39 +114,46 @@ export const fetchPastVisits = async (clientId: string): Promise<Visit[]> => {
     }
 };
 
-// Upload a video for a specific client
-export const uploadClientVideo = async (
-  clientId: string,
-  videoUri: string,
-  vendedorId: string
+// Get signed URL for video upload
+export const getVideoUploadSignedUrl = async (
+    clientId: string, 
+    filename: string, 
+    contentType: string
+): Promise<SignedUrlResponse> => {
+    try {
+        const response = await axios.post<SignedUrlResponse>(
+            `${API_BASE_URL}/generate_upload_url`, 
+            {
+                filename,
+                contentType,
+                clientId
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error getting signed URL:', error);
+        throw error;
+    }
+};
+
+// Notify backend about successful upload
+export const notifyVideoUploadComplete = async (
+    blobPath: string,
+    clientId: string,
+    vendedorId: string
 ): Promise<VideoUploadResponse> => {
-  try {
-    const formData = new FormData();
-    
-    const filename = videoUri.split('/').pop() || 'video.mp4';
-    
-    formData.append('video', {
-      uri: videoUri,
-      name: filename,
-      type: 'video/mp4',
-    } as any);
-    
-    formData.append('vendedor_id', vendedorId);
-    formData.append('cliente_id', clientId);
-    
-    const response = await axios.post<VideoUploadResponse>(
-      `${API_BASE_URL}/${clientId}/videos`, 
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-    );
-    
-    return response.data;
-  } catch (error) {
-    console.error('Error uploading video:', error);
-    throw error;
-  }
+    try {
+        const response = await axios.post<VideoUploadResponse>(
+            `${API_BASE_URL}/notify_upload_complete`,
+            {
+                blobPath,
+                clientId,
+                vendedorId
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error notifying backend of upload:', error);
+        throw error;
+    }
 };

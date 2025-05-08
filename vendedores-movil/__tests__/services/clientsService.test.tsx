@@ -11,7 +11,6 @@ import {
     fetchPastVisits,
     VisitsResponse,
     Visit,
-    uploadClientVideo,
     VideoUploadResponse
 } from '../../services/api/clientsService';
 
@@ -215,63 +214,6 @@ describe('clientsService', () => {
             mockedAxios.get.mockRejectedValueOnce(error);
 
             await expect(fetchPastVisits('client1')).rejects.toThrow('Network error');
-        });
-    });
-
-    describe('uploadClientVideo', () => {
-        it('should upload client video correctly', async () => {
-            const mockVideoResponse: VideoUploadResponse = {
-                body: { videoId: 'video123', message: 'File uploaded' },
-                msg: 'Video subido exitosamente'
-            };
-            mockedAxios.post.mockResolvedValueOnce({ data: mockVideoResponse });
-
-            const clientId = 'client1';
-            const videoUri = 'file:///path/to/video.mp4';
-            const vendedorId = 'seller1';
-
-            // Mock FormData
-            const mockFormData = new FormData();
-            jest.spyOn(global, 'FormData').mockImplementation(() => mockFormData);
-            const appendSpy = jest.spyOn(mockFormData, 'append');
-
-            const result = await uploadClientVideo(clientId, videoUri, vendedorId);
-
-            expect(global.FormData).toHaveBeenCalledTimes(1);
-            expect(appendSpy).toHaveBeenCalledWith('video', {
-                uri: videoUri,
-                name: 'video.mp4',
-                type: 'video/mp4',
-            });
-            expect(appendSpy).toHaveBeenCalledWith('vendedor_id', vendedorId);
-            expect(appendSpy).toHaveBeenCalledWith('cliente_id', clientId);
-
-            expect(mockedAxios.post).toHaveBeenCalledTimes(1);
-            expect(mockedAxios.post).toHaveBeenCalledWith(
-                `${API_BASE_URL}/${clientId}/videos`,
-                mockFormData,
-                { headers: { 'Content-Type': 'multipart/form-data' } }
-            );
-            expect(result).toEqual(mockVideoResponse);
-        });
-
-        it('should throw error when uploading video fails', async () => {
-            const error = new Error('Upload failed');
-            mockedAxios.post.mockRejectedValueOnce(error);
-
-            await expect(
-                uploadClientVideo('client1', 'file:///path/to/video.mp4', 'seller1')
-            ).rejects.toThrow('Upload failed');
-        });
-
-        it('should handle filename correctly if videoUri is just a filename', async () => {
-            mockedAxios.post.mockResolvedValueOnce({ data: {} });
-            const mockFormData = new FormData();
-            jest.spyOn(global, 'FormData').mockImplementation(() => mockFormData);
-            const appendSpy = jest.spyOn(mockFormData, 'append');
-
-            await uploadClientVideo('client1', 'video.mp4', 'seller1');
-            expect(appendSpy).toHaveBeenCalledWith('video', expect.objectContaining({ name: 'video.mp4' }));
         });
     });
 });

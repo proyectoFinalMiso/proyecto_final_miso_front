@@ -13,7 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
 import { Colors } from '../constants/Colors';
 import LoadingIndicator from './LoadingIndicator';
-import { uploadClientVideo } from '@/services/api/clientsService';
+import { getVideoUploadSignedUrl, notifyVideoUploadComplete } from '../services/api/clientsService';
 
 interface VideoUploadModalProps {
   visible: boolean;
@@ -32,6 +32,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
 }) => {
   const { t } = useTranslation();
   const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
 
   const pickVideoFromGallery = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -47,13 +48,12 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-        allowsEditing: true,
-        quality: 1,
+        quality: 0.8,
         videoMaxDuration: 60,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        await uploadVideo(result.assets[0].uri);
+        await uploadVideoWithSignedUrl(result.assets[0].uri);
       }
     } catch (error) {
       console.error('Error picking video:', error);
@@ -66,12 +66,11 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
 
   const recordVideo = async () => {
     const { status: cameraStatus } = await Camera.requestCameraPermissionsAsync();
-    const { status: audioStatus } = await Camera.requestMicrophonePermissionsAsync();
     
-    if (cameraStatus !== 'granted' || audioStatus !== 'granted') {
+    if (cameraStatus !== 'granted') {
       Alert.alert(
         t('common.permissionRequired', 'Permiso requerido'),
-        t('clientDetails.cameraPermission', 'Se necesitan permisos de cámara y micrófono')
+        t('clientDetails.cameraPermission', 'Se necesitan permisos de cámara')
       );
       return;
     }
@@ -80,11 +79,12 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         allowsEditing: true,
+        quality: 0.8,
         videoMaxDuration: 60,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        await uploadVideo(result.assets[0].uri);
+        await uploadVideoWithSignedUrl(result.assets[0].uri);
       }
     } catch (error) {
       console.error('Error recording video:', error);
@@ -95,29 +95,80 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
     }
   };
 
-  const uploadVideo = async (videoUri: string) => {
+  const uploadVideoWithSignedUrl = async (videoUri: string) => {
     setIsUploading(true);
+    setUploadProgress(0);
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      // await uploadClientVideo(clientId, videoUri, vendedorId);
-      
+      // 1. Filename
+      const timestamp = new Date().getTime();
+      const originalFileName = videoUri.split('/').pop() || `video_${timestamp}.mp4`;
+      const fileExtension = originalFileName.split('.').pop() || 'mp4';
+      const filename = `client_${clientId}_${timestamp}.${fileExtension}`;
+      const contentType = `video/${fileExtension}`;
+
+      // 2. Signed URL
+      const { signedUrl, gcsPath } = await getVideoUploadSignedUrl(clientId, filename, contentType);
+
+      // 3. Upload
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', signedUrl);
+      xhr.setRequestHeader('Content-Type', contentType);
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const progress = Math.round((event.loaded / event.total) * 100);
+          setUploadProgress(progress);
+        }
+      };
+
+      await new Promise<void>((resolve, reject) => {
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve();
+          } else {
+            console.error('GCS Upload Error:', xhr.status, xhr.responseText);
+            reject(new Error(`GCS Upload Failed: ${xhr.status} ${xhr.responseText || 'Unknown error'}`));
+          }
+        };
+        xhr.onerror = (e) => {
+          console.error('Network error during GCS upload:', e);
+          reject(new Error('Network error during upload.'));
+        };
+
+        fetch(videoUri)
+          .then(res => res.blob())
+          .then(blob => {
+            xhr.send(blob);
+          })
+          .catch(blobError => {
+            console.error('Error creating blob from videoUri:', blobError);
+            reject(new Error('Could not process video file.'));
+          });
+      });
+
+      // 4. Notify
+      await notifyVideoUploadComplete(gcsPath, clientId, vendedorId);
+
       Alert.alert(
         t('common.success', 'Éxito'),
         t('clientDetails.videoUploadSuccess', 'El video se ha subido correctamente')
       );
-      
+
       if (onSuccess) {
         onSuccess();
       }
       onClose();
-    } catch (error) {
-      console.error('Error uploading video:', error);
+
+    } catch (error: any) {
+      console.error('Error during video upload process:', error);
       Alert.alert(
         t('common.error', 'Error'),
-        t('clientDetails.videoUploadError', 'No se pudo subir el video')
+        error.message || t('clientDetails.videoUploadError', 'No se pudo subir el video')
       );
     } finally {
       setIsUploading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -126,49 +177,57 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
       visible={visible}
       transparent={true}
       animationType="fade"
-      onRequestClose={onClose}
+      onRequestClose={() => !isUploading && onClose()}
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>{t('clientDetails.videoUpload', 'Subir Video')}</Text>
-            <TouchableOpacity onPress={onClose} testID="modal-close-button">
+            <TouchableOpacity onPress={onClose} testID="modal-close-button" disabled={isUploading}>
               <Ionicons name="close" size={24} color={Colors.light.text} />
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.modalSubtitle}>
-            {t('clientDetails.selectVideoSource', 'Seleccione cómo desea subir el video')}
-          </Text>
-
-          <View style={styles.modalButtons}>
-            <TouchableOpacity
-              style={[styles.modalButton, styles.galleryButton]}
-              onPress={pickVideoFromGallery}
-              disabled={isUploading}
-              testID="pick-gallery-button"
-            >
-              <Ionicons name="images-outline" size={24} color={Colors.light.buttonText} />
-              <Text style={styles.modalButtonText}>
-                {t('clientDetails.fromGallery', 'Galería')}
+          {isUploading ? (
+            <View style={styles.uploadingContainer}>
+              <LoadingIndicator message={t('clientDetails.uploading', 'Subiendo video...')} />
+              <Text style={styles.progressText}>{`${uploadProgress}%`}</Text>
+              <View style={styles.progressBarContainer}>
+                <View style={[styles.progressBar, { width: `${uploadProgress}%` }]} />
+              </View>
+            </View>
+          ) : (
+            <>
+              <Text style={styles.modalSubtitle}>
+                {t('clientDetails.selectVideoSource', 'Seleccione cómo desea subir el video')}
               </Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              style={[styles.modalButton, styles.cameraButton]}
-              onPress={recordVideo}
-              disabled={isUploading}
-              testID="record-video-button"
-            >
-              <Ionicons name="videocam-outline" size={24} color={Colors.light.buttonText} />
-              <Text style={styles.modalButtonText}>
-                {t('clientDetails.recordNew', 'Grabar')}
-              </Text>
-            </TouchableOpacity>
-          </View>
+              <View style={styles.modalButtons}>
+                <TouchableOpacity
+                  style={[styles.modalButton, styles.galleryButton]}
+                  onPress={pickVideoFromGallery}
+                  disabled={isUploading}
+                  testID="pick-gallery-button"
+                >
+                  <Ionicons name="images-outline" size={24} color={Colors.light.buttonText} />
+                  <Text style={styles.modalButtonText}>
+                    {t('clientDetails.fromGallery', 'Galería')}
+                  </Text>
+                </TouchableOpacity>
 
-          {isUploading && (
-            <LoadingIndicator message={t('clientDetails.uploading', 'Subiendo video...')} />
+                <TouchableOpacity
+                  style={[styles.modalButton, styles.cameraButton]}
+                  onPress={recordVideo}
+                  disabled={isUploading}
+                  testID="record-video-button"
+                >
+                  <Ionicons name="videocam-outline" size={24} color={Colors.light.buttonText} />
+                  <Text style={styles.modalButtonText}>
+                    {t('clientDetails.recordNew', 'Grabar')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </>
           )}
         </View>
       </View>
@@ -250,6 +309,31 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     color: Colors.light.buttonText,
   },
+
+  uploadingContainer: {
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+
+  progressText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: Colors.light.text,
+    fontFamily: 'PlusJakartaSans_500Medium',
+  },
+  
+  progressBarContainer: {
+    width: '100%',
+    height: 10,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 5,
+    marginTop: 10,
+    overflow: 'hidden',
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: Colors.light.button,
+  }
 });
 
 export default VideoUploadModal;

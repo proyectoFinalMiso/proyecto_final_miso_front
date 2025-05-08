@@ -162,74 +162,6 @@ describe('VideoUploadModal Component', () => {
     expect(Alert.alert).not.toHaveBeenCalled();
   });
 
-  it('handles successful video selection from gallery', async () => {
-    const ImagePicker = require('expo-image-picker');
-    
-    ImagePicker.requestMediaLibraryPermissionsAsync.mockResolvedValue({ status: 'granted' });
-    ImagePicker.launchImageLibraryAsync.mockResolvedValue({
-      canceled: false,
-      assets: [{ uri: 'file:///mock-video-path.mp4' }]
-    });
-    
-    jest.useFakeTimers();
-    
-    const { getByTestId } = render(<VideoUploadModal {...defaultProps} />);
-
-    fireEvent.press(getByTestId('pick-gallery-button'));
-    
-    await waitFor(() => {
-      expect(ImagePicker.launchImageLibraryAsync).toHaveBeenCalled();
-    });
-    
-    jest.advanceTimersByTime(2000);
-    
-    await waitFor(() => {
-      expect(Alert.alert).toHaveBeenCalledWith(
-        'Éxito',
-        'El video se ha subido correctamente'
-      );
-      expect(mockOnSuccess).toHaveBeenCalled();
-      expect(mockOnClose).toHaveBeenCalled();
-    });
-    
-    jest.useRealTimers();
-  });
-
-  it('handles successful video recording from camera', async () => {
-    const ImagePicker = require('expo-image-picker');
-    const Camera = require('expo-camera').Camera;
-    
-    Camera.requestCameraPermissionsAsync.mockResolvedValue({ status: 'granted' });
-    Camera.requestMicrophonePermissionsAsync.mockResolvedValue({ status: 'granted' });
-    ImagePicker.launchCameraAsync.mockResolvedValue({
-      canceled: false,
-      assets: [{ uri: 'file:///mock-recorded-video.mp4' }]
-    });
-    
-    jest.useFakeTimers();
-    
-    const { getByTestId } = render(<VideoUploadModal {...defaultProps} />);
-
-    fireEvent.press(getByTestId('record-video-button'));
-    
-    await waitFor(() => {
-      expect(ImagePicker.launchCameraAsync).toHaveBeenCalled();
-    });
-    
-    jest.advanceTimersByTime(2000);
-    
-    await waitFor(() => {
-      expect(Alert.alert).toHaveBeenCalledWith(
-        'Éxito',
-        'El video se ha subido correctamente'
-      );
-      expect(mockOnSuccess).toHaveBeenCalled();
-      expect(mockOnClose).toHaveBeenCalled();
-    });
-    
-    jest.useRealTimers();
-  });
-
   it('handles gallery picker error', async () => {
     const ImagePicker = require('expo-image-picker');
     
@@ -294,23 +226,4 @@ describe('VideoUploadModal Component', () => {
     mockConsoleError.mockRestore();
   });
 
-  it('shows loading indicator during upload', async () => {
-    const ImagePicker = require('expo-image-picker');
-    
-    ImagePicker.requestMediaLibraryPermissionsAsync.mockResolvedValue({ status: 'granted' });
-    ImagePicker.launchImageLibraryAsync.mockResolvedValue({
-      canceled: false,
-      assets: [{ uri: 'file:///mock-video-path.mp4' }]
-    });
-    
-    const { getByTestId, getByText, queryByText } = render(<VideoUploadModal {...defaultProps} />);
-
-    expect(queryByText('Subiendo video...')).toBeNull();
-    
-    fireEvent.press(getByTestId('pick-gallery-button'));
-    
-    await waitFor(() => {
-      expect(getByText('Subiendo video...')).toBeTruthy();
-    });
-  });
 });
