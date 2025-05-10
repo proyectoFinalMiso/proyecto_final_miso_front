@@ -19,6 +19,14 @@ jest.mock('@expo/vector-icons', () => ({
     Ionicons: 'Ionicons',
 }));
 
+// Mock AsyncStorage
+jest.mock('@react-native-async-storage/async-storage', () => ({
+    getItem: jest.fn(),
+    setItem: jest.fn(() => Promise.resolve()), // Ensure setItem returns a Promise
+    removeItem: jest.fn(),
+    clear: jest.fn(),
+}));
+
 // Mock Platform specific APIs
 jest.mock('react-native/Libraries/Utilities/Platform', () => ({
     OS: 'ios',
@@ -35,4 +43,4 @@ jest.mock('react-native', () => {
     };
 
     return RN;
-}); 
+});

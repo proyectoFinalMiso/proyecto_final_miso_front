@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest",
+    "test": "TZ=UTC jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lint": "expo lint"
@@ -47,7 +47,11 @@
     "react-native-svg": "^15.11.2",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "expo-image-picker": "~16.0.6",
+    "expo-camera": "~16.0.18",
+    "expo-media-library": "~17.0.6",
+    "expo-av": "~15.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

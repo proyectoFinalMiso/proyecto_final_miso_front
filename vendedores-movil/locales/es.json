@@ -206,7 +206,19 @@
     "notFound": "Cliente no encontrado",
     "registerVisit": "Registrar visita",
     "registerVisitPrompt": "¿Desea registrar una nueva visita para este cliente?",
-    "pastVisits": "Visitas Pasadas"
+    "pastVisits": "Visitas Pasadas",
+    "uploadVideo": "Solicitar Recomendación",
+    "videoUpload": "Subir video",
+    "selectVideoSource": "Selecciona cómo desea subir el video",
+    "fromGallery": "Galería",
+    "recordNew": "Grabar",
+    "uploading": "Subiendo video...",
+    "videoUploadSuccess": "El video se ha subido correctamente, el resultado se enviará al cliente",
+    "videoUploadError": "No se pudo subir el video",
+    "videoRecordError": "No se pudo grabar el video",
+    "cameraPermission": "Se necesitan permisos de cámara",
+    "videoPickError": "No se pudo seleccionar el video",
+    "galleryPermission": "Se necesita permiso para acceder a la galería"
   },
   "registerVisitModal": {
     "title": "Registrar visita",
