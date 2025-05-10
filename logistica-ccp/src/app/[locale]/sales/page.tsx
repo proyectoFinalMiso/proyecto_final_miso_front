@@ -9,6 +9,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslations } from "next-intl";
 import ModalReport from "./ModalReport";
+import { getSalesPlan } from "./adapters/microserviceSales";
 
 declare module '@mui/material/Button' {
     interface ButtonPropsColorOverrides {
@@ -21,27 +22,58 @@ interface Sales {
     id: string;
     estado: string;
     fecha_inicio: string;
-    fecha_fin: string;
+    fecha_final: string;
     meta_ventas: number;
-    productos: number;
+    productos_plan: number;
 }
 
+const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    });
+};
 
 const Sales: React.FC = () => {
     const t = useTranslations('Sales')
 
     const tableSchema: GridColDef[] = [
-        {field: 'ID Plan Ventas', headerName: t('table_col_1'), flex: 1, headerClassName: styles.Header},
-        {field: 'Estado', headerName: t('table_col_2'), flex: 1, headerClassName: styles.Header},
-        {field: 'Fecha Inicio', headerName: t('table_col_3'), flex: 1, headerClassName: styles.Header},
-        {field: 'Fecha Fin', headerName: t('table_col_4'), flex: 1, headerClassName: styles.Header},
-        {field: 'Meta Ventas', headerName: t('table_col_5'), flex: 1, headerClassName: styles.Header},
-        {field: 'Productos', headerName: t('table_col_6'), flex: 1, headerClassName: styles.Header}
+        {field: 'id', headerName: t('table_col_1'), flex: 1, headerClassName: styles.Header},
+        {field: 'estado', headerName: t('table_col_2'), flex: 1, headerClassName: styles.Header},
+        {field: 'fecha_inicio', headerName: t('table_col_3'), flex: 1, headerClassName: styles.Header},
+        {field: 'fecha_final', headerName: t('table_col_4'), flex: 1, headerClassName: styles.Header},
+        {field: 'meta_ventas', headerName: t('table_col_5'), flex: 1, headerClassName: styles.Header},
+        {field: 'productos_plan', headerName: t('table_col_6'), flex: 1, headerClassName: styles.Header}
     ]
 
     const [isOpenReport, setIsOpenReport] = useState(false);
     const [sales, setSales] = useState<Sales[]>([])
 
+    // const fetchSalesPlan = async () => {
+    //     const salesPlanList = await getSalesPlan();
+    //     setSales(salesPlanList);
+    // }
+
+    useEffect(() => {
+        const fetchSalesPlan = async () => {
+            const salesPlanList = await getSalesPlan();
+            setSales(salesPlanList);
+        };
+
+        const interval = setInterval(() => {
+            fetchSalesPlan();
+        }, 10000);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Transform sales data to format dates before rendering
+    const formattedSales = sales.map((sale) => ({
+        ...sale,
+        fecha_inicio: formatDate(sale.fecha_inicio),
+        fecha_final: sale.fecha_final ? formatDate(sale.fecha_final) : "",
+    }));
 
     return (
         <Box>
@@ -65,7 +97,7 @@ const Sales: React.FC = () => {
                         </Grid>
                     </Grid>
                     <Grid size="grow" sx={{ margin: '1.25rem 6.25rem' }}>
-                        <DataTable columns={tableSchema} rows={sales} />
+                        <DataTable columns={tableSchema} rows={formattedSales} />
                     </Grid>
                 </Grid>
                 
