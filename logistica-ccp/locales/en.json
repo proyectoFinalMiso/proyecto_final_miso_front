@@ -122,10 +122,12 @@
         "table_col_4": "End Date",
         "table_col_5": "Goal",
         "table_col_6": "Products",
+        "table_col_7": "Close",
         "Report": "Report",
         "modal_title": "Sales Report",
         "modal_subtitle": "Sales report for the period: ",
         "modal_button_close": "CLOSE",
+        "close_plan": "Close",
 
         "route_modal_title": "Delivery Route",
         "route_modal_order": "Order: ",
