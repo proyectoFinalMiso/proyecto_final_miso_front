@@ -9,7 +9,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslations } from "next-intl";
 import ModalReport from "./ModalReport";
-import { getSalesPlan } from "./adapters/microserviceSales";
+import { getSalesPlan, closePlan } from "./adapters/microserviceSales";
 
 declare module '@mui/material/Button' {
     interface ButtonPropsColorOverrides {
@@ -39,13 +39,41 @@ const formatDate = (dateString: string): string => {
 const Sales: React.FC = () => {
     const t = useTranslations('Sales')
 
+    const handleClosePlan = async (id: string) => {
+        console.log(`Cerrar registro ${id}`);
+        try {
+            const response = await closePlan({ id });
+            if (response) {
+                console.log("Plan cerrado exitosamente");
+            } else {
+                console.error("Error al cerrar el plan");
+            }
+        } catch (error) {
+            console.error("Error al cerrar el plan", error);
+        }
+    };
+
     const tableSchema: GridColDef[] = [
         {field: 'id', headerName: t('table_col_1'), flex: 1, headerClassName: styles.Header},
         {field: 'estado', headerName: t('table_col_2'), flex: 1, headerClassName: styles.Header},
         {field: 'fecha_inicio', headerName: t('table_col_3'), flex: 1, headerClassName: styles.Header},
         {field: 'fecha_final', headerName: t('table_col_4'), flex: 1, headerClassName: styles.Header},
         {field: 'meta_ventas', headerName: t('table_col_5'), flex: 1, headerClassName: styles.Header},
-        {field: 'productos_plan', headerName: t('table_col_6'), flex: 1, headerClassName: styles.Header}
+        {field: 'productos_plan', headerName: t('table_col_6'), flex: 1, headerClassName: styles.Header},
+        {field: 'acciones', headerName: t('table_col_7'), flex: 1, headerClassName: styles.Header,
+            renderCell: (params) => (
+                <Stack spacing={2} direction="row" justifyContent={'flex-end'}>
+                    <Button
+                        variant="contained"
+                        color="cpp"
+                        onClick={() => handleClosePlan(params.row.id)}
+                        disabled={params.row.estado == 'FINALIZADO'}
+                    >
+                        {t('close_plan')}
+                    </Button>
+                </Stack>
+            )
+        }
     ]
 
     const [isOpenReport, setIsOpenReport] = useState(false);

@@ -122,10 +122,12 @@
         "table_col_4": "Fecha Fin",
         "table_col_5": "Meta",
         "table_col_6": "Productos",
+        "table_col_7": "Cerrar",
         "Report": "Reporte",
         "modal_title": "Reporte Plan de Ventas",
         "modal_subtitle": "Reporte de Ventas para el periodo: ",
         "modal_button_close": "CERRAR",
+        "close_plan": "Cerrar",
 
         "route_modal_title": "Delivery Route",
         "route_modal_order": "Order: ",
