@@ -208,6 +208,8 @@ const ClientDetailsScreen = () => {
           clientId={client.id}
           vendedorId={sellerInfo.vendedorData.id}
           onSuccess={handleVideoUploadSuccess}
+          clientEmail={client.correo}
+          vendedorEmail={sellerInfo.vendedorData.email}
         />
       )}
     </SafeAreaView>

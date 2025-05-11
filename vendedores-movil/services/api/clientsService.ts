@@ -139,16 +139,16 @@ export const getVideoUploadSignedUrl = async (
 // Notify backend about successful upload
 export const notifyVideoUploadComplete = async (
     blobPath: string,
-    clientId: string,
-    vendedorId: string
+    clientEmail: string,
+    vendedorEmail: string
 ): Promise<VideoUploadResponse> => {
     try {
         const response = await axios.post<VideoUploadResponse>(
             `${API_BASE_URL}/notify_upload_complete`,
             {
                 blobPath,
-                clientId,
-                vendedorId
+                clientEmail,
+                vendedorEmail,
             }
         );
         return response.data;

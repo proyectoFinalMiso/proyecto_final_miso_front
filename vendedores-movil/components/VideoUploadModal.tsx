@@ -21,6 +21,8 @@ interface VideoUploadModalProps {
   clientId: string;
   vendedorId: string;
   onSuccess?: () => void;
+  clientEmail: string;
+  vendedorEmail: string;
 }
 
 const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
@@ -28,11 +30,21 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
   onClose,
   clientId,
   vendedorId,
+  clientEmail,
+  vendedorEmail,
   onSuccess,
 }) => {
   const { t } = useTranslation();
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+
+  console.log('VideoUploadModal props:', {
+    visible,
+    clientId,
+    vendedorId,
+    clientEmail,
+    vendedorEmail,
+  });
 
   const pickVideoFromGallery = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -148,7 +160,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
       });
 
       // 4. Notify
-      await notifyVideoUploadComplete(gcsPath, clientId, vendedorId);
+      await notifyVideoUploadComplete(gcsPath, clientEmail, vendedorEmail);
 
       Alert.alert(
         t('common.success', 'Éxito'),

@@ -21,7 +21,7 @@ export interface LoginResponse {
 export interface VendedorData {
     id: string;
     nombre: string;
-    correo: string;
+    email: string;
 }
 
 export const register = async (data: RegisterRequest): Promise<any> => {
