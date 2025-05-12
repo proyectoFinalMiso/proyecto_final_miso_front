@@ -203,7 +203,19 @@
     "loading": "Loading client details...",
     "notFound": "Client not found",
     "registerVisit": "Register visit",
-    "pastVisits": "Past visits"
+    "pastVisits": "Past visits",
+    "uploadVideo": "Request Recommendation",
+    "videoUpload": "Upload video",
+    "selectVideoSource": "Select how to upload the video",
+    "fromGallery": "Gallery",
+    "recordNew": "Record",
+    "uploading": "Uploading video...",
+    "videoUploadSuccess": "Video uploaded successfully, the result will be sent to the client",
+    "videoUploadError": "An error occurred while uploading the video",
+    "videoRecordError": "An error occurred while recording the video",
+    "cameraPermission": "Camera permission required",
+    "videoPickError": "An error occurred while selecting the video",
+    "galleryPermission": "Gallery permission required"
   },
   "registerVisitModal": {
     "title": "Register visit",

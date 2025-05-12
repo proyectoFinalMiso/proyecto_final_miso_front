@@ -17,6 +17,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import RegisterVisitModal from '../../../components/RegisterVisitModal';
+import VideoUploadModal from '@/components/VideoUploadModal';
 
 const ClientDetailsScreen = () => {
   const { id } = useLocalSearchParams();
@@ -30,6 +31,7 @@ const ClientDetailsScreen = () => {
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [showVisitModal, setShowVisitModal] = useState<boolean>(false);
+  const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
 
   const fetchData = useCallback(async (isRefreshingPull = false) => {
     try {
@@ -67,6 +69,14 @@ const ClientDetailsScreen = () => {
   };
 
   const handleVisitSuccess = () => {
+    fetchData();
+  };
+
+  const handleVideoUpload = () => {
+    setShowVideoModal(true);
+  };
+
+  const handleVideoUploadSuccess = () => {
     fetchData();
   };
 
@@ -130,17 +140,41 @@ const ClientDetailsScreen = () => {
                 <Text style={styles.clientEmail}>{client.correo}</Text>
               )}
             </View>
-            <TouchableOpacity 
-              style={styles.registerVisitButton}
-              onPress={handleRegisterVisit}
-              testID="register-visit-button"
-              accessibilityLabel={t('clientDetails.registerVisit', 'Registrar Visita')}
-            >
-              <Ionicons name="calendar-outline" size={20} color={Colors.light.buttonText} />
-              <Text style={styles.registerVisitText}>
-                {t('clientDetails.registerVisit', 'Registrar Visita')}
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.actionButtonsContainer}>
+              <TouchableOpacity 
+                style={[styles.actionButton, styles.visitButtonStyle]}
+                onPress={handleRegisterVisit}
+                testID="register-visit-button"
+                accessibilityLabel={t('clientDetails.registerVisit', 'Registrar Visita')}
+              >
+                <Ionicons 
+                  name="calendar-outline" 
+                  size={24} 
+                  color={Colors.light.buttonText} 
+                  style={styles.actionButtonIcon}
+                />
+                <Text style={styles.actionButtonText}>
+                  {t('clientDetails.registerVisit', 'Registrar Visita')}
+                </Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                style={[styles.actionButton, styles.videoButtonStyle]}
+                onPress={handleVideoUpload}
+                testID="upload-video-button"
+                accessibilityLabel={t('clientDetails.uploadVideo', 'Solicitar Recomendación')}
+              >
+                <Ionicons 
+                  name="videocam-outline" 
+                  size={24} 
+                  color={Colors.light.buttonText} 
+                  style={styles.actionButtonIcon}
+                />
+                <Text style={styles.actionButtonText}>
+                  {t('clientDetails.uploadVideo', 'Recomendar')}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         
@@ -164,6 +198,18 @@ const ClientDetailsScreen = () => {
           vendedorId={sellerInfo.vendedorData.id}
           clientName={client.nombre}
           onSuccess={handleVisitSuccess}
+        />
+      )}
+
+      {client && sellerInfo?.vendedorData?.id && (
+        <VideoUploadModal
+          visible={showVideoModal}
+          onClose={() => setShowVideoModal(false)}
+          clientId={client.id}
+          vendedorId={sellerInfo.vendedorData.id}
+          onSuccess={handleVideoUploadSuccess}
+          clientEmail={client.correo}
+          vendedorEmail={sellerInfo.vendedorData.email}
         />
       )}
     </SafeAreaView>
@@ -259,6 +305,39 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
   },
+  actionButtonsContainer: {
+  flexDirection: 'row',
+  marginTop: 16,
+  justifyContent: 'space-evenly',
+},
+
+actionButton: {
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: 12,
+  borderRadius: 12,
+  width: '45%',
+},
+
+visitButtonStyle: {
+  backgroundColor: Colors.light.button,
+},
+
+videoButtonStyle: {
+  backgroundColor: Colors.light.primary,
+},
+
+actionButtonIcon: {
+  marginBottom: 4,
+},
+
+actionButtonText: {
+  color: Colors.light.buttonText,
+  fontSize: 14,
+  fontWeight: '600',
+  fontFamily: 'PlusJakartaSans_600SemiBold',
+  textAlign: 'center',
+},
 });
 
 export default ClientDetailsScreen;

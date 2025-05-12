@@ -1,5 +1,18 @@
 import axios from 'axios';
-import { fetchClients, fetchClientById, mapClientesToProducts, Cliente, ClientesResponse } from '../../services/api/clientsService';
+import {
+    fetchClients,
+    fetchClientById,
+    mapClientesToProducts,
+    Cliente,
+    ClientesResponse,
+    sendVisit,
+    VisitPayload,
+    VisitResponse,
+    fetchPastVisits,
+    VisitsResponse,
+    Visit,
+    VideoUploadResponse
+} from '../../services/api/clientsService';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -138,6 +151,69 @@ describe('clientsService', () => {
         it('should return empty array when input is empty', () => {
             const result = mapClientesToProducts([]);
             expect(result).toEqual([]);
+        });
+    });
+
+    describe('sendVisit', () => {
+        it('should send visit data correctly', async () => {
+            const mockVisitResponse: VisitResponse = {
+                body: { visitId: 'visit123' },
+                msg: 'Visita registrada exitosamente'
+            };
+            mockedAxios.post.mockResolvedValueOnce({ data: mockVisitResponse });
+
+            const clienteID = 'client1';
+            const vendedorId = 'seller1';
+            const fecha = '2025-05-06';
+            const estado = 'realizada';
+
+            const result = await sendVisit(clienteID, vendedorId, fecha, estado);
+
+            expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+            expect(mockedAxios.post).toHaveBeenCalledWith(
+                `${API_BASE_URL}/${clienteID}/registrar_visita`,
+                { vendedor_id: vendedorId, fecha, estado }
+            );
+            expect(result).toEqual(mockVisitResponse);
+        });
+
+        it('should throw error when sending visit fails', async () => {
+            const error = new Error('Network error');
+            mockedAxios.post.mockRejectedValueOnce(error);
+
+            await expect(
+                sendVisit('client1', 'seller1', '2025-05-06', 'realizada')
+            ).rejects.toThrow('Network error');
+        });
+    });
+
+    describe('fetchPastVisits', () => {
+        it('should fetch past visits correctly', async () => {
+            const mockVisits: Visit[] = [
+                { id: 1, cliente_id: 'client1', vendedor_id: 'seller1', estado: 'completada', fecha: '2025-05-01' },
+                { id: 2, cliente_id: 'client1', vendedor_id: 'seller1', estado: 'completada', fecha: '2025-04-20' }
+            ];
+            const mockResponse: VisitsResponse = {
+                visitas: mockVisits,
+                msg: 'Visitas obtenidas'
+            };
+            mockedAxios.get.mockResolvedValueOnce({ data: mockResponse });
+
+            const clientId = 'client1';
+            const result = await fetchPastVisits(clientId);
+
+            expect(mockedAxios.get).toHaveBeenCalledTimes(1);
+            expect(mockedAxios.get).toHaveBeenCalledWith(
+                `${API_BASE_URL}/visitas?cliente_id=${clientId}&estado=completada`
+            );
+            expect(result).toEqual(mockVisits);
+        });
+
+        it('should throw error when fetching past visits fails', async () => {
+            const error = new Error('Network error');
+            mockedAxios.get.mockRejectedValueOnce(error);
+
+            await expect(fetchPastVisits('client1')).rejects.toThrow('Network error');
         });
     });
 });

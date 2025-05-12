@@ -46,6 +46,16 @@ export interface VisitsResponse {
     msg?: string;
 }
 
+export interface VideoUploadResponse {
+    message: string;
+    messageId: string;
+}
+
+export interface SignedUrlResponse {
+    signedUrl: string;
+    gcsPath: string;
+}
+
 // Fetch all seller's clients
 export const fetchClients = async (vendedorId: string): Promise<Cliente[]> => {
     try {
@@ -100,6 +110,50 @@ export const fetchPastVisits = async (clientId: string): Promise<Visit[]> => {
         return response.data.visitas;
     } catch (error) {
         console.error('Error fetching past visits:', error);
+        throw error;
+    }
+};
+
+// Get signed URL for video upload
+export const getVideoUploadSignedUrl = async (
+    clientId: string, 
+    filename: string, 
+    contentType: string
+): Promise<SignedUrlResponse> => {
+    try {
+        const response = await axios.post<SignedUrlResponse>(
+            `${API_BASE_URL}/generate_upload_url`, 
+            {
+                filename,
+                contentType,
+                clientId
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error getting signed URL:', error);
+        throw error;
+    }
+};
+
+// Notify backend about successful upload
+export const notifyVideoUploadComplete = async (
+    blobPath: string,
+    clientEmail: string,
+    vendedorEmail: string
+): Promise<VideoUploadResponse> => {
+    try {
+        const response = await axios.post<VideoUploadResponse>(
+            `${API_BASE_URL}/notify_upload_complete`,
+            {
+                blobPath,
+                clientEmail,
+                vendedorEmail,
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error notifying backend of upload:', error);
         throw error;
     }
 };
