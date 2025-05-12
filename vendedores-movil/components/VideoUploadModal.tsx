@@ -13,7 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
 import { Colors } from '../constants/Colors';
 import LoadingIndicator from './LoadingIndicator';
-import { getVideoUploadSignedUrl, notifyVideoUploadComplete } from '../services/api/clientsService';
+import { notifyVideoUploadComplete } from '../services/api/clientsService';
 
 interface VideoUploadModalProps {
   visible: boolean;
@@ -37,6 +37,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
   const { t } = useTranslation();
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const gcsBucketName = 'ccp-recommendations-videos'
 
   console.log('VideoUploadModal props:', {
     visible,
@@ -65,7 +66,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        await uploadVideoWithSignedUrl(result.assets[0].uri);
+        await uploadVideoDirectlyToGCS(result.assets[0].uri);
       }
     } catch (error) {
       console.error('Error picking video:', error);
@@ -96,7 +97,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        await uploadVideoWithSignedUrl(result.assets[0].uri);
+        await uploadVideoDirectlyToGCS(result.assets[0].uri);
       }
     } catch (error) {
       console.error('Error recording video:', error);
@@ -107,7 +108,13 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
     }
   };
 
-  const uploadVideoWithSignedUrl = async (videoUri: string) => {
+  const uploadVideoDirectlyToGCS = async (videoUri: string) => {
+    if (!gcsBucketName) {
+        Alert.alert(t('common.error', 'Error'), "GCS Bucket name is not configured.");
+        console.error("GCS Bucket name is missing.");
+        return;
+    }
+
     setIsUploading(true);
     setUploadProgress(0);
 
@@ -119,12 +126,15 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
       const filename = `client_${clientId}_${timestamp}.${fileExtension}`;
       const contentType = `video/${fileExtension}`;
 
-      // 2. Signed URL
-      const { signedUrl, gcsPath } = await getVideoUploadSignedUrl(clientId, filename, contentType);
+      // 2. GCS Object URL
+      const gcsObjectUrl = `https://storage.googleapis.com/${gcsBucketName}/${filename}`;
+
+      console.log(`Attempting direct upload to: ${gcsObjectUrl}`);
+      console.log(`Content-Type: ${contentType}`);
 
       // 3. Upload
       const xhr = new XMLHttpRequest();
-      xhr.open('PUT', signedUrl);
+      xhr.open('PUT', gcsObjectUrl);
       xhr.setRequestHeader('Content-Type', contentType);
 
       xhr.upload.onprogress = (event) => {
@@ -137,14 +147,30 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
       await new Promise<void>((resolve, reject) => {
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
+            console.log('GCS Direct Upload Success:', xhr.status, xhr.responseText);
             resolve();
           } else {
-            console.error('GCS Upload Error:', xhr.status, xhr.responseText);
-            reject(new Error(`GCS Upload Failed: ${xhr.status} ${xhr.responseText || 'Unknown error'}`));
+            console.error('GCS Direct Upload Error:', xhr.status, xhr.responseText, xhr.getAllResponseHeaders());
+            let errorMessage = `GCS Upload Failed: ${xhr.status}`;
+            if (xhr.responseText) {
+                try {
+                    const errorResponse = JSON.parse(xhr.responseText);
+                    if (errorResponse.error && errorResponse.error.message) {
+                        errorMessage += ` - ${errorResponse.error.message}`;
+                    } else {
+                        errorMessage += ` - ${xhr.responseText.substring(0, 100)}`;
+                    }
+                } catch (e) {
+                    errorMessage += ` - ${xhr.responseText.substring(0, 100)}`;
+                }
+            } else {
+                errorMessage += ' - Unknown GCS error';
+            }
+            reject(new Error(errorMessage));
           }
         };
         xhr.onerror = (e) => {
-          console.error('Network error during GCS upload:', e);
+          console.error('Network error during GCS direct upload:', e);
           reject(new Error('Network error during upload.'));
         };
 
@@ -160,7 +186,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
       });
 
       // 4. Notify
-      await notifyVideoUploadComplete(gcsPath, clientEmail, vendedorEmail);
+      await notifyVideoUploadComplete(gcsObjectUrl, clientEmail, vendedorEmail);
 
       Alert.alert(
         t('common.success', 'Éxito'),
