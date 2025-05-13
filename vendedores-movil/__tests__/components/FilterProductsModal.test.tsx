@@ -2,6 +2,29 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import FilterModal from '../../components/FilterProductsModal';
 
+// Mock dependencies
+jest.mock('react-i18next', () => ({
+    useTranslation: () => ({
+        t: (key: string, fallback?: string) => {
+            const translations: { [key: string]: string } = {
+                'home.filterProducts': 'Filtrar productos',
+                'products.price': 'Precio',
+                'products.minPrice': 'Precio mín',
+                'products.maxPrice': 'Precio máx',
+                'filters.min': 'Mín',
+                'filters.max': 'Máx',
+                'filters.apply': 'Aplicar',
+                'common.cancel': 'Cancelar',
+                'home.clearFilters': 'Limpiar filtros',
+                'filters.minPriceInput': 'Input precio mínimo',
+                'filters.maxPriceInput': 'Input precio máximo',
+                'filters.applyFilters': 'Aplicar filtros'
+            };
+            return translations[key] || fallback || key;
+        }
+    })
+}));
+
 describe('FilterModal Component', () => {
     const mockOnClose = jest.fn();
     const mockOnTempPriceChange = jest.fn();
@@ -26,9 +49,9 @@ describe('FilterModal Component', () => {
 
         expect(getByText('Filtrar productos')).toBeTruthy();
         expect(getByText('Precio')).toBeTruthy();
-        expect(getByText('Mínimo')).toBeTruthy();
-        expect(getByText('Máximo')).toBeTruthy();
-        expect(getByText('Limpiar')).toBeTruthy();
+        expect(getByText('Precio mín')).toBeTruthy();
+        expect(getByText('Precio máx')).toBeTruthy();
+        expect(getByText('Cancelar')).toBeTruthy();
         expect(getByText('Aplicar')).toBeTruthy();
     });
 
@@ -73,7 +96,7 @@ describe('FilterModal Component', () => {
     it('calls onClear when clear button is pressed', () => {
         const { getByText } = render(<FilterModal {...defaultProps} />);
 
-        fireEvent.press(getByText('Limpiar'));
+        fireEvent.press(getByText('Cancelar'));
 
         expect(mockOnClear).toHaveBeenCalledTimes(1);
     });

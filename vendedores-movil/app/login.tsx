@@ -5,10 +5,12 @@ import { Colors } from '../constants/Colors';
 import { useAuth } from '../contexts/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
 import { preloadImage, getOptimizedImageProps } from '../utils/imageUtils';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginScreen() {
   const router = useRouter();
   const { login, isLoading } = useAuth();
+  const { t } = useTranslation();
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -38,12 +40,12 @@ export default function LoginScreen() {
       setEmailError('');
       return;
     }
-    setEmailError(emailRegex.test(email) ? '' : 'Email inválido. Debe ser un email de CCP.');
+    setEmailError(emailRegex.test(email) ? '' : t('auth.invalidEmail'));
   };
 
   const handleLogin = async () => {
     if (!correo || !contrasena) {
-      Alert.alert('Error', 'Por favor, introduce correo y contraseña');
+      Alert.alert(t('common.error'), t('auth.requiredFields'));
       return;
     }
 
@@ -51,11 +53,11 @@ export default function LoginScreen() {
       await login({ correo, contrasena });
       router.replace('/(tabs)');
     } catch (error) {
-      let message = 'Error al iniciar sesión';
+      let message = t('auth.loginError');
       if (error instanceof Error) {
         message += `: ${error.message}`;
       }
-      Alert.alert('Error', message);
+      Alert.alert(t('common.error'), message);
     }
   };
 
@@ -75,14 +77,14 @@ export default function LoginScreen() {
           {...getOptimizedImageProps()}
         />
         <View style={styles.contentContainer}>
-          <Text style={styles.welcomeText}>Bienvenido</Text>
+          <Text style={styles.welcomeText}>{t('common.welcomeText')}</Text>
 
           <View style={styles.formContainer}>
             <View style={styles.inputContainer}>
               <Ionicons name="mail-outline" size={20} color="#888" style={styles.inputIcon} />
               <TextInput
                 style={[styles.input, emailError ? styles.inputError : null]}
-                placeholder="Correo electrónico"
+                placeholder={t('auth.email')}
                 placeholderTextColor="#888"
                 value={correo}
                 onChangeText={(text) => {
@@ -91,6 +93,8 @@ export default function LoginScreen() {
                 }}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                testID="loginEmailInput"
+                accessibilityLabel="loginEmailInput"
               />
             </View>
             {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
@@ -99,11 +103,13 @@ export default function LoginScreen() {
               <Ionicons name="lock-closed-outline" size={20} color="#888" style={styles.inputIcon} />
               <TextInput
                 style={styles.input}
-                placeholder="Contraseña"
+                placeholder={t('auth.password')}
                 placeholderTextColor="#888"
                 value={contrasena}
                 onChangeText={setContrasena}
                 secureTextEntry={!showPassword}
+                testID="loginPasswordInput"
+                accessibilityLabel="loginPasswordInput"
               />
               <TouchableOpacity
                 style={styles.eyeIcon}
@@ -123,11 +129,13 @@ export default function LoginScreen() {
               style={[styles.button, styles.primaryButton, isLoading && styles.disabledButton]}
               onPress={handleLogin}
               disabled={isLoading}
+              testID="loginSubmitButton"
+              accessibilityLabel="loginSubmitButton"
             >
               {isLoading ? (
                 <ActivityIndicator color={Colors.light.buttonText} size="small" />
               ) : (
-                <Text style={styles.buttonText}>Iniciar sesión</Text>
+                <Text style={styles.buttonText}>{t('common.login')}</Text>
               )}
             </TouchableOpacity>
 
