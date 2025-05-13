@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid2";
 
 import { insertStock, getProducts, getBodega } from "./adapters/microserviceStock";
 import { useTranslations } from "next-intl";
+import { useTheme } from '@mui/material/styles';
 
 interface ModalFormProps {
     open: boolean;
@@ -92,6 +93,8 @@ export default function FormStock({ open, onClose }: ModalFormProps) {
         setFormData((prev) => ({ ...prev, bodega: e.target.value }));
     };
 
+    const theme = useTheme()
+
     return (
         <Modal
             open={open}
@@ -107,16 +110,16 @@ export default function FormStock({ open, onClose }: ModalFormProps) {
         >
             <Box sx={{ height: "100%" }}>
                 <Grid container sx={{ height: "100%" }}>
-                    <Grid sx={{ 
-                        backgroundColor: "white", 
+                    <Grid sx={{
+                        backgroundColor: theme.palette.background.paper,
                         borderRadius: "16px",
                         boxShadow: "3",
-                        direction: "column", 
-                        minHeight: "28.75rem", 
+                        direction: "column",
+                        minHeight: "28.75rem",
                         margin: "auto",
                         padding: "1.25rem",
-                        width: "40rem",
-                        }}
+                        maxWidth: "40rem",
+                    }}
                         title="Formulario Ingresar Producto a Stock"
                     >
                         <Typography id="modal-formulario-producto-title"
