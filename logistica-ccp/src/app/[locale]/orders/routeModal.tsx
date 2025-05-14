@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Modal,
@@ -27,7 +27,7 @@ export default function RouteModal({
   onClose,
   routeInfo,
 }: ModalFormProps) {
-  const t = useTranslations('Orders')
+  const t = useTranslations('Orders');
   const [loading, setLoading] = useState(false);
   const [route, setRoute] = useState<any[]>([]);
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function RouteModal({
     onClose();
   };
 
-  const theme = useTheme()
+  const theme = useTheme();
 
   const tableSchema: GridColDef[] = [
     {
@@ -60,6 +60,20 @@ export default function RouteModal({
     {
       field: 'direccion',
       headerName: t('route_modal_table_col_2'),
+      flex: 1,
+      headerClassName: styles.Header,
+      align: 'center',
+    },
+    {
+      field: 'cantidadDisponible',
+      headerName: t('route_modal_table_col_3'),
+      flex: 1,
+      headerClassName: styles.Header,
+      align: 'center',
+    },
+    {
+      field: 'cantidadRequerida',
+      headerName: t('route_modal_table_col_4'),
       flex: 1,
       headerClassName: styles.Header,
       align: 'center',
@@ -94,7 +108,7 @@ export default function RouteModal({
           display: 'flex',
           flexDirection: 'column',
         }}
-        title='Modal ruta de entrega'
+        title="Modal ruta de entrega"
       >
         <Typography
           id="modal-formulario-route-title"
