@@ -9,7 +9,8 @@
     "option_2": "Productos",
     "option_3": "Inventario",
     "option_4": "Vendedores",
-    "option_5": "Pedidos"
+    "option_5": "Pedidos",
+    "option_6": "Plan de ventas"
   },
   "ConfigMenu": {
     "title": "Opciones",
@@ -32,6 +33,16 @@
     "form_field_2_placeholder": "País",
     "form_submit_button": "GUARDAR",
     "form_cancel_button": "CANCELAR"
+  },
+  "Login": {
+    "title": "Bienvenido",
+    "email_placeholder": "Introduce tu correo",
+    "password_placeholder": "Introduce tu Contraseña",
+    "login_button": "Log in con Google",
+    "auth_invalid_credential": "Credenciales invalidas",
+    "auth_invalid_email": "Correo invalido",
+    "auth_too_many_requests": "Demasiados intentos fallidos. Por favor intenta más tarde.",
+    "unexpected_error": "Error inesperado"
   },
   "Products": {
     "new_product": "CREAR PRODUCTO",
@@ -111,8 +122,29 @@
     "route_modal_address": "Dirección: ",
     "route_modal_table_col_1": "SKU",
     "route_modal_table_col_2": "Bodega",
-    "route_modal_table_col_3": "Cantidad disponible",
-    "route_modal_table_col_4": "Cantidad requerida",
     "button_close": "CERRAR"
+  },
+  "Sales": {
+    "title": "Plan de ventas",
+    "table_col_1": "ID",
+    "table_col_2": "Estado",
+    "table_col_3": "Fecha Inicio",
+    "table_col_4": "Fecha Fin",
+    "table_col_5": "Meta",
+    "table_col_6": "Productos",
+    "table_col_7": "Cerrar",
+    "Report": "Reporte",
+    "modal_title": "Reporte Plan de Ventas",
+    "modal_subtitle": "Reporte de Ventas para el periodo: ",
+    "modal_button_close": "CERRAR",
+    "close_plan": "Cerrar",
+
+    "route_modal_title": "Delivery Route",
+    "route_modal_order": "Order: ",
+    "route_modal_customer": "Customer: ",
+    "route_modal_address": "Address: ",
+    "route_modal_table_col_1": "SKU",
+    "route_modal_table_col_2": "Warehouse",
+    "button_close": "CLOSE"
   }
 }
