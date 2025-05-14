@@ -1,15 +1,17 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import styles from "./Sales.module.css"
-import DataTable from "../../../globalComponents/Datatable";
-import PageTitle from "../../../globalComponents/PageTitle";
 import Grid from "@mui/material/Grid2";
 import { ThemeProvider, Box, Stack, Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslations } from "next-intl";
+
 import ModalReport from "./ModalReport";
 import { getSalesPlan, closePlan } from "./adapters/microserviceSales";
+import FormCreatePlan from "./FormCreatePlan";
+import DataTable from "../../../globalComponents/Datatable";
+import PageTitle from "../../../globalComponents/PageTitle";
 
 declare module '@mui/material/Button' {
     interface ButtonPropsColorOverrides {
@@ -19,7 +21,7 @@ declare module '@mui/material/Button' {
 }
 
 interface Sales {
-    id: string;
+    vendedor: string;
     estado: string;
     fecha_inicio: string;
     fecha_final: string;
@@ -54,7 +56,7 @@ const Sales: React.FC = () => {
     };
 
     const tableSchema: GridColDef[] = [
-        {field: 'id', headerName: t('table_col_1'), flex: 1, headerClassName: styles.Header},
+        {field: 'vendedor_nombre', headerName: t('table_col_1'), flex: 1, headerClassName: styles.Header},
         {field: 'estado', headerName: t('table_col_2'), flex: 1, headerClassName: styles.Header},
         {field: 'fecha_inicio', headerName: t('table_col_3'), flex: 1, headerClassName: styles.Header},
         {field: 'fecha_final', headerName: t('table_col_4'), flex: 1, headerClassName: styles.Header},
@@ -77,12 +79,8 @@ const Sales: React.FC = () => {
     ]
 
     const [isOpenReport, setIsOpenReport] = useState(false);
+    const [isOpenCreatePlan, setIsOpenCreatePlan] = useState(false);
     const [sales, setSales] = useState<Sales[]>([])
-
-    // const fetchSalesPlan = async () => {
-    //     const salesPlanList = await getSalesPlan();
-    //     setSales(salesPlanList);
-    // }
 
     useEffect(() => {
         const fetchSalesPlan = async () => {
@@ -107,6 +105,7 @@ const Sales: React.FC = () => {
         <Box>
             <Grid container>
                 <ModalReport open={isOpenReport} onClose={() => setIsOpenReport(false)} />
+                <FormCreatePlan open={isOpenCreatePlan} onClose={() => setIsOpenCreatePlan(false)} />
                 <Grid sx={{ direction: 'column' }} size="grow">
                 <PageTitle text={t('title')} />
                     <Grid container size="grow" sx={{ direction: 'row', marginLeft: '6.25rem', height: '40px' }}>
@@ -116,10 +115,18 @@ const Sales: React.FC = () => {
                                     onClick={() => setIsOpenReport(true)}
                                     variant="contained"
                                     color="cpp"
-                                    startIcon={<AddIcon />}
-                                    data-testid="addStock"
+                                    data-testid="openReport"
                                 >
                                     {t('Report')}
+                                </Button>
+                                <Button
+                                    onClick={() => setIsOpenCreatePlan(true)}
+                                    variant="contained"
+                                    color="cpp"
+                                    startIcon={<AddIcon />}
+                                    data-testid="addPlanForm"
+                                >
+                                    {t('sellers_plan')}
                                 </Button>
                             </Stack>
                         </Grid>
