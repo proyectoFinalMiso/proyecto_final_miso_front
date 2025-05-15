@@ -86,6 +86,35 @@ jest.mock('../../components/FilterProductsModal', () => {
     });
 });
 
+jest.mock('react-i18next', () => ({
+    useTranslation: jest.fn().mockReturnValue({
+        t: (key: string, options?: any) => {
+            const translations: Record<string, string | ((opts?: any) => string)> = {
+                'home.title': 'Ordena lo que gustes',
+                'home.loading': 'Cargando productos...',
+                'home.lastUpdated': (opts?: any) => `Última actualización: ${opts?.time || ''}`,
+                'home.loadError': 'No se pudieron cargar los productos. Por favor intente de nuevo.',
+                'home.searchProducts': 'Busca productos...',
+                'home.filterProducts': 'Filtrar productos',
+                'home.filterHint': 'Abre el modal de filtrado',
+                'home.filters': 'Filtros:',
+                'home.clearFilters': 'Limpiar filtros',
+                'home.priceRangeError': 'El precio mínimo no puede ser mayor que el precio máximo.',
+                'products.minPrice': 'Precio mín',
+                'products.maxPrice': 'Precio máx',
+                'common.search': 'Buscar',
+                'home.searchHint': 'Ingresa el nombre del producto que buscas',
+            };
+            const value = translations[key];
+            if (typeof value === 'function') {
+                return value(options);
+            }
+            return value || key;
+        },
+        i18n: { language: 'es', changeLanguage: jest.fn() }
+    })
+}));
+
 global.console = {
     ...global.console,
     log: jest.fn(),

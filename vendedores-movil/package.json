@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest",
+    "test": "TZ=UTC jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lint": "expo lint"
@@ -16,6 +16,8 @@
   "dependencies": {
     "@expo-google-fonts/plus-jakarta-sans": "^0.2.3",
     "@expo/vector-icons": "^14.0.2",
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "@react-native-community/datetimepicker": "8.2.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@testing-library/react-native": "^13.2.0",
@@ -26,14 +28,17 @@
     "expo-font": "~13.0.4",
     "expo-haptics": "~14.0.1",
     "expo-linking": "~7.0.5",
+    "expo-localization": "~16.0.1",
     "expo-router": "~4.0.18",
     "expo-splash-screen": "~0.29.22",
     "expo-status-bar": "~2.0.1",
     "expo-symbols": "~0.2.2",
     "expo-system-ui": "~4.0.8",
     "expo-web-browser": "~14.0.2",
+    "i18next": "^25.0.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-i18next": "^15.5.1",
     "react-native": "0.76.7",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-reanimated": "~3.16.1",
@@ -42,7 +47,11 @@
     "react-native-svg": "^15.11.2",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "expo-image-picker": "~16.0.6",
+    "expo-camera": "~16.0.18",
+    "expo-media-library": "~17.0.6",
+    "expo-av": "~15.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

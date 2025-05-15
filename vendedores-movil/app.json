@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "vendedores",
-    "slug": "vendedores",
+    "slug": "vendedores-movil",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.proyecto_final_miso.vendedoresmovil"
     },
     "web": {
       "bundler": "metro",
@@ -32,10 +33,20 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "06f1a480-8fee-4a60-9192-993188af033d"
+      }
+    },
+    "owner": "proyecto_final_miso"
   }
 }
