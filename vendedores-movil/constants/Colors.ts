@@ -18,5 +18,29 @@ export const Colors = {
         expandableDetailValue: '#454545',
         expandableQuantityButtonBorder: '#CACACA',
         cancelColor: '#B04A3C',
+        tableBorder: '#f0f0f0',
+    },
+    dark: {
+        titleText: '#E0E0E0',
+        background: '#1E1E1E',
+        backgroundLogin: '#2C2C2C',
+        button: '#588157',
+        buttonText: '#FFFFFF',
+        secondaryButtonOutline: '#E0E0E0',
+        primary: '#496348',
+        tableHeaderText: '#ffffff',
+        searchHint: '#A0A0A0',
+        borderWidget: '#262626',
+        text: '#C5C5C5',
+        tabActiveBackground: '#385238',
+        tabTint: '#E0E0E0',
+        expandableButtonBackground: '#1E1E1E',
+        expandableDetailLabel: '#AAAAAA',
+        expandableDetailValue: '#D0D0D0',
+        expandableQuantityButtonBorder: '#555555',
+        cancelColor: '#CF6679',
+        tableBorder: '#262626',
     }
-}
+};
+
+export type ThemeColors = typeof Colors.light;

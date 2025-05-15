@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, SafeAreaView, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import { Colors } from '../../constants/Colors';
+import { useTheme } from '../../contexts/ThemeContext';
 import CartTable from '../../components/CartTable';
 import OrderSummary from '../../components/OrderSummary';
 import { useCart } from '../../contexts/CartContext';
@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 export default function CartScreen() {
   const { t } = useTranslation();
   const { items } = useCart();
+  const { colors } = useTheme();
+  const styles = useMemo(() => getStyles(colors), [colors]);
 
   return (
     <SafeAreaView style={styles.container} testID="cart-container">
@@ -35,10 +37,10 @@ export default function CartScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: colors.background,
   },
   keyboardAvoid: {
     flex: 1,
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '600',
-    color: Colors.light.titleText,
+    color: colors.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   content: {

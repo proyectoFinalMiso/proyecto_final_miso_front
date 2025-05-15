@@ -4,6 +4,7 @@ import ClientsScreen from '../../../app/(tabs)/clients';
 import { useAuth } from '../../../contexts/AuthContext';
 import { Cliente } from '../../../services/api/clientsService';
 import { useRouter } from 'expo-router';
+import { Colors } from '../../../constants/Colors';
 
 // Mock services
 jest.mock('../../../services/api/clientsService', () => ({
@@ -91,6 +92,19 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+jest.mock('../../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        }),
+    };
+});
+
 global.console = {
     ...global.console,
     log: jest.fn(),
@@ -125,6 +139,14 @@ describe('ClientsScreen', () => {
             isLoggedIn: true,
             vendedorData: mockVendedorData
         });
+        const mockUseTheme = require('../../../contexts/ThemeContext').useTheme;
+                mockUseTheme.mockReturnValue({
+                    theme: 'light',
+                    colors: Colors.light,
+                    isDark: false,
+                    toggleTheme: jest.fn(),
+                    setTheme: jest.fn(),
+                });
     });
 
     it('should show loading indicator while fetching data', async () => {

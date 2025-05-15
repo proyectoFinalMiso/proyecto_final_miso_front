@@ -7,6 +7,7 @@ import { Product } from '../../components/ProductTable';
 import { AuthProvider, useAuth } from '../../contexts/AuthContext';
 import * as orderService from '../../services/api/orderService';
 import * as clientsService from '../../services/api/clientsService';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 // Mock order service
 jest.mock('../../services/api/orderService');
@@ -37,11 +38,13 @@ const mockUseAuth = useAuth as jest.Mock;
 
 const renderWithProvider = (component: React.ReactElement) => {
     return render(
-        <AuthProvider>
-            <CartProvider>
-                {component}
-            </CartProvider>
-        </AuthProvider>
+        <ThemeProvider>
+            <AuthProvider>
+                <CartProvider>
+                    {component}
+                </CartProvider>
+            </AuthProvider>
+        </ThemeProvider>
     );
 };
 

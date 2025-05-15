@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import ClientsTable from '../../components/ClientsTable';
 import { Cliente } from '../../services/api/clientsService';
+import { Colors } from '../../constants/Colors';
 
 // Mock Ionicons
 jest.mock('@expo/vector-icons', () => ({
@@ -20,6 +21,19 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        }),
+    };
+});
+
 describe('ClientsTable Component', () => {
     const mockClients: Cliente[] = [
         { id: '1', nombre: 'Cliente 1', correo: 'cliente1@example.com' },
@@ -31,6 +45,14 @@ describe('ClientsTable Component', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
+        const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+                mockUseTheme.mockReturnValue({
+                    theme: 'light',
+                    colors: Colors.light,
+                    isDark: false,
+                    toggleTheme: jest.fn(),
+                    setTheme: jest.fn(),
+                });
     });
 
     it('renders correctly with clients', () => {

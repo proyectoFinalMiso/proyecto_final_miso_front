@@ -5,6 +5,7 @@ import { useAuth } from '../../../../contexts/AuthContext';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as clientsService from '../../../../services/api/clientsService';
 import { useTranslation } from 'react-i18next';
+import { Colors } from '../../../../constants/Colors';
 
 // Mock dependencies
 jest.mock('expo-router', () => ({
@@ -77,6 +78,19 @@ jest.mock('@/components/VideoUploadModal', () => {
   return jest.fn(props => (props.visible ? <MockView testID="video-upload-modal-mock" /> : null));
 });
 
+jest.mock('../../../../contexts/ThemeContext', () => {
+  const ActualAppColors = jest.requireActual('../../../../constants/Colors').Colors;
+  return {
+      useTheme: jest.fn().mockReturnValue({
+          theme: 'light',
+          colors: ActualAppColors.light,
+          isDark: false,
+          toggleTheme: jest.fn(),
+          setTheme: jest.fn(),
+      }),
+  };
+});
+
 
 const mockClient = { id: '1', nombre: 'Test Client', correo: 'test@example.com' };
 const mockVisits = [{ id: 'v1', fecha: '2023-01-01', descripcion: 'Visit 1' }];
@@ -97,6 +111,15 @@ describe('ClientDetailsScreen', () => {
     mockUseAuth.mockReturnValue({ vendedorData: mockSellerData });
     mockFetchClientById.mockResolvedValue({ cliente: mockClient });
     mockFetchPastVisits.mockResolvedValue(mockVisits);
+
+    const mockUseTheme = require('../../../../contexts/ThemeContext').useTheme;
+                    mockUseTheme.mockReturnValue({
+                        theme: 'light',
+                        colors: Colors.light,
+                        isDark: false,
+                        toggleTheme: jest.fn(),
+                        setTheme: jest.fn(),
+                    });
   });
 
   it('should show loading indicator initially', async () => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import RegisterVisitModal from '../../components/RegisterVisitModal';
 import { Alert } from 'react-native';
+import { Colors } from '../../constants/Colors';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -49,6 +50,19 @@ jest.spyOn(Alert, 'alert').mockImplementation((title, message, buttons) => {
   return null;
 });
 
+jest.mock('../../contexts/ThemeContext', () => {
+  const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+  return {
+      useTheme: jest.fn().mockReturnValue({
+          theme: 'light',
+          colors: ActualAppColors.light,
+          isDark: false,
+          toggleTheme: jest.fn(),
+          setTheme: jest.fn(),
+      }),
+  };
+});
+
 describe('RegisterVisitModal Component', () => {
   const mockOnClose = jest.fn();
   const mockOnSuccess = jest.fn();
@@ -63,6 +77,15 @@ describe('RegisterVisitModal Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+                    mockUseTheme.mockReturnValue({
+                        theme: 'light',
+                        colors: Colors.light,
+                        isDark: false,
+                        toggleTheme: jest.fn(),
+                        setTheme: jest.fn(),
+                    });
   });
 
   it('renders correctly when visible', () => {

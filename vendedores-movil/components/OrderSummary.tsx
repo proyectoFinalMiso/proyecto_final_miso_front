@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, TextInput, Keyboard, Modal, FlatList } from 'react-native';
-import { Colors } from '../constants/Colors';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { sendOrder } from '../services/api/orderService';
 import { fetchClients, Cliente } from '../services/api/clientsService';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ const isTestEnvironment = process.env.NODE_ENV === 'test';
 const OrderSummary = () => {
     const { getTotal, items, clearCart } = useCart();
     const { vendedorData, isLoggedIn } = useAuth();
+    const { colors } = useTheme();
     const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [destino, setDestino] = useState('');
@@ -20,6 +21,8 @@ const OrderSummary = () => {
     const [selectedClient, setSelectedClient] = useState<Cliente | null>(null);
     const [isClientModalVisible, setIsClientModalVisible] = useState(false);
     const [isLoadingClients, setIsLoadingClients] = useState(false);
+
+    const styles = useMemo(() => getStyles(colors), [colors]);
 
     useEffect(() => {
         if (vendedorData?.id) {
@@ -208,7 +211,7 @@ const OrderSummary = () => {
                     accessibilityLabel="finishOrderButton"
                 >
                     {isLoading ? (
-                        <ActivityIndicator size="small" color={Colors.light.buttonText} />
+                        <ActivityIndicator size="small" color={colors.buttonText} />
                     ) : (
                         <Text style={styles.buttonText}>{t('cart.finishOrder', 'Finalizar Pedido')}</Text>
                     )}
@@ -225,7 +228,7 @@ const OrderSummary = () => {
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle} testID='modal-title'>{t('clientsModal.title', 'Selecciona un cliente')}</Text>
                         {isLoadingClients ? (
-                            <ActivityIndicator size="large" color={Colors.light.button} />
+                            <ActivityIndicator size="large" color={colors.button} />
                         ) : clients.length === 0 ? (
                             <View style={styles.emptyStateContainer}>
                                 <Text style={styles.emptyStateText} testID='empty-modal'>{t('clientsModal.empty', 'No tienes clientes asignados')}</Text>
@@ -253,9 +256,9 @@ const OrderSummary = () => {
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
     mainContainer: {
-        backgroundColor: Colors.light.backgroundLogin,
+        backgroundColor: colors.backgroundLogin,
         borderRadius: 21,
         marginBottom: 24,
         shadowColor: '#000',
@@ -267,13 +270,13 @@ const styles = StyleSheet.create({
     addressContainer: {
         padding: 16,
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
+        borderBottomColor: colors.tableBorder,
     },
     addressLabel: {
         fontSize: 16,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
-        color: Colors.light.text,
+        color: colors.text,
         marginBottom: 8,
     },
     addressInput: {
@@ -310,17 +313,17 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
-        color: Colors.light.text,
+        color: colors.text,
         marginRight: 8,
     },
     totalValue: {
         fontSize: 16,
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
-        color: Colors.light.text,
+        color: colors.text,
     },
     finishButton: {
-        backgroundColor: Colors.light.button,
+        backgroundColor: colors.button,
         borderRadius: 69,
         paddingVertical: 10,
         paddingHorizontal: 16,
@@ -329,10 +332,10 @@ const styles = StyleSheet.create({
         minWidth: 120,
     },
     finishButtonDisabled: {
-        backgroundColor: Colors.light.button + '80',
+        backgroundColor: colors.button + '80',
     },
     buttonText: {
-        color: Colors.light.buttonText,
+        color: colors.buttonText,
         fontSize: 14,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
@@ -348,7 +351,7 @@ const styles = StyleSheet.create({
     selectedClientText: {
         fontSize: 14,
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: Colors.light.text,
+        color: colors.text,
     },
     placeholderText: {
         fontSize: 14,
@@ -372,7 +375,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
-        color: Colors.light.text,
+        color: colors.text,
         marginBottom: 16,
         textAlign: 'center',
     },
@@ -399,7 +402,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
-        color: Colors.light.text,
+        color: colors.text,
         marginBottom: 4,
     },
     clientEmail: {
@@ -410,12 +413,12 @@ const styles = StyleSheet.create({
     closeButton: {
         marginTop: 16,
         padding: 12,
-        backgroundColor: Colors.light.button,
+        backgroundColor: colors.button,
         borderRadius: 8,
         alignItems: 'center',
     },
     closeButtonText: {
-        color: Colors.light.buttonText,
+        color: colors.buttonText,
         fontSize: 16,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',

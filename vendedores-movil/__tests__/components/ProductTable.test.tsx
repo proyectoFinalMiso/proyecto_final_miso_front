@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react-native';
 import ProductTable, { Product } from '../../components/ProductTable';
 import { CartProvider } from '../../contexts/CartContext';
+import { Colors } from '../../constants/Colors';
 
 // Mock the CartContext
 jest.mock('../../contexts/CartContext', () => {
@@ -49,6 +50,19 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        }),
+    };
+});
+
 // Import the mockAddToCart from the mocked module
 const { mockAddToCart } = require('../../contexts/CartContext');
 
@@ -69,6 +83,15 @@ describe('ProductTable Component', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+                        mockUseTheme.mockReturnValue({
+                            theme: 'light',
+                            colors: Colors.light,
+                            isDark: false,
+                            toggleTheme: jest.fn(),
+                            setTheme: jest.fn(),
+                        });
     });
 
     it('renders correctly with products', () => {
