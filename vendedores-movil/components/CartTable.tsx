@@ -23,8 +23,8 @@ if (Platform.OS === 'android') {
 const CartTable = () => {
     const { items, updateQuantity, removeFromCart, getTotal } = useCart();
     const { t } = useTranslation();
-    const { colors } = useTheme();
-    const styles = useMemo(() => getStyles(colors), [colors]);
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
     const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
     const toggleExpand = (productId: string) => {
@@ -142,7 +142,7 @@ const CartTable = () => {
     );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.backgroundLogin,
@@ -163,7 +163,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     headerText: {
         color: colors.tableHeaderText,
-        fontSize: 11,
+        fontSize: fontSizes.xxs,
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
     },
@@ -190,7 +190,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         alignItems: 'center',
     },
     productName: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         color: colors.text,
         flex: 1,
         fontWeight: '500',
@@ -208,7 +208,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         alignItems: 'center',
     },
     detailLabel: {
-        fontSize: 15,
+        fontSize: fontSizes.smd,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
         color: colors.expandableDetailLabel,
@@ -216,7 +216,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         marginRight: 15
     },
     detailValue: {
-        fontSize: 15,
+        fontSize: fontSizes.smd,
         color: colors.expandableDetailValue,
         flex: 1,
         fontWeight: '400',
@@ -236,7 +236,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     detailButtonText: {
         color: colors.buttonText,
-        fontSize: 8,
+        fontSize: fontSizes.xxxs,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
     },
@@ -256,7 +256,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     quantityText: {
         paddingVertical: 2,
         paddingHorizontal: 8,
-        fontSize: 13,
+        fontSize: fontSizes.xsPlus,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
         color: colors.text,
@@ -270,7 +270,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         alignItems: 'center',
     },
     emptyText: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         color: colors.text,
         textAlign: 'center',
     }

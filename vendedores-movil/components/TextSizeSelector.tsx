@@ -4,45 +4,43 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 
-const THEMES = [
-    { mode: 'light', name: 'Light' },
-    { mode: 'dark', name: 'Dark' }
+const FONT_SIZES = [
+    { mode: 'small', name: 'Small', icon: 'text-outline' },
+    { mode: 'medium', name: 'Medium', icon: 'text-outline' },
+    { mode: 'large', name: 'Large', icon: 'text-outline' }
 ];
 
-const ThemeSelector: React.FC = () => {
+const TextSizeSelector: React.FC = () => {
     const { t } = useTranslation();
-    const { colors, theme, setTheme, fontSizes } = useTheme();
-    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
+    const { colors, fontSize, setFontSize } = useTheme();
+    const styles = useMemo(() => getStyles(colors), [colors]);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{t('common.theme', 'Theme')}</Text>
-            <View style={styles.themeButtons}>
-                {THEMES.map((themeOption) => (
+            <Text style={styles.title}>{t('common.textSize', 'Text Size')}</Text>
+            <View style={styles.sizeButtons}>
+                {FONT_SIZES.map((sizeOption) => (
                     <TouchableOpacity
-                        key={themeOption.mode}
+                        key={sizeOption.mode}
                         style={[
-                            styles.themeButton,
-                            theme === themeOption.mode && styles.activeTheme,
+                            styles.sizeButton,
+                            fontSize === sizeOption.mode && styles.activeSize,
                         ]}
-                        onPress={() => setTheme(themeOption.mode as 'light' | 'dark')}
+                        onPress={() => setFontSize(sizeOption.mode as 'small' | 'medium' | 'large')}
                         activeOpacity={0.7}
-                        accessibilityLabel={`switch to ${themeOption.name} theme`}
+                        accessibilityLabel={`switch to ${sizeOption.name} text size`}
                     >
-                        <View style={styles.themeButtonContent}>
-                            <Ionicons
-                                name={themeOption.mode === 'light' ? 'sunny-outline' : 'moon-outline'}
-                                size={20}
-                                color={theme === themeOption.mode ? colors.buttonText : colors.text}
-                                style={styles.themeIcon}
-                            />
+                        <View style={styles.sizeButtonContent}>
                             <Text
                                 style={[
-                                    styles.themeText,
-                                    theme === themeOption.mode && styles.activeThemeText,
+                                    styles.sizeText,
+                                    fontSize === sizeOption.mode && styles.activeSizeText,
+                                    sizeOption.mode === 'small' && { fontSize: 12 },
+                                    sizeOption.mode === 'medium' && { fontSize: 14 },
+                                    sizeOption.mode === 'large' && { fontSize: 16 },
                                 ]}
                             >
-                                {t(`common.${themeOption.mode}`, themeOption.name)}
+                                {t(`common.${sizeOption.mode}`, sizeOption.name)}
                             </Text>
                         </View>
                     </TouchableOpacity>
@@ -52,7 +50,7 @@ const ThemeSelector: React.FC = () => {
     );
 };
 
-const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
     container: {
         padding: 16,
         borderRadius: 12,
@@ -65,16 +63,16 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
         elevation: 2,
     },
     title: {
-        fontSize: fontSizes.md,
+        fontSize: 16,
         fontFamily: 'PlusJakartaSans_600SemiBold',
         marginBottom: 16,
         color: colors.titleText,
     },
-    themeButtons: {
+    sizeButtons: {
         flexDirection: 'row',
         gap: 12,
     },
-    themeButton: {
+    sizeButton: {
         flex: 1,
         paddingHorizontal: 16,
         paddingVertical: 12,
@@ -84,27 +82,23 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.borderWidget,
     },
-    themeButtonContent: {
+    sizeButtonContent: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
-    themeIcon: {
-        marginRight: 8,
-    },
-    activeTheme: {
+    activeSize: {
         backgroundColor: colors.button,
         borderColor: colors.button,
     },
-    themeText: {
-        fontSize: fontSizes.sm,
+    sizeText: {
         fontFamily: 'PlusJakartaSans_500Medium',
         color: colors.text,
     },
-    activeThemeText: {
+    activeSizeText: {
         color: colors.buttonText,
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
 });
 
-export default ThemeSelector;
+export default TextSizeSelector;

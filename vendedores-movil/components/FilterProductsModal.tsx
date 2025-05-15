@@ -22,8 +22,8 @@ const FilterModal = ({
     onClear,
 }: FilterModalProps) => {
     const { t } = useTranslation();
-    const { colors } = useTheme();
-    const styles = useMemo(() => getStyles(colors), [colors]);
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
     return (
         <Modal
@@ -97,7 +97,7 @@ const FilterModal = ({
     );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     modalOverlay: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -125,7 +125,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         marginBottom: 16,
     },
     modalTitle: {
-        fontSize: 18,
+        fontSize: fontSizes.lg,
         fontWeight: '600',
         color: colors.titleText,
         fontFamily: 'PlusJakartaSans_600SemiBold',
@@ -134,7 +134,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         marginBottom: 20,
     },
     filterSectionTitle: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         marginBottom: 10,
         color: colors.text,
@@ -148,7 +148,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         width: '48%',
     },
     priceInputLabel: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         marginBottom: 4,
         color: colors.text,
         fontFamily: 'PlusJakartaSans_400Regular',
@@ -160,7 +160,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 12,
         backgroundColor: colors.backgroundLogin,
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontFamily: 'PlusJakartaSans_400Regular',
     },
     filterActions: {
@@ -181,7 +181,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     clearButtonText: {
         color: colors.text,
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
@@ -197,7 +197,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     applyButtonText: {
         color: colors.buttonText,
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },

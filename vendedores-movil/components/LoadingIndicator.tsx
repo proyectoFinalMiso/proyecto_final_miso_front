@@ -10,8 +10,8 @@ interface LoadingIndicatorProps {
 const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
     message = 'Cargando...'
 }) => {
-    const { colors } = useTheme();
-    const styles = useMemo(() => getStyles(colors), [colors]);
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
     return (
         <View style={styles.container}>
             <ActivityIndicator size="large" color={colors.primary} />
@@ -20,7 +20,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
     );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -29,7 +29,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     message: {
         marginTop: 15,
-        fontSize: 16,
+        fontSize: fontSizes.md,
         color: colors.text,
         textAlign: 'center',
         fontFamily: 'PlusJakartaSans_400Regular',

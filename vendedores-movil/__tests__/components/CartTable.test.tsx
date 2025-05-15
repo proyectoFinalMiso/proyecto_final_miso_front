@@ -53,8 +53,8 @@ const renderWithProvider = (component: React.ReactElement) => {
 };
 
 describe('CartTable', () => {
-    const product1: Product = { id: '1', name: 'Producto 1', price: 10000, sku: 10001 };
-    const product2: Product = { id: '2', name: 'Producto 2', price: 20000, sku: 10002 };
+    const product1: Product = { id: '1', name: 'Producto 1', price: 10000, sku: 10001, availableQuantity: 5 };
+    const product2: Product = { id: '2', name: 'Producto 2', price: 20000, sku: 10002, availableQuantity: 3 };
 
     it('should render empty cart message when cart is empty', () => {
         const { getByTestId } = renderWithProvider(<CartTable />);

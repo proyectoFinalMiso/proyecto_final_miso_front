@@ -35,8 +35,8 @@ const RegisterVisitModal = ({
     onSuccess
 }: RegisterVisitModalProps) => {
     const { t } = useTranslation();
-    const { colors } = useTheme();
-    const styles = useMemo(() => getStyles(colors), [colors]);
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -244,7 +244,7 @@ const RegisterVisitModal = ({
     );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     modalOverlay: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -272,13 +272,13 @@ const getStyles = (colors: any) => StyleSheet.create({
         marginBottom: 16,
     },
     modalTitle: {
-        fontSize: 18,
+        fontSize: fontSizes.lg,
         fontWeight: '600',
         color: colors.titleText,
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     clientName: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '500',
         color: colors.text,
         fontFamily: 'PlusJakartaSans_500Medium',
@@ -288,7 +288,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         marginBottom: 20,
     },
     sectionTitle: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         marginBottom: 10,
         color: colors.text,
@@ -334,7 +334,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         justifyContent: 'space-between',
     },
     dateText: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontFamily: 'PlusJakartaSans_400Regular',
         color: colors.text,
     },
@@ -357,7 +357,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     cancelButtonText: {
         color: colors.text,
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
@@ -373,7 +373,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     submitButtonText: {
         color: colors.buttonText,
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },

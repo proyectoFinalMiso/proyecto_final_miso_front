@@ -10,8 +10,8 @@ const LANGUAGES = [
 
 const LanguageSelector: React.FC = () => {
     const { t, i18n } = useTranslation();
-    const { colors } = useTheme();
-    const styles = useMemo(() => getStyles(colors), [colors]);
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
     return (
         <View style={styles.container}>
@@ -42,7 +42,7 @@ const LanguageSelector: React.FC = () => {
     );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     container: {
         padding: 16,
         borderRadius: 12,
@@ -55,7 +55,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         elevation: 2,
     },
     title: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontFamily: 'PlusJakartaSans_600SemiBold',
         marginBottom: 16,
         color: colors.titleText,
@@ -79,7 +79,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         borderColor: colors.button,
     },
     languageText: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontFamily: 'PlusJakartaSans_500Medium',
         color: colors.text,
     },

@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next';
 export default function CartScreen() {
   const { t } = useTranslation();
   const { items } = useCart();
-  const { colors } = useTheme();
-  const styles = useMemo(() => getStyles(colors), [colors]);
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
   return (
     <SafeAreaView style={styles.container} testID="cart-container">
@@ -37,7 +37,7 @@ export default function CartScreen() {
   );
 }
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -49,7 +49,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: fontSizes.xxl,
     fontWeight: '600',
     color: colors.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
