@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import LoginScreen from '../../app/login';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 // Mock dependencies
 jest.mock('expo-router', () => ({
@@ -16,6 +17,25 @@ jest.mock('../../contexts/AuthContext', () => ({
 
 jest.mock('react-native/Libraries/Alert/Alert', () => ({
     alert: jest.fn()
+}));
+
+jest.mock('react-i18next', () => ({
+    useTranslation: jest.fn().mockReturnValue({
+        t: (key: string) => {
+            const translations: { [key: string]: string } = {
+                'common.welcomeText': 'Bienvenido',
+                'common.login': 'Iniciar sesión',
+                'common.register': 'Registrarse',
+                'common.error': 'Error',
+                'auth.email': 'Correo electrónico',
+                'auth.password': 'Contraseña',
+                'auth.invalidEmail': 'Email inválido',
+                'auth.loginError': 'Error al iniciar sesión',
+                'auth.requiredFields': 'Por favor, introduce correo y contraseña'
+            };
+            return translations[key] || key;
+        }
+    })
 }));
 
 jest.mock('@expo/vector-icons', () => ({
@@ -72,13 +92,13 @@ describe('LoginScreen', () => {
         fireEvent.changeText(emailInput, 'invalidemail');
 
         // Should show validation error
-        expect(getByText('Email inválido. Debe ser un email de CCP.')).toBeTruthy();
+        expect(getByText('Email inválido')).toBeTruthy();
 
         // Enter valid email
         fireEvent.changeText(emailInput, 'valid@ccp.com');
 
         // Error message should not be present
-        expect(() => getByText('Email inválido. Debe ser un email de CCP.')).toThrow();
+        expect(() => getByText('Email inválido')).toThrow();
     });
 
     it('should call login and navigate on successful login', async () => {
@@ -87,7 +107,7 @@ describe('LoginScreen', () => {
         const { getByPlaceholderText, getByText } = render(<LoginScreen />);
 
         // Fill the form
-        fireEvent.changeText(getByPlaceholderText('Correo electrónico'), 'test@ccp.com');
+        fireEvent.changeText(getByPlaceholderText('Correo electrónico'), 'test@example.com');
         fireEvent.changeText(getByPlaceholderText('Contraseña'), 'password123');
 
         // Submit the form
@@ -95,7 +115,7 @@ describe('LoginScreen', () => {
 
         // Check login was called with correct data
         expect(mockLogin).toHaveBeenCalledWith({
-            correo: 'test@ccp.com',
+            correo: 'test@example.com',
             contrasena: 'password123'
         });
 

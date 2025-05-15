@@ -21,6 +21,34 @@ jest.mock('../../contexts/CartContext', () => {
     };
 });
 
+jest.mock('react-i18next', () => ({
+    useTranslation: jest.fn().mockReturnValue({
+        t: (key: string, options?: any) => {
+            const translations: Record<string, string | ((opts?: any) => string)> = {
+                'productTable.title': 'Productos',
+                'productTable.empty': 'No hay productos disponibles',
+                'productTable.listLabel': 'Lista de productos disponibles',
+                'productTable.unitValue': 'Valor Unitario',
+                'productTable.quantity': 'Cantidad',
+                'productTable.action': 'Acción',
+                'productTable.addToCartButton': 'Agregar al carrito',
+                'productTable.addToCart': (opts?: any) => `Agregar ${opts?.quantity} de ${opts?.name} al carrito`,
+                'productTable.decreaseQuantity': (opts?: any) => `Disminuir cantidad para ${opts?.name}`,
+                'productTable.increaseQuantity': (opts?: any) => `Aumentar cantidad para ${opts?.name}`,
+                'productTable.currentQuantity': (opts?: any) => `Cantidad actual ${opts?.quantity}`,
+                'productTable.expandDetails': 'Expandir detalles',
+                'productTable.collapseDetails': 'Contraer detalles',
+            };
+            const value = translations[key];
+            if (typeof value === 'function') {
+                return value(options);
+            }
+            return value || key;
+        },
+        i18n: { language: 'es', changeLanguage: jest.fn() }
+    })
+}));
+
 // Import the mockAddToCart from the mocked module
 const { mockAddToCart } = require('../../contexts/CartContext');
 

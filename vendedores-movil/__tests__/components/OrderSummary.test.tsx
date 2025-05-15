@@ -301,7 +301,7 @@ describe('OrderSummary', () => {
 
         await waitFor(() => {
             expect(mockedClientsService.fetchClients).toHaveBeenCalled();
-            expect(Alert.alert).toHaveBeenCalledWith('Error', 'No se pudieron cargar los clientes');
+            expect(Alert.alert).toHaveBeenCalledWith('Error', 'No se pudieron cargar los clientes. Por favor intente de nuevo.');
         });
     });
 

@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid2";
 
 import { createSeller } from "./adapters/microserviceSeller";
 import { useTranslations } from "next-intl";
+import { useTheme } from '@mui/material/styles';
 
 interface ModalFormProps {
     open: boolean;
@@ -31,6 +32,8 @@ export default function FormSeller({ open, onClose }: ModalFormProps) {
         onClose();
     };
 
+    const theme = useTheme()
+
     return (
         <Modal
             open={open}
@@ -47,7 +50,7 @@ export default function FormSeller({ open, onClose }: ModalFormProps) {
             <Box sx={{ height: "100%" }}>
                 <Grid container sx={{ height: "100%" }}>
                     <Grid sx={{ 
-                        backgroundColor: "white", 
+                        backgroundColor: theme.palette.background.paper,
                         borderRadius: "16px",
                         boxShadow: "3",
                         direction: "column", 

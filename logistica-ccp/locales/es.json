@@ -9,7 +9,8 @@
         "option_2": "Productos",
         "option_3": "Inventario",
         "option_4": "Vendedores",
-        "option_5": "Pedidos"
+        "option_5": "Pedidos",
+        "option_6": "Plan de ventas"
     },
     "ConfigMenu": {
         "title": "Opciones",
@@ -112,5 +113,43 @@
         "route_modal_table_col_1": "SKU",
         "route_modal_table_col_2": "Bodega",
         "button_close": "CERRAR"
-    }
+  },
+  "Sales": {
+    "title": "Plan de ventas",
+    "table_col_1": "ID",
+    "table_col_2": "Estado",
+    "table_col_3": "Fecha Inicio",
+    "table_col_4": "Fecha Fin",
+    "table_col_5": "Meta",
+    "table_col_6": "Productos",
+    "table_col_7": "Cerrar",
+    "Report": "Reporte",
+    "modal_title": "Reporte Plan de Ventas",
+    "modal_subtitle": "Reporte de Ventas para el periodo: ",
+    "modal_button_close": "CERRAR",
+    "close_plan": "Cerrar",
+    "sellers_plan": "Plan de ventas",
+    "route_modal_title": "Delivery Route",
+    "route_modal_order": "Order: ",
+    "route_modal_customer": "Customer: ",
+    "route_modal_address": "Address: ",
+    "route_modal_table_col_1": "SKU",
+    "route_modal_table_col_2": "Warehouse",
+    "button_close": "CLOSE",
+    "select_seller": "Seleccionar vendedor",
+    "form_single_title": "Crear plan de ventas",
+    "form_single_subtitle": "Crear un plan de ventas para un vendedor",
+    "form_single_field_1": "Meta de venta",
+    "form_single_field_2": "Productos del plan",
+    "form_button_submit": "CONFIRMAR",
+    "form_button_cancel": "CANCELAR"
+  },
+  "Login": {
+    "title": "CCP",
+    "email_placeholder": "Correo",
+    "password_placeholder": "Contraseña",
+    "login_button": "INGRESAR",
+    "auth_too_many_requests": "Llene los campos correspondientes",
+    "auth_invalid_credential": "Invalid credentials"
+  }
 }

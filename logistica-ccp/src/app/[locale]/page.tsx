@@ -1,10 +1,13 @@
-import Image from "next/image";
-import Footer from "../../globalComponents/Footer";
+'use client'
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div>
-      
-    </div>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/login');
+  }, [router]);
+
+  return null;
 }
