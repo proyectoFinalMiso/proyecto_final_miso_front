@@ -24,8 +24,8 @@ const ClientDetailsScreen = () => {
   const sellerInfo = useAuth();
   const router = useRouter();
   const { t } = useTranslation();
-  const { colors } = useTheme();
-  const styles = useMemo(() => getStyles(colors), [colors]);
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
   // API data
   const [client, setClient] = useState<Cliente>();
   const [plannedVisits, setPlannedVisits] = useState<Visit[]>([]);
@@ -218,7 +218,7 @@ const ClientDetailsScreen = () => {
   );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -238,7 +238,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     backgroundColor: colors.backgroundLogin,
   },
   title: {
-    fontSize: 24,
+    fontSize: fontSizes.xxl,
     fontWeight: '600',
     color: colors.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
@@ -259,14 +259,14 @@ const getStyles = (colors: any) => StyleSheet.create({
     marginBottom: 16,
   },
   clientName: {
-    fontSize: 20,
+    fontSize: fontSizes.xl,
     fontWeight: '600',
     color: colors.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
     marginBottom: 4,
   },
   clientEmail: {
-    fontSize: 14,
+    fontSize: fontSizes.sm,
     color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
@@ -282,13 +282,13 @@ const getStyles = (colors: any) => StyleSheet.create({
   },
   registerVisitText: {
     color: colors.buttonText,
-    fontSize: 14,
+    fontSize: fontSizes.sm,
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
     marginLeft: 8,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: fontSizes.lg,
     fontWeight: '600',
     color: colors.primary,
     fontFamily: 'PlusJakartaSans_600SemiBold',
@@ -330,7 +330,7 @@ const getStyles = (colors: any) => StyleSheet.create({
   },
   actionButtonText: {
     color: colors.buttonText,
-    fontSize: 14,
+    fontSize: fontSizes.sm,
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
     textAlign: 'center',

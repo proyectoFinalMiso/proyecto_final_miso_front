@@ -26,8 +26,8 @@ type PlannedVisitsTableProps = {
 
 const PlannedVisitsTable = ({ visits, refreshControl }: PlannedVisitsTableProps) => {
   const { t, i18n } = useTranslation();
-  const { colors } = useTheme();
-  const styles = useMemo(() => getStyles(colors), [colors]);
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -73,7 +73,7 @@ const PlannedVisitsTable = ({ visits, refreshControl }: PlannedVisitsTableProps)
   );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundLogin,
@@ -94,7 +94,7 @@ const getStyles = (colors: any) => StyleSheet.create({
   },
   headerText: {
     color: colors.tableHeaderText,
-    fontSize: 11,
+    fontSize: fontSizes.xxs,
     fontWeight: '700',
     fontFamily: 'PlusJakartaSans_700Bold',
   },
@@ -108,7 +108,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     paddingHorizontal: 12,
   },
   visitDate: {
-    fontSize: 14,
+    fontSize: fontSizes.sm,
     color: colors.text,
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
@@ -119,7 +119,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    fontSize: 14,
+    fontSize: fontSizes.sm,
     color: colors.text,
     textAlign: 'center',
     fontWeight: '400',

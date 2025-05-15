@@ -12,7 +12,7 @@ const isTestEnvironment = process.env.NODE_ENV === 'test';
 const OrderSummary = () => {
     const { getTotal, items, clearCart } = useCart();
     const { vendedorData, isLoggedIn } = useAuth();
-    const { colors } = useTheme();
+    const { colors, fontSizes } = useTheme();
     const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [destino, setDestino] = useState('');
@@ -22,7 +22,7 @@ const OrderSummary = () => {
     const [isClientModalVisible, setIsClientModalVisible] = useState(false);
     const [isLoadingClients, setIsLoadingClients] = useState(false);
 
-    const styles = useMemo(() => getStyles(colors), [colors]);
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
     useEffect(() => {
         if (vendedorData?.id) {
@@ -183,6 +183,7 @@ const OrderSummary = () => {
                 <TextInput
                     style={[styles.addressInput, addressError ? styles.errorInput : null]}
                     placeholder={t('cart.placeholderAddress', 'Ej: Calle 123 # 45-67, Apto 101. Ciudad de Bogotá')}
+                    placeholderTextColor={colors.searchHint}
                     value={destino}
                     onChangeText={handleAddressChange}
                     editable={!isLoading}
@@ -256,7 +257,7 @@ const OrderSummary = () => {
     );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     mainContainer: {
         backgroundColor: colors.backgroundLogin,
         borderRadius: 21,
@@ -273,7 +274,7 @@ const getStyles = (colors: any) => StyleSheet.create({
         borderBottomColor: colors.tableBorder,
     },
     addressLabel: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
         color: colors.text,
@@ -281,20 +282,21 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     addressInput: {
         borderWidth: 1,
-        borderColor: '#e0e0e0',
+        borderColor: colors.tableBorder,
         borderRadius: 8,
         padding: 12,
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontFamily: 'PlusJakartaSans_400Regular',
-        backgroundColor: '#fff',
+        backgroundColor: colors.background,
         minHeight: 44,
+        color: colors.text,
     },
     errorInput: {
         borderColor: '#ff3b30',
     },
     errorText: {
-        color: '#ff3b30',
-        fontSize: 12,
+        color: colors.text,
+        fontSize: fontSizes.xs,
         fontFamily: 'PlusJakartaSans_400Regular',
         marginTop: 6,
     },
@@ -310,14 +312,14 @@ const getStyles = (colors: any) => StyleSheet.create({
         alignItems: 'center',
     },
     totalLabel: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
         color: colors.text,
         marginRight: 8,
     },
     totalValue: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
         color: colors.text,
@@ -336,27 +338,27 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     buttonText: {
         color: colors.buttonText,
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     clientSelector: {
         borderWidth: 1,
-        borderColor: '#e0e0e0',
+        borderColor: colors.tableBorder,
         borderRadius: 8,
         padding: 12,
         marginBottom: 16,
-        backgroundColor: '#fff',
+        backgroundColor: colors.background,
     },
     selectedClientText: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontFamily: 'PlusJakartaSans_400Regular',
         color: colors.text,
     },
     placeholderText: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: '#999',
+        color: colors.text,
     },
     modalContainer: {
         flex: 1,
@@ -365,17 +367,17 @@ const getStyles = (colors: any) => StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
-        backgroundColor: '#fff',
+        backgroundColor: colors.background,
         borderRadius: 12,
         padding: 20,
         width: '90%',
         maxHeight: '80%',
     },
     modalTitle: {
-        fontSize: 18,
+        fontSize: fontSizes.lg,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
-        color: colors.text,
+        color: colors.searchHint,
         marginBottom: 16,
         textAlign: 'center',
     },
@@ -385,13 +387,14 @@ const getStyles = (colors: any) => StyleSheet.create({
         justifyContent: 'center',
     },
     emptyStateText: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: '#666',
+        color: colors.text,
         textAlign: 'center',
     },
     clientList: {
         maxHeight: '70%',
+        backgroundColor: colors.background,
     },
     clientItem: {
         padding: 12,
@@ -399,16 +402,16 @@ const getStyles = (colors: any) => StyleSheet.create({
         borderBottomColor: '#f0f0f0',
     },
     clientName: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
         color: colors.text,
         marginBottom: 4,
     },
     clientEmail: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: '#666',
+        color: colors.text,
     },
     closeButton: {
         marginTop: 16,
@@ -419,7 +422,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     closeButtonText: {
         color: colors.buttonText,
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },

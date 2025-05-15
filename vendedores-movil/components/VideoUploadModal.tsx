@@ -35,8 +35,8 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
   onSuccess,
 }) => {
   const { t } = useTranslation();
-  const { colors } = useTheme();
-  const styles = useMemo(() => getStyles(colors), [colors]);
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const gcsBucketName = 'ccp-recommendations-videos';
@@ -275,7 +275,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
   );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -306,14 +306,14 @@ const getStyles = (colors: any) => StyleSheet.create({
   },
   
   modalTitle: {
-    fontSize: 18,
+    fontSize: fontSizes.lg,
     fontWeight: '600',
     color: colors.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   
   modalSubtitle: {
-    fontSize: 16,
+    fontSize: fontSizes.md,
     fontFamily: 'PlusJakartaSans_400Regular',
     color: colors.text,
     marginBottom: 20,
@@ -340,7 +340,7 @@ const getStyles = (colors: any) => StyleSheet.create({
   cameraButton: {},
   
   modalButtonText: {
-    fontSize: 16,
+    fontSize: fontSizes.md,
     fontFamily: 'PlusJakartaSans_500Medium',
     marginLeft: 8,
     color: colors.buttonText,
@@ -353,7 +353,7 @@ const getStyles = (colors: any) => StyleSheet.create({
 
   progressText: {
     marginTop: 10,
-    fontSize: 16,
+    fontSize: fontSizes.md,
     color: colors.text,
     fontFamily: 'PlusJakartaSans_500Medium',
   },

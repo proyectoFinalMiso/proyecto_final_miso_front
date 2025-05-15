@@ -14,8 +14,8 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
     onRetry,
 }) => {
     const { t } = useTranslation();
-    const { colors } = useTheme();
-    const styles = useMemo(() => getStyles(colors), [colors]);
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
     return (
         <View style={styles.container}>
@@ -32,7 +32,7 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
     );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -41,7 +41,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     message: {
         marginTop: 15,
-        fontSize: 16,
+        fontSize: fontSizes.md,
         color: colors.text,
         textAlign: 'center',
         fontFamily: 'PlusJakartaSans_400Regular',
@@ -55,7 +55,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     },
     retryText: {
         color: colors.buttonText,
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },

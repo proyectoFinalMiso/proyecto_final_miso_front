@@ -20,8 +20,8 @@ const ClientsScreen = () => {
   const sellerInfo = useAuth();
   const router = useRouter();
   const { t } = useTranslation();
-  const { colors } = useTheme();
-  const styles = useMemo(() => getStyles(colors), [colors]);
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
   // API data
   const [clients, setClients] = useState<Cliente[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -126,7 +126,7 @@ const ClientsScreen = () => {
   );
 };
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -135,14 +135,14 @@ const getStyles = (colors: any) => StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: fontSizes.xxl,
     fontWeight: '600',
     color: colors.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   lastUpdatedText: {
     marginTop: 4,
-    fontSize: 12,
+    fontSize: fontSizes.xs,
     color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
@@ -151,7 +151,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     flex: 1,
   },
   placeholder: {
-    fontSize: 16,
+    fontSize: fontSizes.md,
     color: colors.text,
     textAlign: 'center',
     marginTop: 20,
@@ -171,7 +171,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 12,
     backgroundColor: colors.backgroundLogin,
-    fontSize: 16,
+    fontSize: fontSizes.md,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
     color: colors.text,
@@ -203,7 +203,7 @@ const getStyles = (colors: any) => StyleSheet.create({
   },
   activeFiltersText: {
     flex: 1,
-    fontSize: 12,
+    fontSize: fontSizes.xs,
     color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },

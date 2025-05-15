@@ -49,8 +49,8 @@ const renderWithProvider = (component: React.ReactElement) => {
 };
 
 describe('OrderSummary', () => {
-    const product1: Product = { id: '1', name: 'Producto 1', price: 10000, sku: 10006 };
-    const product2: Product = { id: '2', name: 'Producto 2', price: 20000, sku: 10007 };
+    const product1: Product = { id: '1', name: 'Producto 1', price: 10000, sku: 10006, availableQuantity: 10 };
+    const product2: Product = { id: '2', name: 'Producto 2', price: 20000, sku: 10007, availableQuantity: 5 };
 
     const mockVendedorData = {
         id: '456',

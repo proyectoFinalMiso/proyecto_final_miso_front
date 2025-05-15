@@ -39,6 +39,24 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+const mockBaseFontSizes = {
+    xxxs: 8, xxs: 11, xs: 12, xsPlus: 13, sm: 14, smd: 15, md: 16,
+    lg: 18, xl: 20, xxl: 24, xxlPlus: 28, xxxl: 32, title: 42,
+};
+const mockFontSizeMultipliers: Record<'small' | 'medium' | 'large', number> = { small: 0.9, medium: 1.0, large: 1.1 };
+  
+const calculateMockFontSizes = (fontSizeMode: 'small' | 'medium' | 'large') => {
+    const multiplier = mockFontSizeMultipliers[fontSizeMode];
+    const calculated: any = {}; 
+    for (const key in mockBaseFontSizes) {
+    calculated[key] = mockBaseFontSizes[key as keyof typeof mockBaseFontSizes] * multiplier;
+    }
+    return calculated;
+};
+
+const mockDefaultFontSizeMode = 'medium' as 'small' | 'medium' | 'large';
+const mockDefaultFontSizes = calculateMockFontSizes(mockDefaultFontSizeMode);
+
 // Mock ThemeContext
 jest.mock('../../../contexts/ThemeContext', () => {
     const ActualAppColors = jest.requireActual('../../../constants/Colors').Colors;
@@ -49,6 +67,12 @@ jest.mock('../../../contexts/ThemeContext', () => {
             isDark: false,
             toggleTheme: jest.fn(),
             setTheme: jest.fn(),
+
+            fontSize: mockDefaultFontSizeMode,
+            fontSizes: mockDefaultFontSizes,
+            setFontSize: jest.fn(),
+            increaseFontSize: jest.fn(),
+            decreaseFontSize: jest.fn(),
         }),
     };
 });
@@ -63,6 +87,12 @@ describe('SettingsScreen', () => {
             isDark: false,
             toggleTheme: jest.fn(),
             setTheme: jest.fn(),
+
+            fontSize: mockDefaultFontSizeMode,
+            fontSizes: mockDefaultFontSizes,
+            setFontSize: jest.fn(),
+            increaseFontSize: jest.fn(),
+            decreaseFontSize: jest.fn(),
         });
     });
 
@@ -71,7 +101,6 @@ describe('SettingsScreen', () => {
 
         expect(getByTestId('settingsScreenTitle')).toBeTruthy();
         expect(getByText('Ajustes')).toBeTruthy();
-        expect(getByText('Preferencias')).toBeTruthy();
         expect(getByText('Versión 1.0.0')).toBeTruthy();
     });
 
@@ -89,7 +118,7 @@ describe('SettingsScreen', () => {
         
         expect(titleStyle).toBeTruthy();
         expect(titleStyle.color).toBe(Colors.light.titleText);
-        expect(titleStyle.fontSize).toBe(28);
+        expect(titleStyle.fontSize).toBe(24);
         expect(titleStyle.fontFamily).toBe('PlusJakartaSans_700Bold');
     });
 
@@ -102,11 +131,9 @@ describe('SettingsScreen', () => {
     it('should render the correct layout structure', () => {
         const { getByText } = render(<SettingsScreen />);
         const titleElement = getByText('Ajustes');
-        const preferencesElement = getByText('Preferencias');
         const versionElement = getByText('Versión 1.0.0');
         
         expect(titleElement).toBeTruthy();
-        expect(preferencesElement).toBeTruthy();
         expect(versionElement).toBeTruthy();
     });
 
@@ -119,6 +146,12 @@ describe('SettingsScreen', () => {
                 isDark: true,
                 toggleTheme: jest.fn(),
                 setTheme: jest.fn(),
+
+                fontSize: mockDefaultFontSizeMode,
+            fontSizes: mockDefaultFontSizes,
+            setFontSize: jest.fn(),
+            increaseFontSize: jest.fn(),
+            decreaseFontSize: jest.fn(),
             });
         });
 

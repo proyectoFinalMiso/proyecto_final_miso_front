@@ -13,8 +13,8 @@ const AUTO_REFRESH_INTERVAL = 30000;
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  const { colors } = useTheme();
-  const styles = useMemo(() => getStyles(colors), [colors]);
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
   // API data
   const [products, setProducts] = useState<Product[]>([]);
@@ -209,7 +209,7 @@ export default function HomeScreen() {
   );
 }
 
-const getStyles = (colors: any) => StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -218,14 +218,14 @@ const getStyles = (colors: any) => StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: fontSizes.xxl,
     fontWeight: '600',
     color: colors.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   lastUpdatedText: {
     marginTop: 4,
-    fontSize: 12,
+    fontSize: fontSizes.xs,
     color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
@@ -234,7 +234,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     flex: 1,
   },
   placeholder: {
-    fontSize: 16,
+    fontSize: fontSizes.md,
     color: colors.text,
     textAlign: 'center',
     marginTop: 20,
@@ -248,16 +248,17 @@ const getStyles = (colors: any) => StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    height: 40,
+    paddingVertical: 10, 
     borderWidth: 0.8,
     borderColor: colors.borderWidget,
     borderRadius: 8,
     paddingHorizontal: 12,
     backgroundColor: colors.backgroundLogin,
-    fontSize: 16,
+    fontSize: fontSizes.md,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
     color: colors.text,
+    textAlignVertical: 'center',
   },
   filterButton: {
     width: 40,
@@ -286,7 +287,7 @@ const getStyles = (colors: any) => StyleSheet.create({
   },
   activeFiltersText: {
     flex: 1,
-    fontSize: 12,
+    fontSize: fontSizes.xs,
     color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },

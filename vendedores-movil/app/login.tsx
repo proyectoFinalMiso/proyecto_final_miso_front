@@ -155,7 +155,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 0,
-    backgroundColor: colors.backgroundLogin,
+    backgroundColor: colors.background,
   },
   contentContainer: {
     width: '100%',
@@ -182,7 +182,7 @@ const getStyles = (colors: any) => StyleSheet.create({
     borderColor: colors.borderWidget,
     borderRadius: 10,
     marginBottom: 15,
-    backgroundColor: colors.background,
+    backgroundColor: colors.backgroundLogin,
   },
   inputIcon: {
     marginLeft: 15,
