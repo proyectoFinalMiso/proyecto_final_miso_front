@@ -48,24 +48,7 @@ export default async function LocaleLayout({
         <ThemeProvider>
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <NextIntlClientProvider locale={locale}>
-            <Box sx={{ flexGrow: 1 }}>
-              <Grid container sx={{ flex: 1, minHeight: "100vh" }}>
-                <Grid size={2} sx={{ minWidth: "20rem", minHeight: "100vh", overflow: "auto", alignItems: "stretch" }}>
-                  <Sidebar />
-                </Grid>
-
-                <Grid direction="column" sx={{ display: "flex", flexDirection: "column", flex: 1, minHeight: "100vh" }}>
-
-                  <Grid size="grow" sx={{ flex: 1, overflow: "auto" }}>
-                    {children}
-                  </Grid>
-
-                  <Grid sx={{ width: "100%", alignItems: "flex-end" }}>
-                    <Footer />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Box>
+            <GlobalLayout>{children}</GlobalLayout>
             </NextIntlClientProvider>
           </AppRouterCacheProvider>
         </ThemeProvider>
