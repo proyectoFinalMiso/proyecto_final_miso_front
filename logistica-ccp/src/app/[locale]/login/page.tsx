@@ -35,7 +35,7 @@ const Login: React.FC = () => {
       return;
     }
 
-    router.push('/');
+    router.push('/products');
   };
 
   useEffect(() => {
