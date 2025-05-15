@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,10 +8,10 @@ import {
   UIManager,
   RefreshControlProps,
 } from 'react-native';
-import { Colors } from '../constants/Colors';
 import { Visit } from '../services/api/clientsService';
 import { useTranslation } from 'react-i18next';
 import { getLocaleFromLanguage } from '../utils/localeUtils';
+import { useTheme } from '../contexts/ThemeContext';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -26,6 +26,8 @@ type PlannedVisitsTableProps = {
 
 const PlannedVisitsTable = ({ visits, refreshControl }: PlannedVisitsTableProps) => {
   const { t, i18n } = useTranslation();
+  const { colors } = useTheme();
+  const styles = useMemo(() => getStyles(colors), [colors]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -71,10 +73,10 @@ const PlannedVisitsTable = ({ visits, refreshControl }: PlannedVisitsTableProps)
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.backgroundLogin,
     borderRadius: 21,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -83,15 +85,15 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: colors.tableBorder,
   },
   header: {
-    backgroundColor: Colors.light.primary,
+    backgroundColor: colors.primary,
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
   headerText: {
-    color: Colors.light.tableHeaderText,
+    color: colors.tableHeaderText,
     fontSize: 11,
     fontWeight: '700',
     fontFamily: 'PlusJakartaSans_700Bold',
@@ -101,17 +103,16 @@ const styles = StyleSheet.create({
   },
   visitContainer: {
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: colors.tableBorder,
     paddingVertical: 12,
     paddingHorizontal: 12,
   },
   visitDate: {
     fontSize: 14,
-    color: Colors.light.text,
+    color: colors.text,
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
     paddingVertical: 4,
-  
   },
   emptyContainer: {
     padding: 24,
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 14,
-    color: Colors.light.text,
+    color: colors.text,
     textAlign: 'center',
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',

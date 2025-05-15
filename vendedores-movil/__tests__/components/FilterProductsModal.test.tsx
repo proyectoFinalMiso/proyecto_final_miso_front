@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import FilterModal from '../../components/FilterProductsModal';
+import { Colors } from '../../constants/Colors';
 
 // Mock dependencies
 jest.mock('react-i18next', () => ({
@@ -25,6 +26,19 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        }),
+    };
+});
+
 describe('FilterModal Component', () => {
     const mockOnClose = jest.fn();
     const mockOnTempPriceChange = jest.fn();
@@ -42,6 +56,15 @@ describe('FilterModal Component', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+                mockUseTheme.mockReturnValue({
+                    theme: 'light',
+                    colors: Colors.light,
+                    isDark: false,
+                    toggleTheme: jest.fn(),
+                    setTheme: jest.fn(),
+                });
     });
 
     it('renders correctly when visible', () => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen, act, waitFor } from '@testing-library/react-native';
 import HomeScreen from '../../app/(tabs)';
 import { Product } from '../../components/ProductTable';
+import { Colors } from '../../constants/Colors';
 
 // Mock services
 jest.mock('../../services/api/inventoryService', () => ({
@@ -38,7 +39,7 @@ jest.mock('../../components/ProductTable', () => {
                 {props.refreshControl}
                 <MockView
                     testID="product-press-button"
-                    onPress={() => onProductPress({ id: 'test-id', name: 'Test Product', price: 100, sku: 10007 })}
+                    onPress={() => onProductPress({ id: 'test-id', name: 'Test Product', price: 100, sku: 10007})}
                 />
             </MockView>
         );
@@ -69,7 +70,7 @@ jest.mock('../../components/FilterProductsModal', () => {
         const onClose = () => props.onClose && props.onClose();
         const onTempPriceChange = (field: 'min' | 'max', value: string) => props.onTempPriceChange && props.onTempPriceChange(field, value);
         return (
-            <MockView testID="filter-modal-mock">
+            <MockView testID="filter-modal-mock" visible={props.visible}>
                 <MockView testID="apply-button" onPress={onApply} />
                 <MockView testID="clear-button" onPress={onClear} />
                 <MockView testID="close-button" onPress={onClose} />
@@ -92,7 +93,7 @@ jest.mock('react-i18next', () => ({
             const translations: Record<string, string | ((opts?: any) => string)> = {
                 'home.title': 'Ordena lo que gustes',
                 'home.loading': 'Cargando productos...',
-                'home.lastUpdated': (opts?: any) => `Última actualización: ${opts?.time || ''}`,
+                'home.lastUpdated': (opts?: any) => `Última actualización: ${opts?.time || new Date().toLocaleTimeString()}`,
                 'home.loadError': 'No se pudieron cargar los productos. Por favor intente de nuevo.',
                 'home.searchProducts': 'Busca productos...',
                 'home.filterProducts': 'Filtrar productos',
@@ -115,6 +116,19 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        }),
+    };
+});
+
 global.console = {
     ...global.console,
     log: jest.fn(),
@@ -130,54 +144,65 @@ describe('HomeScreen', () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        // Setup default mocks for API functions
-        mockInventoryService.fetchAvailableInventory.mockResolvedValue([{ id: 1, nombre: 'Test Product', precio: 100, cantidadDisponible: 10 }]);
+        mockInventoryService.fetchAvailableInventory.mockResolvedValue([{ id: "1", nombre: 'Test Product', precio: 100, cantidadDisponible: 10, sku: "10007" }]);
         mockInventoryService.mapInventoryToProducts.mockReturnValue(mockProducts);
+
+        const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+        mockUseTheme.mockReturnValue({
+            theme: 'light',
+            colors: Colors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        });
     });
 
     it('should show loading indicator while fetching data', async () => {
         mockInventoryService.fetchAvailableInventory.mockImplementation(() => new Promise(resolve => setTimeout(() => resolve([]), 100)));
 
-        const { getByTestId } = render(<HomeScreen />);
-        expect(getByTestId('loading-indicator-mock')).toBeTruthy();
+        render(<HomeScreen />);
+        expect(screen.getByTestId('loading-indicator-mock')).toBeTruthy();
     });
 
     it('should show error display when fetching fails', async () => {
         mockInventoryService.fetchAvailableInventory.mockRejectedValue(new Error('API Error'));
 
-        const { getByTestId } = render(<HomeScreen />);
+        render(<HomeScreen />);
 
         await waitFor(() => {
-            expect(getByTestId('error-display-mock')).toBeTruthy();
+            expect(screen.getByTestId('error-display-mock')).toBeTruthy();
         });
     });
 
     it('should retry fetching data when retry button is pressed', async () => {
         mockInventoryService.fetchAvailableInventory.mockRejectedValueOnce(new Error('API Error'));
 
-        const { getByTestId } = render(<HomeScreen />);
+        render(<HomeScreen />);
 
         await waitFor(() => {
-            expect(getByTestId('error-display-mock')).toBeTruthy();
+            expect(screen.getByTestId('error-display-mock')).toBeTruthy();
         });
 
-        mockInventoryService.fetchAvailableInventory.mockResolvedValueOnce([{ id: 1, nombre: 'Test Product', precio: 100, cantidadDisponible: 10 }]);
+        mockInventoryService.fetchAvailableInventory.mockResolvedValueOnce([{ id: "1", nombre: 'Test Product', precio: 100, cantidadDisponible: 10, sku: "10007" }]);
+        mockInventoryService.mapInventoryToProducts.mockReturnValueOnce(mockProducts);
+
 
         act(() => {
-            fireEvent.press(getByTestId('retry-button'));
+            fireEvent.press(screen.getByTestId('retry-button'));
         });
 
         await waitFor(() => {
             expect(mockInventoryService.fetchAvailableInventory).toHaveBeenCalledTimes(2);
+            expect(screen.getByTestId('product-table-mock')).toBeTruthy();
         });
     });
 
     it('should render search input and product table when data is loaded', async () => {
-        const { getByPlaceholderText, getByTestId } = render(<HomeScreen />);
+        render(<HomeScreen />);
 
         await waitFor(() => {
-            expect(getByTestId('product-table-mock')).toBeTruthy();
-            expect(getByPlaceholderText('Busca productos...')).toBeTruthy();
+            expect(screen.getByTestId('product-table-mock')).toBeTruthy();
+            expect(screen.getByPlaceholderText('Busca productos...')).toBeTruthy();
         });
 
         const ProductTableMock = require('../../components/ProductTable');
@@ -185,60 +210,62 @@ describe('HomeScreen', () => {
     });
 
     it('should open filter modal when filter button is pressed', async () => {
-        const { getByLabelText, getByTestId } = render(<HomeScreen />);
+        render(<HomeScreen />);
+        const FilterModalMock = require('../../components/FilterProductsModal');
+
 
         await waitFor(() => {
-            const filterButton = getByLabelText('Filtrar productos');
+            const filterButton = screen.getByLabelText('Filtrar productos');
             expect(filterButton).toBeTruthy();
-
-            act(() => {
+             act(() => {
                 fireEvent.press(filterButton);
             });
         });
 
-        const FilterModalMock = require('../../components/FilterProductsModal');
-        expect(FilterModalMock).toHaveBeenCalled();
-        expect(getByTestId('filter-modal-mock')).toBeTruthy();
+
+        await waitFor(() => {
+          expect(FilterModalMock).toHaveBeenCalledWith(expect.objectContaining({ visible: true }), {});
+        });
     });
 
     it('should filter products when search text changes', async () => {
-        const { getByPlaceholderText } = render(<HomeScreen />);
+        render(<HomeScreen />);
+        const ProductTableMock = require('../../components/ProductTable');
 
         await waitFor(() => {
-            const searchInput = getByPlaceholderText('Busca productos...');
-
-            act(() => {
-                fireEvent.changeText(searchInput, 'Test');
-            });
+            expect(screen.getByTestId('product-table-mock')).toBeTruthy();
         });
+        
+        const searchInput = screen.getByPlaceholderText('Busca productos...');
+        act(() => {
+            fireEvent.changeText(searchInput, 'Test');
+        });
+        
 
-        const ProductTableMock = require('../../components/ProductTable');
-        expect(ProductTableMock).toHaveBeenCalled();
-
-        const mockCalls = ProductTableMock.mock.calls;
-        const lastCall = mockCalls[mockCalls.length - 1][0];
-        expect(lastCall).toHaveProperty('products');
-        expect(lastCall).toHaveProperty('onProductPress');
-        expect(lastCall).toHaveProperty('refreshControl');
+        await waitFor(() => {
+            const mockCalls = ProductTableMock.mock.calls;
+            expect(mockCalls.length).toBeGreaterThanOrEqual(1);
+            const lastCallArgs = mockCalls[mockCalls.length - 1][0];
+            expect(lastCallArgs).toHaveProperty('products');
+        });
     });
 
     it('should render title correctly', async () => {
-        const { getByText } = render(<HomeScreen />);
-
+        render(<HomeScreen />);
         await waitFor(() => {
-            expect(getByText('Ordena lo que gustes')).toBeTruthy();
+            expect(screen.getByText('Ordena lo que gustes')).toBeTruthy();
         });
     });
 
-    it('should pass onProductPress to ProductTable', async () => {
-        const { getByTestId } = render(<HomeScreen />);
+    it('should pass onProductPress to ProductTable and log selection', async () => {
+        render(<HomeScreen />);
 
         await waitFor(() => {
-            expect(getByTestId('product-table-mock')).toBeTruthy();
+            expect(screen.getByTestId('product-table-mock')).toBeTruthy();
         });
 
         act(() => {
-            fireEvent.press(getByTestId('product-press-button'));
+            fireEvent.press(screen.getByTestId('product-press-button'));
         });
 
         expect(console.log).toHaveBeenCalledWith('Producto seleccionado:', expect.objectContaining({
@@ -249,49 +276,52 @@ describe('HomeScreen', () => {
     });
 
     it('should close filter modal when applied', async () => {
-        const { getByLabelText, getByTestId } = render(<HomeScreen />);
+        render(<HomeScreen />);
+        const FilterModalMock = require('../../components/FilterProductsModal');
+
+        await waitFor(() => screen.getByLabelText('Filtrar productos'));
+        
+        act(() => {
+          fireEvent.press(screen.getByLabelText('Filtrar productos'));
+        });
 
         await waitFor(() => {
-            const filterButton = getByLabelText('Filtrar productos');
-            act(() => {
-                fireEvent.press(filterButton);
-            });
+           expect(FilterModalMock).toHaveBeenCalledWith(expect.objectContaining({ visible: true }), {});
         });
-
-        expect(getByTestId('filter-modal-mock')).toBeTruthy();
-
+        
         act(() => {
-            fireEvent.press(getByTestId('apply-button'));
+            fireEvent.press(screen.getByTestId('apply-button'));
         });
 
-        const FilterModalMock = require('../../components/FilterProductsModal');
-        const lastCall = FilterModalMock.mock.calls[FilterModalMock.mock.calls.length - 1][0];
-        expect(typeof lastCall.onApply).toBe('function');
+        await waitFor(() => {
+            const lastCallArgs = FilterModalMock.mock.calls[FilterModalMock.mock.calls.length - 1][0];
+            expect(lastCallArgs.visible).toBe(false);
+        });
     });
 
     it('should show last updated time when data is loaded', async () => {
-        const { getByText } = render(<HomeScreen />);
+        render(<HomeScreen />);
 
         await waitFor(() => {
-            expect(getByText(/Última actualización:/)).toBeTruthy();
+            expect(screen.getByText(/Última actualización:/)).toBeTruthy();
         });
     });
 
-    it('should refresh data when onRefresh is called', async () => {
-        const { getByTestId } = render(<HomeScreen />);
+    it('should refresh data when onRefresh is called from ProductTable', async () => {
+        render(<HomeScreen />);
+        const ProductTableMock = require('../../components/ProductTable');
 
         await waitFor(() => {
-            const productTable = getByTestId('product-table-mock');
-            expect(productTable).toBeTruthy();
+            expect(screen.getByTestId('product-table-mock')).toBeTruthy();
         });
 
-        const ProductTableMock = require('../../components/ProductTable');
-        const refreshControl = ProductTableMock.mock.calls[0][0].refreshControl;
-        expect(refreshControl).toBeTruthy();
+        expect(ProductTableMock).toHaveBeenCalled();
+        const productTableProps = ProductTableMock.mock.calls[ProductTableMock.mock.calls.length -1][0];
+        expect(productTableProps.refreshControl).toBeTruthy();
+        expect(typeof productTableProps.refreshControl.props.onRefresh).toBe('function');
 
-        // Simulate the refresh call
         act(() => {
-            refreshControl.props.onRefresh();
+            productTableProps.refreshControl.props.onRefresh();
         });
 
         await waitFor(() => {

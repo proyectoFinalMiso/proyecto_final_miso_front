@@ -1,13 +1,39 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import ErrorDisplay from '../../components/ErrorDisplay';
+import { Colors } from '../../constants/Colors';
 
 // Mock Ionicons
 jest.mock('@expo/vector-icons', () => ({
     Ionicons: 'Ionicons',
 }));
 
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        }),
+    };
+});
+
 describe('ErrorDisplay Component', () => {
+    beforeEach(() => {
+            jest.clearAllMocks();    
+            const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+            mockUseTheme.mockReturnValue({
+                theme: 'light',
+                colors: Colors.light,
+                isDark: false,
+                toggleTheme: jest.fn(),
+                setTheme: jest.fn(),
+            });
+        });
+        
     it('renders correctly with default message', () => {
         const { getByText } = render(<ErrorDisplay />);
 

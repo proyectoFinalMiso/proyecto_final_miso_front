@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import LanguageSelector from '../../components/LanguageSelector';
 import { useTranslation } from 'react-i18next';
+import { Colors } from '../../constants/Colors';
 
 jest.mock('react-i18next', () => ({
     useTranslation: jest.fn().mockReturnValue({
@@ -18,9 +19,31 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        }),
+    };
+});
+
 describe('LanguageSelector Component', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+
+        const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+                        mockUseTheme.mockReturnValue({
+                            theme: 'light',
+                            colors: Colors.light,
+                            isDark: false,
+                            toggleTheme: jest.fn(),
+                            setTheme: jest.fn(),
+                        });
     });
 
     const mockUseTranslation = useTranslation as jest.Mock;

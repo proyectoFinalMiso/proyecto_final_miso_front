@@ -2,8 +2,35 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { ActivityIndicator } from 'react-native';
+import { Colors } from '../../constants/Colors';
+
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        }),
+    };
+});
 
 describe('LoadingIndicator Component', () => {
+    beforeEach(() => {
+            jest.clearAllMocks();
+    
+            const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+                    mockUseTheme.mockReturnValue({
+                        theme: 'light',
+                        colors: Colors.light,
+                        isDark: false,
+                        toggleTheme: jest.fn(),
+                        setTheme: jest.fn(),
+                    });
+        });
+        
     it('renders correctly with default message', () => {
         const { getByText, UNSAFE_getByType } = render(<LoadingIndicator />);
 

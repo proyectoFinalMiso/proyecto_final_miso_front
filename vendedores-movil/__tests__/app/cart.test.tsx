@@ -3,6 +3,7 @@ import { render, act, screen } from '@testing-library/react-native';
 import CartScreen from '../../app/(tabs)/cart';
 import { CartProvider, useCart, CartItem } from '../../contexts/CartContext';
 import { Product } from '../../components/ProductTable';
+import { Colors } from '../../constants/Colors';
 
 jest.mock('react-native', () => {
     const RN = jest.requireActual('react-native');
@@ -28,11 +29,33 @@ jest.mock('../../components/OrderSummary', () => {
     return jest.fn(() => <MockView testID="order-summary-mock" />);
 });
 
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+        }),
+    };
+});
+
 describe('CartScreen - Final', () => {
     const product1: Product = { id: 'prod-abc', name: 'Final Item', price: 100, sku: 10001 };
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+                mockUseTheme.mockReturnValue({
+                    theme: 'light',
+                    colors: Colors.light,
+                    isDark: false,
+                    toggleTheme: jest.fn(),
+                    setTheme: jest.fn(),
+                });
     });
 
 

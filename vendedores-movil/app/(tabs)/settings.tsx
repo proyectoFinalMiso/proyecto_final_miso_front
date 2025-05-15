@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
-import { Colors } from '../../constants/Colors';
+import { useTheme } from '../../contexts/ThemeContext';
 import LanguageSelector from '../../components/LanguageSelector';
+import ThemeSelector from '../../components/ThemeSelector';
 import { useTranslation } from 'react-i18next';
 
 export default function SettingsScreen() {
     const { t } = useTranslation();
+    const { colors } = useTheme();
+    const styles = useMemo(() => getStyles(colors), [colors]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -20,6 +23,7 @@ export default function SettingsScreen() {
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>{t('settings.preferences', 'Preferencias')}</Text>
                         <LanguageSelector />
+                        <ThemeSelector />
                     </View>
                 </View>
 
@@ -33,10 +37,10 @@ export default function SettingsScreen() {
     );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.light.background,
+        backgroundColor: colors.background,
     },
     scrollView: {
         flex: 1,
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 28,
         fontFamily: 'PlusJakartaSans_700Bold',
-        color: Colors.light.titleText,
+        color: colors.titleText,
     },
     content: {
         paddingHorizontal: 16,
@@ -60,14 +64,14 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 18,
         fontFamily: 'PlusJakartaSans_600SemiBold',
-        color: Colors.light.primary,
+        color: colors.primary,
         marginBottom: 12,
     },
     optionItem: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 16,
-        backgroundColor: Colors.light.backgroundLogin,
+        backgroundColor: colors.backgroundLogin,
         borderRadius: 12,
         marginVertical: 8,
         shadowColor: '#000',
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
         width: 40, 
         height: 40,
         borderRadius: 20,
-        backgroundColor: Colors.light.tabActiveBackground,
+        backgroundColor: colors.tabActiveBackground,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 12,
@@ -91,12 +95,12 @@ const styles = StyleSheet.create({
     optionTitle: {
         fontSize: 16,
         fontFamily: 'PlusJakartaSans_600SemiBold',
-        color: Colors.light.titleText,
+        color: colors.titleText,
     },
     optionDescription: {
         fontSize: 14,
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: Colors.light.text,
+        color: colors.text,
         opacity: 0.7,
         marginTop: 2,
     },
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
     versionText: {
         fontSize: 14,
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: Colors.light.text,
+        color: colors.text,
         opacity: 0.6,
     },
 });
