@@ -6,7 +6,10 @@
     "register": "Register",
     "cancel": "Cancel",
     "error": "Error",
-    "language": "Language"
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark"
   },
   "auth": {
     "email": "Email",

@@ -9,6 +9,7 @@ import { fetchClientOrders, Order } from '../../services/api/orderService';
 import { useAuth } from '../../contexts/AuthContext';
 import OrderTable from '../../components/OrderTable';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const AUTO_REFRESH_INTERVAL = 30000;
 
@@ -38,6 +39,9 @@ export default function OrdersScreen() {
   const [dateRange, setDateRange] = useState<{ start: Date | null, end: Date | null }>({ start: null, end: null });
   const [tempPriceRange, setTempPriceRange] = useState<{ min: string, max: string }>({ min: '', max: '' });
   const [tempDateRange, setTempDateRange] = useState<{ start: string, end: string }>({ start: '', end: '' });
+
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
   const parseDateString = (dateString: string): Date | null => {
     if (!dateString || dateString.trim() === '') return null;
@@ -198,7 +202,7 @@ export default function OrdersScreen() {
             <TextInput
               style={styles.searchInput}
               placeholder={t('orders.searchOrders', 'Busca por dirección...')}
-              placeholderTextColor={Colors.light.searchHint}
+              placeholderTextColor={colors.searchHint}
               value={searchText}
               onChangeText={setSearchText}
               testID='searchInput'
@@ -215,7 +219,7 @@ export default function OrdersScreen() {
               <Ionicons
                 name="filter-outline"
                 size={22}
-                color={hasActiveFilters ? Colors.light.buttonText : Colors.light.text}
+                color={hasActiveFilters ? colors.buttonText : colors.text}
               />
             </TouchableOpacity>
           </View>
@@ -229,7 +233,7 @@ export default function OrdersScreen() {
                 {dateRange.end !== null && ` ${t('orders.to', 'Hasta')}: ${dateRange.end.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' })}`}
               </Text>
               <TouchableOpacity onPress={clearFilters} testID="clear-filters-button" accessibilityLabel={t('orders.clearFilters', 'Limpiar filtros')}>
-                <Ionicons name="close-circle" size={18} color={Colors.light.text}/>
+                <Ionicons name="close-circle" size={18} color={colors.text}/>
               </TouchableOpacity>
             </View>
           )}
@@ -261,10 +265,10 @@ export default function OrdersScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: colors.background,
   },
   content: {
     padding: 16,
@@ -274,15 +278,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: fontSizes.xxl,
     fontWeight: '600',
-    color: Colors.light.titleText,
+    color: colors.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   lastUpdatedText: {
     marginTop: 4,
-    fontSize: 12,
-    color: Colors.light.text,
+    fontSize: fontSizes.xs,
+    color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
   searchContainer: {
@@ -296,11 +300,11 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     borderWidth: 0.8,
-    borderColor: Colors.light.borderWidget,
+    borderColor: colors.borderWidget,
     borderRadius: 8,
     paddingHorizontal: 12,
-    backgroundColor: Colors.light.backgroundLogin,
-    fontSize: 16,
+    backgroundColor: colors.backgroundLogin,
+    fontSize: fontSizes.md,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
   },
@@ -309,14 +313,14 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 8,
     marginLeft: 10,
-    backgroundColor: Colors.light.backgroundLogin,
+    backgroundColor: colors.backgroundLogin,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 0.8,
-    borderColor: Colors.light.borderWidget,
+    borderColor: colors.borderWidget,
   },
   filterButtonActive: {
-    backgroundColor: Colors.light.button,
+    backgroundColor: colors.button,
   },
   activeFiltersContainer: {
     flexDirection: 'row',
@@ -324,15 +328,15 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingHorizontal: 10,
     paddingVertical: 4,
-    backgroundColor: Colors.light.backgroundLogin,
+    backgroundColor: colors.backgroundLogin,
     borderRadius: 4,
     borderWidth: 0.5,
-    borderColor: Colors.light.borderWidget,
+    borderColor: colors.borderWidget,
   },
   activeFiltersText: {
     flex: 1,
-    fontSize: 12,
-    color: Colors.light.text,
+    fontSize: fontSizes.xs,
+    color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
 });

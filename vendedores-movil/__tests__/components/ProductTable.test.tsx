@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react-native';
 import ProductTable, { Product } from '../../components/ProductTable';
 import { CartProvider } from '../../contexts/CartContext';
+import { Colors } from '../../constants/Colors';
 
 // Mock the CartContext
 jest.mock('../../contexts/CartContext', () => {
@@ -49,6 +50,43 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+const mockBaseFontSizes = {
+    xxxs: 8, xxs: 11, xs: 12, xsPlus: 13, sm: 14, smd: 15, md: 16,
+    lg: 18, xl: 20, xxl: 24, xxxl: 32, title: 42,
+};
+const mockFontSizeMultipliers: Record<'small' | 'medium' | 'large', number> = { small: 0.9, medium: 1.0, large: 1.1 };
+  
+const calculateMockFontSizes = (fontSizeMode: 'small' | 'medium' | 'large') => {
+    const multiplier = mockFontSizeMultipliers[fontSizeMode];
+    const calculated: any = {}; 
+    for (const key in mockBaseFontSizes) {
+    calculated[key] = mockBaseFontSizes[key as keyof typeof mockBaseFontSizes] * multiplier;
+    }
+    return calculated;
+};
+
+const mockDefaultFontSizeMode = 'medium' as 'small' | 'medium' | 'large';
+const mockDefaultFontSizes = calculateMockFontSizes(mockDefaultFontSizeMode);
+
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
+    return {
+        useTheme: jest.fn().mockReturnValue({
+            theme: 'light',
+            colors: ActualAppColors.light,
+            isDark: false,
+            toggleTheme: jest.fn(),
+            setTheme: jest.fn(),
+
+            fontSize: mockDefaultFontSizeMode,
+            fontSizes: mockDefaultFontSizes,
+            setFontSize: jest.fn(),
+            increaseFontSize: jest.fn(),
+            decreaseFontSize: jest.fn(),
+        }),
+    };
+});
+
 // Import the mockAddToCart from the mocked module
 const { mockAddToCart } = require('../../contexts/CartContext');
 
@@ -61,14 +99,29 @@ const renderWithCartProvider = (ui: React.ReactElement) => {
 
 describe('ProductTable Component', () => {
     const mockProducts: Product[] = [
-        { id: '1', name: 'Producto 1', price: 10000, sku: 10001 },
-        { id: '2', name: 'Producto 2', price: 20000, sku: 10002 },
+        { id: '1', name: 'Producto 1', price: 10000, sku: 10001, availableQuantity: 10 },
+        { id: '2', name: 'Producto 2', price: 20000, sku: 10002, availableQuantity: 5 },
     ];
 
     const mockOnProductPress = jest.fn();
 
     beforeEach(() => {
         jest.clearAllMocks();
+
+        const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+                        mockUseTheme.mockReturnValue({
+                            theme: 'light',
+                            colors: Colors.light,
+                            isDark: false,
+                            toggleTheme: jest.fn(),
+                            setTheme: jest.fn(),
+
+                            fontSize: mockDefaultFontSizeMode,
+                            fontSizes: mockDefaultFontSizes,
+                            setFontSize: jest.fn(),
+                            increaseFontSize: jest.fn(),
+                            decreaseFontSize: jest.fn(),
+                        });
     });
 
     it('renders correctly with products', () => {

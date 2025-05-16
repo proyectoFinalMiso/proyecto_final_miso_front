@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import SettingsScreen from '../../../app/(tabs)/settings';
-import { Colors } from '../../../constants/Colors';
+import SettingsScreen from '../../app/(tabs)/settings';
+import { Colors } from '../../constants/Colors';
 import { StyleSheet } from 'react-native';
 
 // Mock dependencies
@@ -21,7 +21,7 @@ jest.mock('@expo/vector-icons', () => ({
 }));
 
 // Mock LanguageSelector component
-jest.mock('../../../components/LanguageSelector', () => {
+jest.mock('../../components/LanguageSelector', () => {
     const MockView = require('react-native').View;
     return jest.fn(() => <MockView testID="language-selector-mock" />);
 });
@@ -58,8 +58,8 @@ const mockDefaultFontSizeMode = 'medium' as 'small' | 'medium' | 'large';
 const mockDefaultFontSizes = calculateMockFontSizes(mockDefaultFontSizeMode);
 
 // Mock ThemeContext
-jest.mock('../../../contexts/ThemeContext', () => {
-    const ActualAppColors = jest.requireActual('../../../constants/Colors').Colors;
+jest.mock('../../contexts/ThemeContext', () => {
+    const ActualAppColors = jest.requireActual('../../constants/Colors').Colors;
     return {
         useTheme: jest.fn().mockReturnValue({
             theme: 'light',
@@ -80,7 +80,7 @@ jest.mock('../../../contexts/ThemeContext', () => {
 describe('SettingsScreen', () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        const mockUseTheme = require('../../../contexts/ThemeContext').useTheme;
+        const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
         mockUseTheme.mockReturnValue({
             theme: 'light',
             colors: Colors.light,
@@ -139,7 +139,7 @@ describe('SettingsScreen', () => {
 
     describe('SettingsScreen with dark theme', () => {
         beforeEach(() => {
-            const mockUseTheme = require('../../../contexts/ThemeContext').useTheme;
+            const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
             mockUseTheme.mockReturnValue({
                 theme: 'dark',
                 colors: Colors.dark,

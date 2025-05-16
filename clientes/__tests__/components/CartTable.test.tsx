@@ -3,6 +3,7 @@ import { render, fireEvent, act } from '@testing-library/react-native';
 import CartTable from '../../components/CartTable';
 import { CartProvider, useCart } from '../../contexts/CartContext';
 import { Product } from '../../components/ProductTable';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 jest.mock('@expo/vector-icons', () => ({
     Ionicons: 'Ionicons',
@@ -43,9 +44,11 @@ jest.mock('react-i18next', () => ({
 
 const renderWithProvider = (component: React.ReactElement) => {
     return render(
-        <CartProvider>
-            {component}
-        </CartProvider>
+        <ThemeProvider>
+            <CartProvider>
+                {component}
+            </CartProvider>
+        </ThemeProvider>
     );
 };
 
