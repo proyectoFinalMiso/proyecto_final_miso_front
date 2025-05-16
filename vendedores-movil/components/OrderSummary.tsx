@@ -12,7 +12,10 @@ const isTestEnvironment = process.env.NODE_ENV === 'test';
 const OrderSummary = () => {
     const { getTotal, items, clearCart } = useCart();
     const { vendedorData, isLoggedIn } = useAuth();
+<<<<<<< HEAD
     const { colors, fontSizes } = useTheme();
+=======
+>>>>>>> main
     const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [destino, setDestino] = useState('');
@@ -183,7 +186,10 @@ const OrderSummary = () => {
                 <TextInput
                     style={[styles.addressInput, addressError ? styles.errorInput : null]}
                     placeholder={t('cart.placeholderAddress', 'Ej: Calle 123 # 45-67, Apto 101. Ciudad de Bogotá')}
+<<<<<<< HEAD
                     placeholderTextColor={colors.searchHint}
+=======
+>>>>>>> main
                     value={destino}
                     onChangeText={handleAddressChange}
                     editable={!isLoading}

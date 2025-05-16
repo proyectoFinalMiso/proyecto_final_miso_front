@@ -7,6 +7,7 @@
     "cancel": "Cancelar",
     "error": "Error",
     "language": "Idioma",
+<<<<<<< HEAD
     "theme": "Tema",
     "light": "Claro",
     "dark": "Oscuro",
@@ -14,6 +15,8 @@
     "small": "Pequeño",
     "medium": "Mediano",
     "large": "Grande",
+=======
+>>>>>>> main
     "success": "Éxito",
     "confirm": "Confirmar",
     "back": "Volver",

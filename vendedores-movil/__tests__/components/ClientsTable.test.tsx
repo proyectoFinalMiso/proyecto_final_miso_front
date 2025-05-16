@@ -2,7 +2,10 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import ClientsTable from '../../components/ClientsTable';
 import { Cliente } from '../../services/api/clientsService';
+<<<<<<< HEAD
 import { Colors } from '../../constants/Colors';
+=======
+>>>>>>> main
 
 // Mock Ionicons
 jest.mock('@expo/vector-icons', () => ({
@@ -21,6 +24,7 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+<<<<<<< HEAD
 const mockBaseFontSizes = {
     xxxs: 8, xxs: 11, xs: 12, xsPlus: 13, sm: 14, smd: 15, md: 16,
     lg: 18, xl: 20, xxl: 24, xxxl: 32, title: 42,
@@ -58,6 +62,8 @@ jest.mock('../../contexts/ThemeContext', () => {
     };
 });
 
+=======
+>>>>>>> main
 describe('ClientsTable Component', () => {
     const mockClients: Cliente[] = [
         { id: '1', nombre: 'Cliente 1', correo: 'cliente1@example.com' },
@@ -69,6 +75,7 @@ describe('ClientsTable Component', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
+<<<<<<< HEAD
         const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
                 mockUseTheme.mockReturnValue({
                     theme: 'light',
@@ -83,6 +90,8 @@ describe('ClientsTable Component', () => {
             increaseFontSize: jest.fn(),
             decreaseFontSize: jest.fn(),
                 });
+=======
+>>>>>>> main
     });
 
     it('renders correctly with clients', () => {

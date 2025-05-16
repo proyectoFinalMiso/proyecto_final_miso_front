@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useMemo } from 'react';
+=======
+import React from 'react';
+>>>>>>> main
 import {
   View,
   Text,
@@ -8,10 +12,17 @@ import {
   UIManager,
   RefreshControlProps,
 } from 'react-native';
+<<<<<<< HEAD
 import { Visit } from '../services/api/clientsService';
 import { useTranslation } from 'react-i18next';
 import { getLocaleFromLanguage } from '../utils/localeUtils';
 import { useTheme } from '../contexts/ThemeContext';
+=======
+import { Colors } from '../constants/Colors';
+import { Visit } from '../services/api/clientsService';
+import { useTranslation } from 'react-i18next';
+import { getLocaleFromLanguage } from '../utils/localeUtils';
+>>>>>>> main
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -26,8 +37,11 @@ type PlannedVisitsTableProps = {
 
 const PlannedVisitsTable = ({ visits, refreshControl }: PlannedVisitsTableProps) => {
   const { t, i18n } = useTranslation();
+<<<<<<< HEAD
   const { colors, fontSizes } = useTheme();
   const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
+=======
+>>>>>>> main
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -73,10 +87,17 @@ const PlannedVisitsTable = ({ visits, refreshControl }: PlannedVisitsTableProps)
   );
 };
 
+<<<<<<< HEAD
 const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundLogin,
+=======
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+>>>>>>> main
     borderRadius: 21,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -85,16 +106,28 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     borderWidth: 1,
+<<<<<<< HEAD
     borderColor: colors.tableBorder,
   },
   header: {
     backgroundColor: colors.primary,
+=======
+    borderColor: '#f0f0f0',
+  },
+  header: {
+    backgroundColor: Colors.light.primary,
+>>>>>>> main
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
   headerText: {
+<<<<<<< HEAD
     color: colors.tableHeaderText,
     fontSize: fontSizes.xxs,
+=======
+    color: Colors.light.tableHeaderText,
+    fontSize: 11,
+>>>>>>> main
     fontWeight: '700',
     fontFamily: 'PlusJakartaSans_700Bold',
   },
@@ -103,24 +136,42 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   },
   visitContainer: {
     borderBottomWidth: 1,
+<<<<<<< HEAD
     borderBottomColor: colors.tableBorder,
+=======
+    borderBottomColor: '#f0f0f0',
+>>>>>>> main
     paddingVertical: 12,
     paddingHorizontal: 12,
   },
   visitDate: {
+<<<<<<< HEAD
     fontSize: fontSizes.sm,
     color: colors.text,
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
     paddingVertical: 4,
+=======
+    fontSize: 14,
+    color: Colors.light.text,
+    fontWeight: '600',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
+    paddingVertical: 4,
+  
+>>>>>>> main
   },
   emptyContainer: {
     padding: 24,
     alignItems: 'center',
   },
   emptyText: {
+<<<<<<< HEAD
     fontSize: fontSizes.sm,
     color: colors.text,
+=======
+    fontSize: 14,
+    color: Colors.light.text,
+>>>>>>> main
     textAlign: 'center',
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',

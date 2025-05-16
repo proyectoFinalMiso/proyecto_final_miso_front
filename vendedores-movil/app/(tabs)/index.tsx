@@ -13,8 +13,11 @@ const AUTO_REFRESH_INTERVAL = 30000;
 
 export default function HomeScreen() {
   const { t } = useTranslation();
+<<<<<<< HEAD
   const { colors, fontSizes } = useTheme();
   const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
+=======
+>>>>>>> main
 
   // API data
   const [products, setProducts] = useState<Product[]>([]);
@@ -150,7 +153,11 @@ export default function HomeScreen() {
             <TextInput
               style={styles.searchInput}
               placeholder={t('home.searchProducts')}
+<<<<<<< HEAD
               placeholderTextColor={colors.searchHint}
+=======
+              placeholderTextColor={Colors.light.searchHint}
+>>>>>>> main
               value={searchText}
               onChangeText={setSearchText}
               testID='searchInput'
@@ -179,7 +186,11 @@ export default function HomeScreen() {
                 {priceRange.max !== null && ` ${t('products.maxPrice', 'Precio máx')}: $${priceRange.max}`}
               </Text>
               <TouchableOpacity onPress={clearFilters} accessibilityLabel={t('home.clearFilters', 'Limpiar filtros')} testID='clearFiltersButton'>
+<<<<<<< HEAD
                 <Ionicons name="close-circle" size={18} color={colors.text} />
+=======
+                <Ionicons name="close-circle" size={18} color={Colors.light.text} />
+>>>>>>> main
               </TouchableOpacity>
             </View>
           )}

@@ -1,8 +1,13 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, Modal, Pressable, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+<<<<<<< HEAD
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
+=======
+import { Colors } from '../constants/Colors';
+import { useTranslation } from 'react-i18next';
+>>>>>>> main
 
 type FilterModalProps = {
     visible: boolean;
@@ -22,8 +27,11 @@ const FilterModal = ({
     onClear,
 }: FilterModalProps) => {
     const { t } = useTranslation();
+<<<<<<< HEAD
     const { colors, fontSizes } = useTheme();
     const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
+=======
+>>>>>>> main
 
     return (
         <Modal
@@ -51,7 +59,11 @@ const FilterModal = ({
                                     value={tempPriceRange.min}
                                     onChangeText={(text) => onTempPriceChange('min', text)}
                                     placeholder={t('filters.min', 'Mín')}
+<<<<<<< HEAD
                                     placeholderTextColor={colors.searchHint}
+=======
+                                    placeholderTextColor={Colors.light.searchHint}
+>>>>>>> main
                                     keyboardType="numeric"
                                     testID="filter-min-price-input"
                                     accessibilityLabel={t('filters.minPriceInput', 'Input precio mínimo')}
@@ -64,7 +76,11 @@ const FilterModal = ({
                                     value={tempPriceRange.max}
                                     onChangeText={(text) => onTempPriceChange('max', text)}
                                     placeholder={t('filters.max', 'Máx')}
+<<<<<<< HEAD
                                     placeholderTextColor={colors.searchHint}
+=======
+                                    placeholderTextColor={Colors.light.searchHint}
+>>>>>>> main
                                     keyboardType="numeric"
                                     testID="filter-max-price-input"
                                     accessibilityLabel={t('filters.maxPriceInput', 'Input precio máximo')}

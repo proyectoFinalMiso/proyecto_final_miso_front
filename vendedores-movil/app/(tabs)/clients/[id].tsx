@@ -1,6 +1,10 @@
 import { Cliente, fetchClientById, fetchPastVisits, Visit } from '../../../services/api/clientsService';
 import { useAuth } from '../../../contexts/AuthContext';
+<<<<<<< HEAD
 import { useCallback, useEffect, useState, useMemo } from 'react';
+=======
+import { useCallback, useEffect, useState } from 'react';
+>>>>>>> main
 import {
   SafeAreaView,
   Text,
@@ -9,7 +13,11 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from 'react-native';
+<<<<<<< HEAD
 import { useTheme } from '../../../contexts/ThemeContext';
+=======
+import { Colors } from '../../../constants/Colors';
+>>>>>>> main
 import LoadingIndicator from '../../../components/LoadingIndicator';
 import ErrorDisplay from '../../../components/ErrorDisplay';
 import PlannedVisitsTable from '../../../components/PastVisitsTable';
@@ -24,8 +32,11 @@ const ClientDetailsScreen = () => {
   const sellerInfo = useAuth();
   const router = useRouter();
   const { t } = useTranslation();
+<<<<<<< HEAD
   const { colors, fontSizes } = useTheme();
   const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
+=======
+>>>>>>> main
   // API data
   const [client, setClient] = useState<Cliente>();
   const [plannedVisits, setPlannedVisits] = useState<Visit[]>([]);
@@ -130,7 +141,11 @@ const ClientDetailsScreen = () => {
               testID="back-button"
               accessibilityLabel={t('common.back', 'Volver')}
             >
+<<<<<<< HEAD
               <Ionicons name="arrow-back" size={24} color={colors.text} />
+=======
+              <Ionicons name="arrow-back" size={24} color={Colors.light.text} />
+>>>>>>> main
             </TouchableOpacity>
             <Text style={styles.title}>{t('clientDetails.title', 'Detalles del cliente')}</Text>
           </View>
@@ -152,7 +167,11 @@ const ClientDetailsScreen = () => {
                 <Ionicons 
                   name="calendar-outline" 
                   size={24} 
+<<<<<<< HEAD
                   color={colors.buttonText} 
+=======
+                  color={Colors.light.buttonText} 
+>>>>>>> main
                   style={styles.actionButtonIcon}
                 />
                 <Text style={styles.actionButtonText}>
@@ -169,7 +188,11 @@ const ClientDetailsScreen = () => {
                 <Ionicons 
                   name="videocam-outline" 
                   size={24} 
+<<<<<<< HEAD
                   color={colors.buttonText} 
+=======
+                  color={Colors.light.buttonText} 
+>>>>>>> main
                   style={styles.actionButtonIcon}
                 />
                 <Text style={styles.actionButtonText}>
@@ -218,10 +241,17 @@ const ClientDetailsScreen = () => {
   );
 };
 
+<<<<<<< HEAD
 const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+=======
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.background,
+>>>>>>> main
   },
   headerContainer: {
     marginBottom: 20,
@@ -235,17 +265,30 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     padding: 8,
     marginRight: 12,
     borderRadius: 8,
+<<<<<<< HEAD
     backgroundColor: colors.backgroundLogin,
   },
   title: {
     fontSize: fontSizes.xxl,
     fontWeight: '600',
     color: colors.titleText,
+=======
+    backgroundColor: Colors.light.backgroundLogin,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: Colors.light.titleText,
+>>>>>>> main
     fontFamily: 'PlusJakartaSans_600SemiBold',
     flex: 1,
   },
   clientCard: {
+<<<<<<< HEAD
     backgroundColor: colors.backgroundLogin,
+=======
+    backgroundColor: Colors.light.backgroundLogin,
+>>>>>>> main
     borderRadius: 12,
     padding: 16,
     shadowColor: '#000',
@@ -259,19 +302,34 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     marginBottom: 16,
   },
   clientName: {
+<<<<<<< HEAD
     fontSize: fontSizes.xl,
     fontWeight: '600',
     color: colors.titleText,
+=======
+    fontSize: 20,
+    fontWeight: '600',
+    color: Colors.light.titleText,
+>>>>>>> main
     fontFamily: 'PlusJakartaSans_600SemiBold',
     marginBottom: 4,
   },
   clientEmail: {
+<<<<<<< HEAD
     fontSize: fontSizes.sm,
     color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
   registerVisitButton: {
     backgroundColor: colors.button,
+=======
+    fontSize: 14,
+    color: Colors.light.text,
+    fontFamily: 'PlusJakartaSans_400Regular',
+  },
+  registerVisitButton: {
+    backgroundColor: Colors.light.button,
+>>>>>>> main
     borderRadius: 69,
     paddingVertical: 10,
     paddingHorizontal: 16,
@@ -281,16 +339,27 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     alignSelf: 'flex-start',
   },
   registerVisitText: {
+<<<<<<< HEAD
     color: colors.buttonText,
     fontSize: fontSizes.sm,
+=======
+    color: Colors.light.buttonText,
+    fontSize: 14,
+>>>>>>> main
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
     marginLeft: 8,
   },
   sectionTitle: {
+<<<<<<< HEAD
     fontSize: fontSizes.lg,
     fontWeight: '600',
     color: colors.primary,
+=======
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.light.primary,
+>>>>>>> main
     fontFamily: 'PlusJakartaSans_600SemiBold',
     marginBottom: 12,
   },
@@ -303,11 +372,16 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   },
   placeholder: {
     fontSize: 16,
+<<<<<<< HEAD
     color: colors.text,
+=======
+    color: Colors.light.text,
+>>>>>>> main
     textAlign: 'center',
     marginTop: 20,
   },
   actionButtonsContainer: {
+<<<<<<< HEAD
     flexDirection: 'row',
     marginTop: 16,
     justifyContent: 'space-evenly',
@@ -335,6 +409,40 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     fontFamily: 'PlusJakartaSans_600SemiBold',
     textAlign: 'center',
   },
+=======
+  flexDirection: 'row',
+  marginTop: 16,
+  justifyContent: 'space-evenly',
+},
+
+actionButton: {
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: 12,
+  borderRadius: 12,
+  width: '45%',
+},
+
+visitButtonStyle: {
+  backgroundColor: Colors.light.button,
+},
+
+videoButtonStyle: {
+  backgroundColor: Colors.light.primary,
+},
+
+actionButtonIcon: {
+  marginBottom: 4,
+},
+
+actionButtonText: {
+  color: Colors.light.buttonText,
+  fontSize: 14,
+  fontWeight: '600',
+  fontFamily: 'PlusJakartaSans_600SemiBold',
+  textAlign: 'center',
+},
+>>>>>>> main
 });
 
 export default ClientDetailsScreen;

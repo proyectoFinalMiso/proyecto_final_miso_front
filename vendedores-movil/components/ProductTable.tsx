@@ -13,7 +13,10 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useCart } from '../contexts/CartContext';
 import { useTranslation } from 'react-i18next';
+<<<<<<< HEAD
 import { useTheme } from '../contexts/ThemeContext';
+=======
+>>>>>>> main
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -38,8 +41,11 @@ type ProductTableProps = {
 const ProductTable = ({ products, onProductPress, refreshControl }: ProductTableProps) => {
   const { addToCart } = useCart();
   const { t } = useTranslation();
+<<<<<<< HEAD
   const { colors, fontSizes } = useTheme();
   const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
+=======
+>>>>>>> main
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
@@ -103,7 +109,11 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
             <Ionicons
               name={isExpanded ? 'chevron-up' : 'chevron-down'}
               size={20}
+<<<<<<< HEAD
               color={colors.text}
+=======
+              color={Colors.light.text}
+>>>>>>> main
               accessibilityLabel={isExpanded ? t('productTable.collapseDetails', 'Contraer detalles') : t('productTable.expandDetails', 'Expandir detalles')}
             />
           </View>
@@ -155,7 +165,11 @@ const ProductTable = ({ products, onProductPress, refreshControl }: ProductTable
                 testID={`add-to-cart-button-${item.id}`}
                 accessibilityLabel={t('productTable.addToCart', { quantity, name: item.name, defaultValue: `Agregar ${quantity} de ${item.name} al carrito` })}
               >
+<<<<<<< HEAD
                 <Ionicons name="add" size={8} color={colors.buttonText} />
+=======
+                <Ionicons name="add" size={8} color={Colors.light.buttonText} />
+>>>>>>> main
                 <Text style={styles.detailButtonText}>{t('productTable.addToCartButton', 'Agregar al carrito')}</Text>
               </TouchableOpacity>
             </View>

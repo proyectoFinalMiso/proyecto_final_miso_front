@@ -9,11 +9,18 @@ import {
   RefreshControlProps,
   TouchableOpacity,
 } from 'react-native';
+<<<<<<< HEAD
 import { Cliente } from '../services/api/clientsService';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
 import { useMemo } from 'react';
+=======
+import { Colors } from '../constants/Colors';
+import { Cliente } from '../services/api/clientsService';
+import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
+>>>>>>> main
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -33,9 +40,12 @@ const ClientTable = ({
   refreshControl,
 }: ClientTableProps) => {
   const { t } = useTranslation();
+<<<<<<< HEAD
   const { colors, fontSizes } = useTheme();
   const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
+=======
+>>>>>>> main
   const renderClient = ({ item }: { item: Cliente }) => {
     return (
       <View style={styles.clientContainer}>
@@ -50,7 +60,11 @@ const ClientTable = ({
             <Ionicons
               name="eye-outline"
               size={20}
+<<<<<<< HEAD
               color={colors.text}
+=======
+              color={Colors.light.text}
+>>>>>>> main
             />
           </View>
         </TouchableOpacity>
@@ -80,10 +94,17 @@ const ClientTable = ({
   );
 };
 
+<<<<<<< HEAD
 const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundLogin,
+=======
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+>>>>>>> main
     borderRadius: 21,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -92,16 +113,28 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     borderWidth: 1,
+<<<<<<< HEAD
     borderColor: colors.tableBorder,
   },
   header: {
     backgroundColor: colors.primary,
+=======
+    borderColor: '#f0f0f0',
+  },
+  header: {
+    backgroundColor: Colors.light.primary,
+>>>>>>> main
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
   headerText: {
+<<<<<<< HEAD
     color: colors.tableHeaderText,
     fontSize: fontSizes.xxs,
+=======
+    color: Colors.light.tableHeaderText,
+    fontSize: 11,
+>>>>>>> main
     fontWeight: '700',
     fontFamily: 'PlusJakartaSans_700Bold',
   },
@@ -110,7 +143,11 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   },
   clientContainer: {
     borderBottomWidth: 1,
+<<<<<<< HEAD
     borderBottomColor: colors.tableBorder,
+=======
+    borderBottomColor: '#f0f0f0',
+>>>>>>> main
   },
   clientRow: {
     flexDirection: 'row',
@@ -120,7 +157,11 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     paddingHorizontal: 12,
   },
   eyeIconContainer: {
+<<<<<<< HEAD
     backgroundColor: colors.expandableButtonBackground,
+=======
+    backgroundColor: Colors.light.expandableButtonBackground,
+>>>>>>> main
     padding: 2,
     borderRadius: 8,
     width: 28,
@@ -128,14 +169,23 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     alignItems: 'center',
   },
   clientName: {
+<<<<<<< HEAD
     fontSize: fontSizes.sm,
     color: colors.text,
+=======
+    fontSize: 14,
+    color: Colors.light.text,
+>>>>>>> main
     flex: 1,
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   expandedContent: {
+<<<<<<< HEAD
     backgroundColor: colors.backgroundLogin,
+=======
+    backgroundColor: Colors.light.backgroundLogin,
+>>>>>>> main
     paddingVertical: 6,
     paddingHorizontal: 12,
     paddingBottom: 2,
@@ -146,22 +196,38 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     alignItems: 'center',
   },
   detailLabel: {
+<<<<<<< HEAD
     fontSize: fontSizes.smd,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
     color: colors.expandableDetailLabel,
+=======
+    fontSize: 15,
+    fontWeight: '400',
+    fontFamily: 'PlusJakartaSans_400Regular',
+    color: Colors.light.expandableDetailLabel,
+>>>>>>> main
     width: 100,
     marginRight: 15,
   },
   detailValue: {
+<<<<<<< HEAD
     fontSize: fontSizes.smd,
     color: colors.expandableDetailValue,
+=======
+    fontSize: 15,
+    color: Colors.light.expandableDetailValue,
+>>>>>>> main
     flex: 1,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
   },
   detailButton: {
+<<<<<<< HEAD
     backgroundColor: colors.button,
+=======
+    backgroundColor: Colors.light.button,
+>>>>>>> main
     borderRadius: 69,
     paddingVertical: 6,
     paddingHorizontal: 8,
@@ -170,8 +236,13 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     gap: 4,
   },
   detailButtonText: {
+<<<<<<< HEAD
     color: colors.buttonText,
     fontSize: fontSizes.xxxs,
+=======
+    color: Colors.light.buttonText,
+    fontSize: 8,
+>>>>>>> main
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
   },
@@ -181,7 +252,11 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     borderRadius: 4,
     overflow: 'hidden',
     borderWidth: 1,
+<<<<<<< HEAD
     borderColor: colors.expandableQuantityButtonBorder,
+=======
+    borderColor: Colors.light.expandableQuantityButtonBorder,
+>>>>>>> main
   },
   quantityButton: {
     padding: 6,
@@ -191,6 +266,7 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   quantityText: {
     paddingVertical: 2,
     paddingHorizontal: 8,
+<<<<<<< HEAD
     fontSize: fontSizes.xsPlus,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
@@ -199,14 +275,29 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     borderLeftColor: colors.expandableQuantityButtonBorder,
     borderRightWidth: 1,
     borderRightColor: colors.expandableQuantityButtonBorder,
+=======
+    fontSize: 13,
+    fontWeight: '400',
+    fontFamily: 'PlusJakartaSans_400Regular',
+    color: Colors.light.text,
+    borderLeftWidth: 1,
+    borderLeftColor: Colors.light.expandableQuantityButtonBorder,
+    borderRightWidth: 1,
+    borderRightColor: Colors.light.expandableQuantityButtonBorder,
+>>>>>>> main
   },
   emptyContainer: {
     padding: 24,
     alignItems: 'center',
   },
   emptyText: {
+<<<<<<< HEAD
     fontSize: fontSizes.sm,
     color: colors.text,
+=======
+    fontSize: 14,
+    color: Colors.light.text,
+>>>>>>> main
     textAlign: 'center',
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',

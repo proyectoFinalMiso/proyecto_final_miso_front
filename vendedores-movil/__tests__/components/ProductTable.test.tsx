@@ -50,6 +50,7 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
+<<<<<<< HEAD
 const mockBaseFontSizes = {
     xxxs: 8, xxs: 11, xs: 12, xsPlus: 13, sm: 14, smd: 15, md: 16,
     lg: 18, xl: 20, xxl: 24, xxxl: 32, title: 42,
@@ -87,6 +88,8 @@ jest.mock('../../contexts/ThemeContext', () => {
     };
 });
 
+=======
+>>>>>>> main
 // Import the mockAddToCart from the mocked module
 const { mockAddToCart } = require('../../contexts/CartContext');
 

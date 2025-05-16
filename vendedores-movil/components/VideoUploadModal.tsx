@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useMemo } from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> main
 import {
   Modal,
   View,
@@ -11,9 +15,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
+<<<<<<< HEAD
 import LoadingIndicator from './LoadingIndicator';
 import { notifyVideoUploadComplete } from '../services/api/clientsService';
 import { useTheme } from '../contexts/ThemeContext';
+=======
+import { Colors } from '../constants/Colors';
+import LoadingIndicator from './LoadingIndicator';
+import { notifyVideoUploadComplete } from '../services/api/clientsService';
+>>>>>>> main
 
 interface VideoUploadModalProps {
   visible: boolean;
@@ -35,11 +45,17 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
   onSuccess,
 }) => {
   const { t } = useTranslation();
+<<<<<<< HEAD
   const { colors, fontSizes } = useTheme();
   const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const gcsBucketName = 'ccp-recommendations-videos';
+=======
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const gcsBucketName = 'ccp-recommendations-videos'
+>>>>>>> main
 
   console.log('VideoUploadModal props:', {
     visible,
@@ -224,7 +240,11 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>{t('clientDetails.videoUpload', 'Subir Video')}</Text>
             <TouchableOpacity onPress={onClose} testID="modal-close-button" disabled={isUploading}>
+<<<<<<< HEAD
               <Ionicons name="close" size={24} color={colors.text} />
+=======
+              <Ionicons name="close" size={24} color={Colors.light.text} />
+>>>>>>> main
             </TouchableOpacity>
           </View>
 
@@ -233,7 +253,11 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
               <LoadingIndicator message={t('clientDetails.uploading', 'Subiendo video...')} />
               <Text style={styles.progressText}>{`${uploadProgress}%`}</Text>
               <View style={styles.progressBarContainer}>
+<<<<<<< HEAD
                 <View style={[styles.progressBar, { width: `${uploadProgress}%`, backgroundColor: colors.button }]} />
+=======
+                <View style={[styles.progressBar, { width: `${uploadProgress}%` }]} />
+>>>>>>> main
               </View>
             </View>
           ) : (
@@ -244,24 +268,40 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
 
               <View style={styles.modalButtons}>
                 <TouchableOpacity
+<<<<<<< HEAD
                   style={[styles.modalButton, styles.galleryButton, { backgroundColor: colors.button }]}
+=======
+                  style={[styles.modalButton, styles.galleryButton]}
+>>>>>>> main
                   onPress={pickVideoFromGallery}
                   disabled={isUploading}
                   testID="pick-gallery-button"
                 >
+<<<<<<< HEAD
                   <Ionicons name="images-outline" size={24} color={colors.buttonText} />
+=======
+                  <Ionicons name="images-outline" size={24} color={Colors.light.buttonText} />
+>>>>>>> main
                   <Text style={styles.modalButtonText}>
                     {t('clientDetails.fromGallery', 'Galería')}
                   </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
+<<<<<<< HEAD
                   style={[styles.modalButton, styles.cameraButton, { backgroundColor: colors.button }]}
+=======
+                  style={[styles.modalButton, styles.cameraButton]}
+>>>>>>> main
                   onPress={recordVideo}
                   disabled={isUploading}
                   testID="record-video-button"
                 >
+<<<<<<< HEAD
                   <Ionicons name="videocam-outline" size={24} color={colors.buttonText} />
+=======
+                  <Ionicons name="videocam-outline" size={24} color={Colors.light.buttonText} />
+>>>>>>> main
                   <Text style={styles.modalButtonText}>
                     {t('clientDetails.recordNew', 'Grabar')}
                   </Text>
@@ -275,7 +315,11 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({
   );
 };
 
+<<<<<<< HEAD
 const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
+=======
+const styles = StyleSheet.create({
+>>>>>>> main
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -285,7 +329,11 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   
   modalContent: {
     width: '85%',
+<<<<<<< HEAD
     backgroundColor: colors.backgroundLogin,
+=======
+    backgroundColor: Colors.light.backgroundLogin,
+>>>>>>> main
     borderRadius: 12,
     padding: 16,
     shadowColor: '#000',
@@ -306,16 +354,28 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   },
   
   modalTitle: {
+<<<<<<< HEAD
     fontSize: fontSizes.lg,
     fontWeight: '600',
     color: colors.titleText,
+=======
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.light.titleText,
+>>>>>>> main
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   
   modalSubtitle: {
+<<<<<<< HEAD
     fontSize: fontSizes.md,
     fontFamily: 'PlusJakartaSans_400Regular',
     color: colors.text,
+=======
+    fontSize: 16,
+    fontFamily: 'PlusJakartaSans_400Regular',
+    color: Colors.light.text,
+>>>>>>> main
     marginBottom: 20,
   },
   
@@ -335,6 +395,7 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     flexDirection: 'row',
   },
   
+<<<<<<< HEAD
   galleryButton: {},
   
   cameraButton: {},
@@ -344,6 +405,21 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     fontFamily: 'PlusJakartaSans_500Medium',
     marginLeft: 8,
     color: colors.buttonText,
+=======
+  galleryButton: {
+    backgroundColor: Colors.light.button,
+  },
+  
+  cameraButton: {
+    backgroundColor: Colors.light.button,
+  },
+  
+  modalButtonText: {
+    fontSize: 16,
+    fontFamily: 'PlusJakartaSans_500Medium',
+    marginLeft: 8,
+    color: Colors.light.buttonText,
+>>>>>>> main
   },
 
   uploadingContainer: {
@@ -353,8 +429,13 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
 
   progressText: {
     marginTop: 10,
+<<<<<<< HEAD
     fontSize: fontSizes.md,
     color: colors.text,
+=======
+    fontSize: 16,
+    color: Colors.light.text,
+>>>>>>> main
     fontFamily: 'PlusJakartaSans_500Medium',
   },
   
@@ -368,6 +449,10 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   },
   progressBar: {
     height: '100%',
+<<<<<<< HEAD
+=======
+    backgroundColor: Colors.light.button,
+>>>>>>> main
   }
 });
 

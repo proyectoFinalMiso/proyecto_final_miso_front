@@ -1,8 +1,13 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+<<<<<<< HEAD
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
+=======
+import { Colors } from '../constants/Colors';
+import { useTranslation } from 'react-i18next';
+>>>>>>> main
 
 interface ErrorDisplayProps {
     message?: string;
@@ -14,8 +19,11 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
     onRetry,
 }) => {
     const { t } = useTranslation();
+<<<<<<< HEAD
     const { colors, fontSizes } = useTheme();
     const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
+=======
+>>>>>>> main
 
     return (
         <View style={styles.container}>
