@@ -7,7 +7,6 @@
     "cancel": "Cancel",
     "error": "Error",
     "language": "Language",
-<<<<<<< HEAD
     "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
@@ -15,8 +14,6 @@
     "small": "Small",
     "medium": "Medium",
     "large": "Large",
-=======
->>>>>>> main
     "success": "Success",
     "confirm": "Confirm",
     "back": "Back",

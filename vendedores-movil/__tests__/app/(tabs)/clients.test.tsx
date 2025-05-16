@@ -4,10 +4,7 @@ import ClientsScreen from '../../../app/(tabs)/clients';
 import { useAuth } from '../../../contexts/AuthContext';
 import { Cliente } from '../../../services/api/clientsService';
 import { useRouter } from 'expo-router';
-<<<<<<< HEAD
 import { Colors } from '../../../constants/Colors';
-=======
->>>>>>> main
 
 // Mock services
 jest.mock('../../../services/api/clientsService', () => ({
@@ -95,7 +92,6 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
-<<<<<<< HEAD
 const mockBaseFontSizes = {
     xxxs: 8, xxs: 11, xs: 12, xsPlus: 13, sm: 14, smd: 15, md: 16,
     lg: 18, xl: 20, xxl: 24, xxxl: 32, title: 42,
@@ -133,8 +129,6 @@ jest.mock('../../../contexts/ThemeContext', () => {
     };
 });
 
-=======
->>>>>>> main
 global.console = {
     ...global.console,
     log: jest.fn(),
@@ -169,7 +163,6 @@ describe('ClientsScreen', () => {
             isLoggedIn: true,
             vendedorData: mockVendedorData
         });
-<<<<<<< HEAD
         const mockUseTheme = require('../../../contexts/ThemeContext').useTheme;
                 mockUseTheme.mockReturnValue({
                     theme: 'light',
@@ -184,8 +177,6 @@ describe('ClientsScreen', () => {
             increaseFontSize: jest.fn(),
             decreaseFontSize: jest.fn(),
                 });
-=======
->>>>>>> main
     });
 
     it('should show loading indicator while fetching data', async () => {

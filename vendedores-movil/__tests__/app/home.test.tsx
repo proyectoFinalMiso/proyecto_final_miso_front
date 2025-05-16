@@ -93,11 +93,7 @@ jest.mock('react-i18next', () => ({
             const translations: Record<string, string | ((opts?: any) => string)> = {
                 'home.title': 'Ordena lo que gustes',
                 'home.loading': 'Cargando productos...',
-<<<<<<< HEAD
                 'home.lastUpdated': (opts?: any) => `Última actualización: ${opts?.time || new Date().toLocaleTimeString()}`,
-=======
-                'home.lastUpdated': (opts?: any) => `Última actualización: ${opts?.time || ''}`,
->>>>>>> main
                 'home.loadError': 'No se pudieron cargar los productos. Por favor intente de nuevo.',
                 'home.searchProducts': 'Busca productos...',
                 'home.filterProducts': 'Filtrar productos',
@@ -120,7 +116,6 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
-<<<<<<< HEAD
 const mockBaseFontSizes = {
     xxxs: 8, xxs: 11, xs: 12, xsPlus: 13, sm: 14, smd: 15, md: 16,
     lg: 18, xl: 20, xxl: 24, xxxl: 32, title: 42,
@@ -158,8 +153,6 @@ jest.mock('../../contexts/ThemeContext', () => {
     };
 });
 
-=======
->>>>>>> main
 global.console = {
     ...global.console,
     log: jest.fn(),

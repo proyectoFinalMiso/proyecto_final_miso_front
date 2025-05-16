@@ -1,10 +1,6 @@
 import { Cliente, fetchClients } from '../../services/api/clientsService';
 import { useAuth } from '../../contexts/AuthContext';
-<<<<<<< HEAD
 import { useCallback, useEffect, useState, useMemo } from 'react';
-=======
-import { useCallback, useEffect, useState } from 'react';
->>>>>>> main
 import {
   SafeAreaView,
   Text,
@@ -13,29 +9,19 @@ import {
   TextInput,
   RefreshControl,
 } from 'react-native';
-<<<<<<< HEAD
-=======
-import { Colors } from '../../constants/Colors';
->>>>>>> main
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ErrorDisplay from '../../components/ErrorDisplay';
 import ClientTable from '../../components/ClientsTable';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-<<<<<<< HEAD
 import { useTheme } from '../../contexts/ThemeContext';
-=======
->>>>>>> main
 
 const ClientsScreen = () => {
   const sellerInfo = useAuth();
   const router = useRouter();
   const { t } = useTranslation();
-<<<<<<< HEAD
   const { colors, fontSizes } = useTheme();
   const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
-=======
->>>>>>> main
   // API data
   const [clients, setClients] = useState<Cliente[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -114,11 +100,7 @@ const ClientsScreen = () => {
             <TextInput
               style={styles.searchInput}
               placeholder={t('clients.search', 'Buscar clientes')}
-<<<<<<< HEAD
               placeholderTextColor={colors.searchHint}
-=======
-              placeholderTextColor={Colors.light.searchHint}
->>>>>>> main
               value={searchText}
               onChangeText={setSearchText}
               testID="searchInput"
@@ -134,13 +116,8 @@ const ClientsScreen = () => {
             <RefreshControl
               refreshing={isRefreshing}
               onRefresh={onRefresh}
-<<<<<<< HEAD
               colors={[colors.primary]}
               tintColor={colors.primary}
-=======
-              colors={[Colors.light.primary]}
-              tintColor={Colors.light.primary}
->>>>>>> main
             />
           }
         />
@@ -149,42 +126,24 @@ const ClientsScreen = () => {
   );
 };
 
-<<<<<<< HEAD
 const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-=======
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.light.background,
->>>>>>> main
   },
   header: {
     marginBottom: 20,
   },
   title: {
-<<<<<<< HEAD
     fontSize: fontSizes.xxl,
     fontWeight: '600',
     color: colors.titleText,
-=======
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.light.titleText,
->>>>>>> main
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   lastUpdatedText: {
     marginTop: 4,
-<<<<<<< HEAD
     fontSize: fontSizes.xs,
     color: colors.text,
-=======
-    fontSize: 12,
-    color: Colors.light.text,
->>>>>>> main
     fontFamily: 'PlusJakartaSans_400Regular',
   },
   content: {
@@ -192,13 +151,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   placeholder: {
-<<<<<<< HEAD
     fontSize: fontSizes.md,
     color: colors.text,
-=======
-    fontSize: 16,
-    color: Colors.light.text,
->>>>>>> main
     textAlign: 'center',
     marginTop: 20,
   },
@@ -213,7 +167,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     borderWidth: 0.8,
-<<<<<<< HEAD
     borderColor: colors.borderWidget,
     borderRadius: 8,
     paddingHorizontal: 12,
@@ -222,22 +175,12 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
     color: colors.text,
-=======
-    borderColor: Colors.light.borderWidget,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    backgroundColor: Colors.light.backgroundLogin,
-    fontSize: 16,
-    fontWeight: '400',
-    fontFamily: 'PlusJakartaSans_400Regular',
->>>>>>> main
   },
   filterButton: {
     width: 40,
     height: 40,
     borderRadius: 8,
     marginLeft: 10,
-<<<<<<< HEAD
     backgroundColor: colors.backgroundLogin,
     justifyContent: 'center',
     alignItems: 'center',
@@ -246,16 +189,6 @@ const styles = StyleSheet.create({
   },
   filterButtonActive: {
     backgroundColor: colors.button,
-=======
-    backgroundColor: Colors.light.backgroundLogin,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 0.8,
-    borderColor: Colors.light.borderWidget,
-  },
-  filterButtonActive: {
-    backgroundColor: Colors.light.button,
->>>>>>> main
   },
   activeFiltersContainer: {
     flexDirection: 'row',
@@ -263,7 +196,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingHorizontal: 10,
     paddingVertical: 4,
-<<<<<<< HEAD
     backgroundColor: colors.backgroundLogin,
     borderRadius: 4,
     borderWidth: 0.5,
@@ -273,17 +205,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: fontSizes.xs,
     color: colors.text,
-=======
-    backgroundColor: Colors.light.backgroundLogin,
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: Colors.light.borderWidget,
-  },
-  activeFiltersText: {
-    flex: 1,
-    fontSize: 12,
-    color: Colors.light.text,
->>>>>>> main
     fontFamily: 'PlusJakartaSans_400Regular',
   },
 });

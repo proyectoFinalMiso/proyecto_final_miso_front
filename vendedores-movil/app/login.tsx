@@ -5,10 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
 import { preloadImage, getOptimizedImageProps } from '../utils/imageUtils';
 import { useTranslation } from 'react-i18next';
-<<<<<<< HEAD
 import { useTheme } from '../contexts/ThemeContext';
-=======
->>>>>>> main
 
 export default function LoginScreen() {
   const router = useRouter();

@@ -1,11 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import SettingsScreen from '../../../app/(tabs)/settings';
-<<<<<<< HEAD
 import { Colors } from '../../../constants/Colors';
 import { StyleSheet } from 'react-native';
-=======
->>>>>>> main
 
 // Mock dependencies
 jest.mock('react-native', () => {
@@ -42,7 +39,6 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
-<<<<<<< HEAD
 const mockBaseFontSizes = {
     xxxs: 8, xxs: 11, xs: 12, xsPlus: 13, sm: 14, smd: 15, md: 16,
     lg: 18, xl: 20, xxl: 24, xxlPlus: 28, xxxl: 32, title: 42,
@@ -98,11 +94,6 @@ describe('SettingsScreen', () => {
             increaseFontSize: jest.fn(),
             decreaseFontSize: jest.fn(),
         });
-=======
-describe('SettingsScreen', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
->>>>>>> main
     });
 
     it('should render settings screen correctly', () => {
@@ -110,10 +101,6 @@ describe('SettingsScreen', () => {
 
         expect(getByTestId('settingsScreenTitle')).toBeTruthy();
         expect(getByText('Ajustes')).toBeTruthy();
-<<<<<<< HEAD
-=======
-        expect(getByText('Preferencias')).toBeTruthy();
->>>>>>> main
         expect(getByText('Versión 1.0.0')).toBeTruthy();
     });
 
@@ -123,7 +110,6 @@ describe('SettingsScreen', () => {
         expect(getByTestId('language-selector-mock')).toBeTruthy();
     });
 
-<<<<<<< HEAD
     it('should display the correct styling for the title based on the theme', () => {
         const { getByTestId } = render(<SettingsScreen />);
 
@@ -134,29 +120,16 @@ describe('SettingsScreen', () => {
         expect(titleStyle.color).toBe(Colors.light.titleText);
         expect(titleStyle.fontSize).toBe(24);
         expect(titleStyle.fontFamily).toBe('PlusJakartaSans_700Bold');
-=======
-    it('should display the correct styling', () => {
-        const { getByTestId } = render(<SettingsScreen />);
-
-        const title = getByTestId('settingsScreenTitle');
-        expect(title.props.style).toBeTruthy();
->>>>>>> main
     });
 
     it('should be inside a SafeAreaView', () => {
         render(<SettingsScreen />);
-<<<<<<< HEAD
-=======
-
-        // Check if SafeAreaView mock was called
->>>>>>> main
         const RNMock = require('react-native');
         expect(RNMock.SafeAreaView).toHaveBeenCalled();
     });
 
     it('should render the correct layout structure', () => {
         const { getByText } = render(<SettingsScreen />);
-<<<<<<< HEAD
         const titleElement = getByText('Ajustes');
         const versionElement = getByText('Versión 1.0.0');
         
@@ -189,16 +162,4 @@ describe('SettingsScreen', () => {
             expect(titleStyle.color).toBe(Colors.dark.titleText);
         });
     });
-=======
-
-        // Check main sections
-        const titleElement = getByText('Ajustes');
-        const preferencesElement = getByText('Preferencias');
-        const versionElement = getByText('Versión 1.0.0');
-        
-        expect(titleElement).toBeTruthy();
-        expect(preferencesElement).toBeTruthy();
-        expect(versionElement).toBeTruthy();
-    });
->>>>>>> main
 });

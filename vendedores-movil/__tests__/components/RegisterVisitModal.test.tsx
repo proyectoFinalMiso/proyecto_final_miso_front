@@ -2,10 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import RegisterVisitModal from '../../components/RegisterVisitModal';
 import { Alert } from 'react-native';
-<<<<<<< HEAD
 import { Colors } from '../../constants/Colors';
-=======
->>>>>>> main
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -53,7 +50,6 @@ jest.spyOn(Alert, 'alert').mockImplementation((title, message, buttons) => {
   return null;
 });
 
-<<<<<<< HEAD
 const mockBaseFontSizes = {
   xxxs: 8, xxs: 11, xs: 12, xsPlus: 13, sm: 14, smd: 15, md: 16,
   lg: 18, xl: 20, xxl: 24, xxxl: 32, title: 42,
@@ -91,8 +87,6 @@ jest.mock('../../contexts/ThemeContext', () => {
   };
 });
 
-=======
->>>>>>> main
 describe('RegisterVisitModal Component', () => {
   const mockOnClose = jest.fn();
   const mockOnSuccess = jest.fn();
@@ -107,7 +101,6 @@ describe('RegisterVisitModal Component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-<<<<<<< HEAD
 
     const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
                     mockUseTheme.mockReturnValue({
@@ -123,8 +116,6 @@ describe('RegisterVisitModal Component', () => {
             increaseFontSize: jest.fn(),
             decreaseFontSize: jest.fn(),
                     });
-=======
->>>>>>> main
   });
 
   it('renders correctly when visible', () => {

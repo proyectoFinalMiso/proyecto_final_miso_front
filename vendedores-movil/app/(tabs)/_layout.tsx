@@ -1,30 +1,20 @@
 import { Tabs, usePathname } from 'expo-router';
-<<<<<<< HEAD
-=======
-import { Colors } from '../../constants/Colors';
->>>>>>> main
 import { View, StyleSheet } from 'react-native';
 import HomeIcon from '../../assets/icons/HomeIcon';
 import CartIcon from '../../assets/icons/CartIcon';
 import ClientIcon from '../../assets/icons/ClientIcon';
 import SettingsIcon from '../../assets/icons/SettingsIcon';
 import { useTranslation } from 'react-i18next';
-<<<<<<< HEAD
 import { useTheme } from '../../contexts/ThemeContext';
 import { useMemo } from 'react';
-=======
->>>>>>> main
 
 export default function TabLayout() {
   const { t } = useTranslation();
   const pathname = usePathname();
-<<<<<<< HEAD
 
   const { colors } = useTheme();
   const styles = useMemo(() => getStyles(colors), [colors]);
 
-=======
->>>>>>> main
   return (
     <Tabs
       screenOptions={{
@@ -116,11 +106,7 @@ export default function TabLayout() {
 
 const getStyles = (colors: any) => StyleSheet.create({
   activeIconBackground: {
-<<<<<<< HEAD
     backgroundColor: colors.tabActiveBackground,
-=======
-    backgroundColor: Colors.light.tabActiveBackground,
->>>>>>> main
     borderRadius: 85,
     padding: 8,
     width: 64,

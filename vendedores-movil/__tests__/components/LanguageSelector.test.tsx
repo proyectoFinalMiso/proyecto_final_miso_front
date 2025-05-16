@@ -2,10 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import LanguageSelector from '../../components/LanguageSelector';
 import { useTranslation } from 'react-i18next';
-<<<<<<< HEAD
 import { Colors } from '../../constants/Colors';
-=======
->>>>>>> main
 
 jest.mock('react-i18next', () => ({
     useTranslation: jest.fn().mockReturnValue({
@@ -22,7 +19,6 @@ jest.mock('react-i18next', () => ({
     })
 }));
 
-<<<<<<< HEAD
 const mockBaseFontSizes = {
     xxxs: 8, xxs: 11, xs: 12, xsPlus: 13, sm: 14, smd: 15, md: 16,
     lg: 18, xl: 20, xxl: 24, xxxl: 32, title: 42,
@@ -78,11 +74,6 @@ describe('LanguageSelector Component', () => {
             increaseFontSize: jest.fn(),
             decreaseFontSize: jest.fn(),
                         });
-=======
-describe('LanguageSelector Component', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
->>>>>>> main
     });
 
     const mockUseTranslation = useTranslation as jest.Mock;

@@ -12,10 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useCart, CartItem } from '../contexts/CartContext';
 import { useTranslation } from 'react-i18next';
-<<<<<<< HEAD
 import { useTheme } from '../contexts/ThemeContext';
-=======
->>>>>>> main
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -26,11 +23,8 @@ if (Platform.OS === 'android') {
 const CartTable = () => {
     const { items, updateQuantity, removeFromCart, getTotal } = useCart();
     const { t } = useTranslation();
-<<<<<<< HEAD
     const { colors, fontSizes } = useTheme();
     const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
-=======
->>>>>>> main
     const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
     const toggleExpand = (productId: string) => {
@@ -71,11 +65,7 @@ const CartTable = () => {
                         <Ionicons
                             name={isExpanded ? 'chevron-up' : 'chevron-down'}
                             size={20}
-<<<<<<< HEAD
                             color={colors.text}
-=======
-                            color={Colors.light.text}
->>>>>>> main
                             accessibilityLabel={isExpanded ? t('cartTable.collapseDetails', 'Cerrar detalles') : t('cartTable.expandDetails', 'Abrir detalles')}
                         />
                     </View>

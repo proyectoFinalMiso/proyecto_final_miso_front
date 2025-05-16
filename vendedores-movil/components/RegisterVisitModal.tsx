@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState, useMemo } from 'react';
-=======
-import React, { useState } from 'react';
->>>>>>> main
 import { 
     View, 
     Text, 
@@ -16,11 +12,7 @@ import {
     Alert
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-<<<<<<< HEAD
 import { useTheme } from '../contexts/ThemeContext';
-=======
-import { Colors } from '../constants/Colors';
->>>>>>> main
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useTranslation } from 'react-i18next';
 import { sendVisit } from '../services/api/clientsService';
@@ -43,11 +35,8 @@ const RegisterVisitModal = ({
     onSuccess
 }: RegisterVisitModalProps) => {
     const { t } = useTranslation();
-<<<<<<< HEAD
     const { colors, fontSizes } = useTheme();
     const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
-=======
->>>>>>> main
     const [isLoading, setIsLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -146,11 +135,7 @@ const RegisterVisitModal = ({
                         <View style={styles.modalHeader}>
                             <Text style={styles.modalTitle}>{t('registerVisitModal.title', 'Registrar visita')}</Text>
                             <TouchableOpacity onPress={onClose} testID="modal-close-button">
-<<<<<<< HEAD
                                 <Ionicons name="close" size={24} color={colors.text} />
-=======
-                                <Ionicons name="close" size={24} color={Colors.light.text} />
->>>>>>> main
                             </TouchableOpacity>
                         </View>
 
@@ -201,11 +186,7 @@ const RegisterVisitModal = ({
                                 onPress={() => setShowDatePicker(true)}
                             >
                                 <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
-<<<<<<< HEAD
                                 <Ionicons name="calendar-outline" size={20} color={colors.text} />
-=======
-                                <Ionicons name="calendar-outline" size={20} color={Colors.light.text} />
->>>>>>> main
                             </TouchableOpacity>
                         </View>
 
@@ -216,11 +197,7 @@ const RegisterVisitModal = ({
                                 onPress={() => setShowTimePicker(true)}
                             >
                                 <Text style={styles.dateText}>{formatTime(selectedDate)}</Text>
-<<<<<<< HEAD
                                 <Ionicons name="time-outline" size={20} color={colors.text} />
-=======
-                                <Ionicons name="time-outline" size={20} color={Colors.light.text} />
->>>>>>> main
                             </TouchableOpacity>
                         </View>
 
@@ -267,11 +244,7 @@ const RegisterVisitModal = ({
     );
 };
 
-<<<<<<< HEAD
 const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
-=======
-const styles = StyleSheet.create({
->>>>>>> main
     modalOverlay: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -280,11 +253,7 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         width: '85%',
-<<<<<<< HEAD
         backgroundColor: colors.backgroundLogin,
-=======
-        backgroundColor: Colors.light.backgroundLogin,
->>>>>>> main
         borderRadius: 12,
         padding: 16,
         shadowColor: '#000',
@@ -303,7 +272,6 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     modalTitle: {
-<<<<<<< HEAD
         fontSize: fontSizes.lg,
         fontWeight: '600',
         color: colors.titleText,
@@ -313,17 +281,6 @@ const styles = StyleSheet.create({
         fontSize: fontSizes.md,
         fontWeight: '500',
         color: colors.text,
-=======
-        fontSize: 18,
-        fontWeight: '600',
-        color: Colors.light.titleText,
-        fontFamily: 'PlusJakartaSans_600SemiBold',
-    },
-    clientName: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: Colors.light.text,
->>>>>>> main
         fontFamily: 'PlusJakartaSans_500Medium',
         marginBottom: 16,
     },
@@ -331,17 +288,10 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     sectionTitle: {
-<<<<<<< HEAD
         fontSize: fontSizes.md,
         fontWeight: '600',
         marginBottom: 10,
         color: colors.text,
-=======
-        fontSize: 16,
-        fontWeight: '600',
-        marginBottom: 10,
-        color: Colors.light.text,
->>>>>>> main
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     statusContainer: {
@@ -352,16 +302,11 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         borderWidth: 1,
-<<<<<<< HEAD
         borderColor: colors.borderWidget,
-=======
-        borderColor: Colors.light.borderWidget,
->>>>>>> main
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 4,
         borderRadius: 8,
-<<<<<<< HEAD
         backgroundColor: colors.backgroundLogin,
     },
     statusButtonActive: {
@@ -374,51 +319,24 @@ const styles = StyleSheet.create({
     },
     statusTextActive: {
         color: colors.buttonText,
-=======
-        backgroundColor: Colors.light.backgroundLogin,
-    },
-    statusButtonActive: {
-        backgroundColor: Colors.light.button,
-        borderColor: Colors.light.button,
-    },
-    statusText: {
-        color: Colors.light.text,
-        fontFamily: 'PlusJakartaSans_400Regular',
-    },
-    statusTextActive: {
-        color: Colors.light.buttonText,
->>>>>>> main
         fontWeight: '500',
         fontFamily: 'PlusJakartaSans_500Medium',
     },
     dateSelector: {
         height: 46,
         borderWidth: 0.8,
-<<<<<<< HEAD
         borderColor: colors.borderWidget,
         borderRadius: 8,
         paddingHorizontal: 12,
         backgroundColor: colors.backgroundLogin,
-=======
-        borderColor: Colors.light.borderWidget,
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        backgroundColor: Colors.light.backgroundLogin,
->>>>>>> main
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
     },
     dateText: {
-<<<<<<< HEAD
         fontSize: fontSizes.md,
         fontFamily: 'PlusJakartaSans_400Regular',
         color: colors.text,
-=======
-        fontSize: 16,
-        fontFamily: 'PlusJakartaSans_400Regular',
-        color: Colors.light.text,
->>>>>>> main
     },
     actionButtons: {
         flexDirection: 'row',
@@ -426,15 +344,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     cancelButton: {
-<<<<<<< HEAD
         backgroundColor: colors.backgroundLogin,
         borderWidth: 1,
         borderColor: colors.borderWidget,
-=======
-        backgroundColor: Colors.light.backgroundLogin,
-        borderWidth: 1,
-        borderColor: Colors.light.borderWidget,
->>>>>>> main
         borderRadius: 8,
         paddingVertical: 10,
         paddingHorizontal: 16,
@@ -444,22 +356,13 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     cancelButtonText: {
-<<<<<<< HEAD
         color: colors.text,
         fontSize: fontSizes.md,
-=======
-        color: Colors.light.text,
-        fontSize: 16,
->>>>>>> main
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     submitButton: {
-<<<<<<< HEAD
         backgroundColor: colors.button,
-=======
-        backgroundColor: Colors.light.button,
->>>>>>> main
         borderRadius: 8,
         paddingVertical: 10,
         paddingHorizontal: 16,
@@ -469,13 +372,8 @@ const styles = StyleSheet.create({
         marginLeft: 8,
     },
     submitButtonText: {
-<<<<<<< HEAD
         color: colors.buttonText,
         fontSize: fontSizes.md,
-=======
-        color: Colors.light.buttonText,
-        fontSize: 16,
->>>>>>> main
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },

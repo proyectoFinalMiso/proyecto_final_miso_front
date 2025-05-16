@@ -10,15 +10,10 @@ import {
 } from '@expo-google-fonts/plus-jakarta-sans';
 import { CartProvider } from '../contexts/CartContext';
 import { AuthProvider } from '../contexts/AuthContext';
-<<<<<<< HEAD
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 import '../utils/i18n';
 import { initializeLanguage } from '../utils/i18n';
 import { StatusBar } from 'expo-status-bar';
-=======
-import '../utils/i18n';
-import { initializeLanguage } from '../utils/i18n';
->>>>>>> main
 
 
 SplashScreen.preventAutoHideAsync();

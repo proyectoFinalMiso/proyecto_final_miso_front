@@ -4,10 +4,7 @@ import { Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import LoginScreen from '../../app/login';
 import { useAuth } from '../../contexts/AuthContext';
-<<<<<<< HEAD
 import { useTheme } from '@/contexts/ThemeContext';
-=======
->>>>>>> main
 import { useTranslation } from 'react-i18next';
 
 // Mock dependencies

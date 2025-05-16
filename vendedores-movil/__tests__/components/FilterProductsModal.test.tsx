@@ -63,29 +63,6 @@ jest.mock('../../contexts/ThemeContext', () => {
     };
 });
 
-// Mock dependencies
-jest.mock('react-i18next', () => ({
-    useTranslation: () => ({
-        t: (key: string, fallback?: string) => {
-            const translations: { [key: string]: string } = {
-                'home.filterProducts': 'Filtrar productos',
-                'products.price': 'Precio',
-                'products.minPrice': 'Precio mín',
-                'products.maxPrice': 'Precio máx',
-                'filters.min': 'Mín',
-                'filters.max': 'Máx',
-                'filters.apply': 'Aplicar',
-                'common.cancel': 'Cancelar',
-                'home.clearFilters': 'Limpiar filtros',
-                'filters.minPriceInput': 'Input precio mínimo',
-                'filters.maxPriceInput': 'Input precio máximo',
-                'filters.applyFilters': 'Aplicar filtros'
-            };
-            return translations[key] || fallback || key;
-        }
-    })
-}));
-
 describe('FilterModal Component', () => {
     const mockOnClose = jest.fn();
     const mockOnTempPriceChange = jest.fn();
