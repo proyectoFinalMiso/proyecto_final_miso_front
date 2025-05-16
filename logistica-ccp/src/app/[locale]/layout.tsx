@@ -1,15 +1,24 @@
-import type { Metadata } from 'next';
-import '../globals.css';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { Lexend_Deca, Plus_Jakarta_Sans } from 'next/font/google';
+import type { Metadata } from "next";
+import "../globals.css";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
+import { Lexend_Deca, Plus_Jakarta_Sans } from "next/font/google";
 
-import { ThemeProvider } from '../../themeContext';
+import { ThemeProvider } from "../../themeContext";
+
+// MUI components for building the base layout
+import Grid from "@mui/material/Grid2";
+import Box from "@mui/material/Box";
+import { CssBaseline } from "@mui/material/";
+
+// Calling the components that are the base for the rest of the views
+import Footer from "../../globalComponents/Footer"
+import Sidebar from "../../globalComponents/Sidebar"
 
 // Translation wrapper
-import { NextIntlClientProvider, hasLocale } from 'next-intl';
-import { routing } from '@/i18n/routing';
-import { notFound } from 'next/navigation';
-import GlobalLayout from '../../globalComponents/GlobalLayout';
+import { NextIntlClientProvider, hasLocale } from 'next-intl'
+import { routing } from "@/i18n/routing";
+import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ['300', '400', '500', '700', '800'],
@@ -23,32 +32,56 @@ const lexend = Lexend_Deca({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-lexend-exa',
-});
+})
 
 export const metadata: Metadata = {
-  title: 'Logística CPP',
-  description: 'Aplicación web para la gestión de bodegas de CPP',
+  title: "Logística CPP",
+  description: "Aplicación web para la gestión de bodegas de CPP",
 };
 
 export default async function LocaleLayout({
   children,
-  params,
+  params
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: string }>
 }>) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
+  const currentUrl = (children as any).props?.childProp?.segment;
+  console.log("Current URL", currentUrl);
+
   return (
     <html lang={locale}>
-      <body className={`${plusJakartaSans.variable} antialiased`}>
+      <body
+        className={`${plusJakartaSans.variable} antialiased`}
+      >
         <ThemeProvider>
+          <CssBaseline />
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <NextIntlClientProvider locale={locale}>
-            <GlobalLayout>{children}</GlobalLayout>
+            <NextIntlClientProvider locale={locale}>
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container sx={{ flex: 1, minHeight: "100vh" }}>
+
+                  <Grid sx={{ minHeight: "100vh", overflow: "auto", alignItems: "stretch" }}>
+                    <Sidebar />
+                  </Grid>
+
+                  <Grid direction="column" sx={{ display: "flex", flexDirection: "column", flex: 1, minHeight: "100vh" }}>
+
+                    <Grid size="grow" sx={{ flex: 1, overflow: "auto" }}>
+                      {children}
+                    </Grid>
+
+                    <Grid sx={{ width: "100%", alignItems: "flex-end" }}>
+                      <Footer />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Box>
             </NextIntlClientProvider>
           </AppRouterCacheProvider>
         </ThemeProvider>
