@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Colors } from '../constants/Colors';
@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
 import { preloadImage, getOptimizedImageProps } from '../utils/imageUtils';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -17,6 +18,9 @@ export default function LoginScreen() {
   const [emailError, setEmailError] = useState('');
   const [imageReady, setImageReady] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
+
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
   // Preload the login image
   useEffect(() => {
@@ -159,13 +163,13 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 0,
-    backgroundColor: Colors.light.backgroundLogin,
+    backgroundColor: colors.background,
   },
   contentContainer: {
     width: '100%',
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
     fontSize: 42,
     marginBottom: 40,
     fontFamily: 'PlusJakartaSans_400Regular',
-    color: Colors.light.titleText,
+    color: colors.titleText,
   },
   formContainer: {
     width: '80%',
@@ -189,10 +193,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: colors.borderWidget,
     borderRadius: 10,
     marginBottom: 15,
-    backgroundColor: '#fff',
+    backgroundColor: colors.backgroundLogin,
   },
   inputIcon: {
     marginLeft: 15,
@@ -203,6 +207,7 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 10,
     fontFamily: 'PlusJakartaSans_400Regular',
+    color: colors.text,
   },
   inputError: {
     borderColor: 'red',
@@ -229,24 +234,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   primaryButton: {
-    backgroundColor: Colors.light.button,
+    backgroundColor: colors.button,
   },
   secondaryButton: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: Colors.light.secondaryButtonOutline,
+    borderColor: colors.secondaryButtonOutline,
   },
   disabledButton: {
     opacity: 0.7,
   },
   buttonText: {
-    color: Colors.light.buttonText,
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '500',
     fontFamily: 'PlusJakartaSans_500Medium',
   },
   secondaryButtonText: {
-    color: Colors.light.titleText,
+    color: colors.titleText,
   },
   logoImage: {
     width: '100%',

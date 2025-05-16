@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     View,
     Text,
@@ -11,9 +11,9 @@ import {
     RefreshControlProps
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../constants/Colors';
 import { Order } from '../services/api/orderService';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -26,18 +26,18 @@ type OrderTableProps = {
     refreshControl?: React.ReactElement<RefreshControlProps>;
 };
 
-const getStatusColor = (status: string) => {
+const getStatusColor = (status: string, colors: any) => {
     switch (status) {
         case 'SOLICITADO':
-            return Colors.light.warning;
+            return colors.warning;
         case 'EN_PROCESO':
-            return Colors.light.info;
+            return colors.info;
         case 'FINALIZADO':
-            return Colors.light.success;
+            return colors.success;
         case 'CANCELADO':
-            return Colors.light.error;
+            return colors.error;
         default:
-            return Colors.light.text;
+            return colors.text;
     }
 };
 
@@ -56,6 +56,8 @@ const formatDate = (dateString: string) => {
 
 const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
     const { t } = useTranslation();
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
     const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
     const toggleExpand = (orderId: string) => {
@@ -89,7 +91,7 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
                         <Ionicons
                             name={isExpanded ? 'chevron-up' : 'chevron-down'}
                             size={20}
-                            color={Colors.light.text}
+                            color={colors.text}
                             accessibilityLabel={isExpanded ? t('orderTable.closeDetails', 'close-details') : t('orderTable.openDetails', 'open-details')}
                         />
                     </View>
@@ -107,7 +109,7 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
                         </View>
                         <View style={styles.detailRow}>
                             <Text style={styles.detailLabel} testID={`order-status-${item.id}`}>{t('orderTable.status', 'Estado')}</Text>
-                            <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.estado) }]}>
+                            <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.estado, colors) }]}>
                                 <Text style={styles.statusText}>{t(`orderTable.statuses.${item.estado}`, item.estado)}</Text>
                             </View>
                         </View>
@@ -141,10 +143,10 @@ const OrderTable = ({ orders, refreshControl }: OrderTableProps) => {
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colors.backgroundLogin,
         borderRadius: 21,
         overflow: 'hidden',
         shadowColor: '#000',
@@ -153,16 +155,16 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 3,
         borderWidth: 1,
-        borderColor: '#f0f0f0',
+        borderColor: colors.tableBorder,
     },
     header: {
-        backgroundColor: Colors.light.primary,
+        backgroundColor: colors.primary,
         paddingVertical: 12,
         paddingHorizontal: 16,
     },
     headerText: {
-        color: Colors.light.tableHeaderText,
-        fontSize: 11,
+        color: colors.tableHeaderText,
+        fontSize: fontSizes.xxs,
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
     },
@@ -171,7 +173,7 @@ const styles = StyleSheet.create({
     },
     orderContainer: {
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
+        borderBottomColor: colors.tableBorder,
     },
     orderRow: {
         flexDirection: 'row',
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
     },
     chevronIconContainer: {
-        backgroundColor: Colors.light.expandableButtonBackground,
+        backgroundColor: colors.expandableButtonBackground,
         padding: 2,
         borderRadius: 8,
         width: 28,
@@ -189,14 +191,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     orderAddress: {
-        fontSize: 14,
-        color: Colors.light.text,
+        fontSize: fontSizes.sm,
+        color: colors.text,
         flex: 1,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     expandedContent: {
-        backgroundColor: Colors.light.backgroundLogin,
+        backgroundColor: colors.backgroundLogin,
         paddingVertical: 6,
         paddingHorizontal: 12,
         paddingBottom: 2,
@@ -207,16 +209,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     detailLabel: {
-        fontSize: 15,
+        fontSize: fontSizes.smd,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: Colors.light.expandableDetailLabel,
+        color: colors.expandableDetailLabel,
         width: 100,
         marginRight: 15
     },
     detailValue: {
-        fontSize: 15,
-        color: Colors.light.expandableDetailValue,
+        fontSize: fontSizes.smd,
+        color: colors.expandableDetailValue,
         flex: 1,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
@@ -227,8 +229,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     statusText: {
-        fontSize: 12,
-        color: Colors.light.text,
+        fontSize: fontSizes.xs,
+        color: '#2E2E2E',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     emptyContainer: {
@@ -236,8 +238,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     emptyText: {
-        fontSize: 14,
-        color: Colors.light.text,
+        fontSize: fontSizes.sm,
+        color: colors.text,
         textAlign: 'center',
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',

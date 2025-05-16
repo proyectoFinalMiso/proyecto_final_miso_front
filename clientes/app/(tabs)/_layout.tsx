@@ -6,16 +6,21 @@ import CartIcon from '../../assets/icons/CartIcon';
 import OrdersIcon from '../../assets/icons/OrdersIcon';
 import SettingsIcon from '@/assets/icons/SettingsIcon';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../contexts/ThemeContext';
+import { useMemo } from 'react';
 
 export default function TabLayout() {
   const { t } = useTranslation();
+
+  const { colors } = useTheme();
+  const styles = useMemo(() => getStyles(colors), [colors]);
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.light.tabTint,
-        tabBarInactiveTintColor: Colors.light.tabTint,
+        tabBarActiveTintColor: colors.tabTint,
+        tabBarInactiveTintColor: colors.tabTint,
         tabBarStyle: {
-          backgroundColor: Colors.light.backgroundLogin,
+          backgroundColor: colors.backgroundLogin,
           borderTopWidth: 0,
           borderTopColor: '#E5E5E5',
           height: 66,
@@ -77,9 +82,9 @@ export default function TabLayout() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   activeIconBackground: {
-    backgroundColor: Colors.light.tabActiveBackground,
+    backgroundColor: colors.tabActiveBackground,
     borderRadius: 85,
     padding: 8,
     width: 64,
