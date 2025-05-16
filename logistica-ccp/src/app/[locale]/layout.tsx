@@ -18,7 +18,6 @@ import Sidebar from "../../globalComponents/Sidebar"
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
-import { headers } from "next/headers";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ['300', '400', '500', '700', '800'],
@@ -50,9 +49,6 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
-
-  const currentUrl = (children as any).props?.childProp?.segment;
-  console.log("Current URL", currentUrl);
 
   return (
     <html lang={locale}>
