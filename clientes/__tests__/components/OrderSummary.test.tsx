@@ -6,6 +6,7 @@ import { CartProvider, useCart } from '../../contexts/CartContext';
 import { Product } from '../../components/ProductTable';
 import { AuthProvider, useAuth } from '../../contexts/AuthContext';
 import * as orderService from '../../services/api/orderService';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 // Mock order service
 jest.mock('../../services/api/orderService');
@@ -32,11 +33,13 @@ const mockUseAuth = useAuth as jest.Mock;
 
 const renderWithProvider = (component: React.ReactElement) => {
     return render(
-        <AuthProvider>
-            <CartProvider>
-                {component}
-            </CartProvider>
-        </AuthProvider>
+        <ThemeProvider>
+            <AuthProvider>
+                <CartProvider>
+                    {component}
+                </CartProvider>
+            </AuthProvider>
+        </ThemeProvider>
     );
 };
 
@@ -145,12 +148,14 @@ describe('OrderSummary', () => {
         const mockClearCart = jest.fn();
 
         const { getByText, getByPlaceholderText } = render(
-            <AuthProvider>
-                <CartContextMock clearCart={mockClearCart}>
-                    <TestCartAdder products={[product1, product2]} />
-                    <OrderSummary />
-                </CartContextMock>
-            </AuthProvider>
+            <ThemeProvider>
+                <AuthProvider>
+                    <CartContextMock clearCart={mockClearCart}>
+                        <TestCartAdder products={[product1, product2]} />
+                        <OrderSummary />
+                    </CartContextMock>
+                </AuthProvider>
+            </ThemeProvider>
         );
 
         const direccion = 'Calle Principal 123 # 45-67. Ciudad de Bogotá';

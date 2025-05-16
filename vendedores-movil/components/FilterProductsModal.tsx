@@ -159,9 +159,10 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
         borderColor: colors.borderWidget,
         borderRadius: 8,
         paddingHorizontal: 12,
-        backgroundColor: colors.backgroundLogin,
+        backgroundColor: colors.background,
         fontSize: fontSizes.md,
         fontFamily: 'PlusJakartaSans_400Regular',
+        color: colors.text,
     },
     filterActions: {
         flexDirection: 'row',
@@ -170,7 +171,7 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     clearButton: {
         backgroundColor: colors.backgroundLogin,
         borderWidth: 1,
-        borderColor: colors.borderWidget,
+        borderColor: colors.secondaryButtonOutline,
         borderRadius: 8,
         paddingVertical: 10,
         paddingHorizontal: 16,
