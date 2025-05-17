@@ -186,7 +186,6 @@
     "empty": "No tienes clientes asignados",
     "close": "Cerrar",
     "loadClientsError": "No se pudieron cargar los clientes. Por favor intente de nuevo."
-
   },
   "clients": {
     "title": "Mis clientes",
@@ -195,7 +194,6 @@
     "loading": "Cargando clientes...",
     "search": "Buscar clientes",
     "searchHint": "Ingresa el nombre del cliente que buscas"
-
   },
   "clientDetails": {
     "title": "Detalles del cliente",
@@ -242,6 +240,12 @@
     "orders": "Pedidos",
     "cart": "Carrito",
     "settings": "Ajustes",
-    "clients": "Clientes"
+    "clients": "Clientes",
+    "visits": "Ruta de visitas"
+  },
+  "visits": {
+    "title": "Rutas de Visita",
+    "loadError": "No se pudieron cargar las rutas, intente de nuevo.",
+    "loading": "Cargando visitas programadas..."
   }
 }

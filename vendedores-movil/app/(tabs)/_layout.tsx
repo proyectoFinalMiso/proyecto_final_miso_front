@@ -1,6 +1,7 @@
 import { Tabs, usePathname } from 'expo-router';
 import { Colors } from '../../constants/Colors';
 import { View, StyleSheet } from 'react-native';
+import VisitsICon from '../../assets/icons/VisitsIcon';
 import HomeIcon from '../../assets/icons/HomeIcon';
 import CartIcon from '../../assets/icons/CartIcon';
 import ClientIcon from '../../assets/icons/ClientIcon';
@@ -65,17 +66,35 @@ export default function TabLayout() {
         options={{
           title: t('tab.clients'),
           tabBarIcon: ({ color }) => {
-            const isClientsFocused = pathname === '/clients' || pathname.startsWith('/clients/');
+            const isClientsFocused =
+              pathname === '/clients' || pathname.startsWith('/clients/');
             return (
               <View
                 style={
-                  isClientsFocused ? styles.activeIconBackground : styles.iconBackground
+                  isClientsFocused
+                    ? styles.activeIconBackground
+                    : styles.iconBackground
                 }
               >
                 <ClientIcon fill={color} />
               </View>
             );
           },
+        }}
+      />
+      <Tabs.Screen
+        name="visits"
+        options={{
+          title: t('tab.visits'),
+          tabBarIcon: ({ focused, color }) => (
+            <View
+              style={
+                focused ? styles.activeIconBackground : styles.iconBackground
+              }
+            >
+              <VisitsICon fill={color} />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
@@ -89,7 +108,13 @@ export default function TabLayout() {
         options={{
           title: t('tab.settings'),
           tabBarIcon: ({ focused, color }) => (
-            <View style={focused ? styles.activeIconBackground : styles.iconBackground} testID='settings-icon' accessibilityLabel='settings-icon'>
+            <View
+              style={
+                focused ? styles.activeIconBackground : styles.iconBackground
+              }
+              testID="settings-icon"
+              accessibilityLabel="settings-icon"
+            >
               <SettingsIcon fill={color} />
             </View>
           ),
