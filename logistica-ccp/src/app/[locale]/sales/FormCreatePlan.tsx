@@ -161,7 +161,7 @@ export default function FormCreatePlan({ open, onClose }: ModalFormProps) {
                                 onChange={(e) => {
                                     const value = e.target.value;
                                     if (/^\d*$/.test(value)) { // Permitir solo números
-                                        handleChange;
+                                        handleChange(e);
                                     }
                                 }}
                                 margin="normal"

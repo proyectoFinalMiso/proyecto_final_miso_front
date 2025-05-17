@@ -34,7 +34,6 @@ const Login: React.FC = () => {
       setLoading(false);
       return;
     }
-
     router.push('/products');
   };
 
