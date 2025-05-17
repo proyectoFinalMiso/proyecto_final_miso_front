@@ -1,0 +1,15 @@
+# Upload video
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- runFlow: client-details.yml
+- tapOn:
+    id: "upload-video-button"
+- assertVisible:
+    id: "modal-close-button"
+- assertVisible:
+    id: "pick-gallery-button"
+- assertVisible:
+    id: "record-video-button"
+- tapOn:
+    id: "modal-close-button"

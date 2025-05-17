@@ -1,0 +1,27 @@
+# Register visit
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- runFlow: client-details.yml
+- tapOn:
+    id: "register-visit-button"
+- assertVisible:
+    id: "modal-overlay"
+- assertVisible:
+    id: "status-button-completada"
+- tapOn:
+    id: "date-selector"
+- tapOn: "1"
+- tapOn:
+    id: "android:id/button1"
+- tapOn:
+    id: "time-selector"
+- tapOn: "10"
+- tapOn:
+    id: "android:id/button1"
+- tapOn:
+    id: "modal-submit-button"
+- tapOn:
+    id: "android:id/button1"
+- assertVisible:
+    id: "planned-visits-title"

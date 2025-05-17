@@ -1,0 +1,16 @@
+# See product details when tapping on a product
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "product-list"
+- assertVisible:
+    id: "product-row-.*"
+    index: 0
+- tapOn:
+    id: "product-row-.*"
+    index: 0
+- assertVisible:
+    id: "add-to-cart-button-.*"

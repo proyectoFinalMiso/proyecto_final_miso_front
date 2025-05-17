@@ -93,7 +93,9 @@ const ClientsScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.title}>{t('clients.title', 'Mis clientes')}</Text>
+          <Text style={styles.title} testID="clientsScreenTitle" accessibilityLabel="clientsScreenTitle">
+            {t('clients.title', 'Mis clientes')}
+          </Text>
         </View>
         <View style={styles.searchContainer}>
           <View style={styles.searchRow}>
