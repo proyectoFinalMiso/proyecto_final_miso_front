@@ -1,0 +1,19 @@
+# Refresh the product list in the app
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "product-list"
+- assertVisible:
+    id: "last-updated-text"
+- swipe:
+   from: 
+     id: "product-.*"
+     index: 0
+   direction: DOWN
+- assertVisible:
+    id: "product-list"
+- assertVisible:
+    id: "last-updated-text"

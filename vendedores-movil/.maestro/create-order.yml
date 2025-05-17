@@ -1,0 +1,35 @@
+# Create an order in the app
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- runFlow: add-product-to-cart.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "order-summary-container"
+- assertVisible:
+    id: "clientSelector"
+- tapOn:
+    id: "clientSelector"
+- assertVisible:
+    id: "client-item-.*"
+    index: 0
+- tapOn:
+    id: "client-item-.*"
+    index: 0
+- assertVisible:
+    id: "addressInput"
+- tapOn:
+    id: "addressInput"
+- inputText: "Cra 1 #1. Pasto"
+- assertVisible:
+    id: "finishOrderButton"
+- tapOn:
+    id: "finishOrderButton"
+- waitForAnimationToEnd
+- tapOn:
+    id: "android:id/button1"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "empty-cart-message"
+- assertNotVisible:
+    id: "order-summary-container"

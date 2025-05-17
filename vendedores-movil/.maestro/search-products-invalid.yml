@@ -1,0 +1,13 @@
+# Search invalid products in the app
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "product-list*"
+- tapOn:
+    id: "searchInput"
+- inputText: "Producto Inexistente"
+- assertVisible:
+    id: "empty-product-list-text"

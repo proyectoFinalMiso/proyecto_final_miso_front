@@ -156,6 +156,7 @@ const OrderSummary = () => {
                 setSelectedClient(item);
                 setIsClientModalVisible(false);
             }}
+            testID={`client-item-${item.id}`}
         >
             <Text style={styles.clientName}>{item.nombre}</Text>
             <Text style={styles.clientEmail}>{item.correo}</Text>

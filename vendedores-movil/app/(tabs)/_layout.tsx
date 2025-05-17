@@ -44,6 +44,7 @@ export default function TabLayout() {
               style={
                 focused ? styles.activeIconBackground : styles.iconBackground
               }
+              testID='home-icon'
             >
               <HomeIcon fill={color} />
             </View>
@@ -59,6 +60,7 @@ export default function TabLayout() {
               style={
                 focused ? styles.activeIconBackground : styles.iconBackground
               }
+              testID='cart-icon'
             >
               <CartIcon fill={color} />
             </View>
@@ -76,6 +78,7 @@ export default function TabLayout() {
                 style={
                   isClientsFocused ? styles.activeIconBackground : styles.iconBackground
                 }
+                testID='clients-icon'
               >
                 <ClientIcon fill={color} />
               </View>

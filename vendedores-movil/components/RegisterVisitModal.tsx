@@ -150,6 +150,7 @@ const RegisterVisitModal = ({
                                         selectedStatus === 'programada' && styles.statusButtonActive
                                     ]}
                                     onPress={() => setSelectedStatus('programada')}
+                                    testID='status-button-programada'
                                 >
                                     <Text 
                                         style={[
@@ -166,6 +167,7 @@ const RegisterVisitModal = ({
                                         selectedStatus === 'completada' && styles.statusButtonActive
                                     ]}
                                     onPress={() => setSelectedStatus('completada')}
+                                    testID='status-button-completada'
                                 >
                                     <Text 
                                         style={[
@@ -184,6 +186,7 @@ const RegisterVisitModal = ({
                             <TouchableOpacity
                                 style={styles.dateSelector}
                                 onPress={() => setShowDatePicker(true)}
+                                testID="date-selector"
                             >
                                 <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
                                 <Ionicons name="calendar-outline" size={20} color={colors.text} />
@@ -195,6 +198,7 @@ const RegisterVisitModal = ({
                             <TouchableOpacity
                                 style={styles.dateSelector}
                                 onPress={() => setShowTimePicker(true)}
+                                testID="time-selector"
                             >
                                 <Text style={styles.dateText}>{formatTime(selectedDate)}</Text>
                                 <Ionicons name="time-outline" size={20} color={colors.text} />
@@ -202,13 +206,14 @@ const RegisterVisitModal = ({
                         </View>
 
                         <View style={styles.actionButtons}>
-                            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+                            <TouchableOpacity style={styles.cancelButton} onPress={onClose} testID="modal-cancel-button">
                                 <Text style={styles.cancelButtonText}>{t('common.cancel')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity 
                                 style={styles.submitButton}
                                 onPress={handleSubmit}
                                 disabled={isLoading}
+                                testID="modal-submit-button"
                             >
                                 {isLoading ? (
                                     <Text style={styles.submitButtonText}>{t('registerVisitModal.sending', 'Enviando...')}</Text>

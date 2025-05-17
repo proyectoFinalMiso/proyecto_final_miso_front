@@ -1,0 +1,15 @@
+# Login to the app successful
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- tapOn:
+    id: "loginEmailInput"
+- inputText: "simon1@ccp.com"
+- tapOn:
+    id: "loginPasswordInput"
+- inputText: "test"
+- hideKeyboard
+- tapOn:
+    id: "loginSubmitButton"
+- assertVisible:
+    id: "homeScreenTitle"

@@ -26,6 +26,7 @@ const LanguageSelector: React.FC = () => {
                         ]}
                         onPress={() => i18n.changeLanguage(language.code)}
                         activeOpacity={0.7}
+                        testID={`language-${language.code}`}
                     >
                         <Text
                             style={[
