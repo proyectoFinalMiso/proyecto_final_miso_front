@@ -29,6 +29,7 @@ const TextSizeSelector: React.FC = () => {
                         onPress={() => setFontSize(sizeOption.mode as 'small' | 'medium' | 'large')}
                         activeOpacity={0.7}
                         accessibilityLabel={`switch to ${sizeOption.name} text size`}
+                        testID={`size-button-${sizeOption.mode}`}
                     >
                         <View style={styles.sizeButtonContent}>
                             <Text

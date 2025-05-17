@@ -28,6 +28,7 @@ const ThemeSelector: React.FC = () => {
                         onPress={() => setTheme(themeOption.mode as 'light' | 'dark')}
                         activeOpacity={0.7}
                         accessibilityLabel={`switch to ${themeOption.name} theme`}
+                        testID={`theme-button-${themeOption.mode}`}
                     >
                         <View style={styles.themeButtonContent}>
                             <Ionicons
