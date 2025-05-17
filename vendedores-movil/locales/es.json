@@ -246,6 +246,7 @@
   "visits": {
     "title": "Rutas de Visita",
     "loadError": "No se pudieron cargar las rutas, intente de nuevo.",
-    "loading": "Cargando visitas programadas..."
+    "loading": "Cargando visitas programadas...",
+    "clients": "Clientes"
   }
 }

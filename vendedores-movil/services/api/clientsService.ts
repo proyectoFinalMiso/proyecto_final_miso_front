@@ -28,6 +28,26 @@ export interface VisitResponse {
   msg: string;
 }
 
+export interface ClienteData {
+  cliente: {
+    id: string;
+    nombre: string;
+    correo: string;
+    vendedorAsociado: string;
+  };
+}
+
+export interface VisitPayload {
+  vendedor_id: string;
+  fecha: string;
+  estado: string;
+}
+
+export interface VisitResponse {
+  body: any;
+  msg: string;
+}
+
 export interface ClientesResponse {
   clientes: Cliente[];
   msg: string;
@@ -40,6 +60,29 @@ export interface Visit {
   estado: string;
   fecha: string;
   cliente_nombre?: string;
+}
+
+export interface VisitsResponse {
+  visitas: Visit[];
+  msg?: string;
+}
+
+export interface VideoUploadResponse {
+  message: string;
+  messageId: string;
+}
+
+export interface SignedUrlResponse {
+  signedUrl: string;
+  gcsPath: string;
+}
+
+export interface Visit {
+  id: number;
+  cliente_id: string;
+  vendedor_id: string;
+  estado: string;
+  fecha: string;
 }
 
 export interface VisitsResponse {
@@ -127,21 +170,6 @@ export const fetchPastVisits = async (clientId: string): Promise<Visit[]> => {
     return response.data.visitas;
   } catch (error) {
     console.error('Error fetching past visits:', error);
-    throw error;
-  }
-};
-
-// Fetch all scheduled visits for a specific client
-export const fetchScheduledVisits = async (
-  vendedorId: string
-): Promise<Visit[]> => {
-  try {
-    const response = await axios.get<VisitsResponse>(
-      `${API_BASE_URL}/visitas?vendedor_id=${vendedorId}&estado=programada`
-    );
-    return response.data.visitas;
-  } catch (error) {
-    console.error('Error fetching scheduled visits:', error);
     throw error;
   }
 };

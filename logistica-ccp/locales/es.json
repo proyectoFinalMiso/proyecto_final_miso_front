@@ -128,7 +128,7 @@
     "modal_subtitle": "Reporte de Ventas para el periodo: ",
     "modal_button_close": "CERRAR",
     "close_plan": "Cerrar",
-
+    "sellers_plan": "Plan de ventas",
     "route_modal_title": "Delivery Route",
     "route_modal_order": "Order: ",
     "route_modal_customer": "Customer: ",
@@ -136,5 +136,20 @@
     "route_modal_table_col_1": "SKU",
     "route_modal_table_col_2": "Warehouse",
     "button_close": "CLOSE"
+    "select_seller": "Seleccionar vendedor",
+    "form_single_title": "Crear plan de ventas",
+    "form_single_subtitle": "Crear un plan de ventas para un vendedor",
+    "form_single_field_1": "Meta de venta",
+    "form_single_field_2": "Productos del plan",
+    "form_button_submit": "CONFIRMAR",
+    "form_button_cancel": "CANCELAR"
+  },
+  "Login": {
+    "title": "CCP",
+    "email_placeholder": "Correo",
+    "password_placeholder": "Contraseña",
+    "login_button": "INGRESAR",
+    "auth_too_many_requests": "Llene los campos correspondientes",
+    "auth_invalid_credential": "Invalid credentials"
   }
 }

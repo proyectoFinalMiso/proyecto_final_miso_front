@@ -47,8 +47,8 @@ export default async function LocaleLayout({
       <body className={`${plusJakartaSans.variable} antialiased`}>
         <ThemeProvider>
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-            <NextIntlClientProvider locale={locale}>
-              <GlobalLayout>{children}</GlobalLayout>
+          <NextIntlClientProvider locale={locale}>
+            <GlobalLayout>{children}</GlobalLayout>
             </NextIntlClientProvider>
           </AppRouterCacheProvider>
         </ThemeProvider>
