@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, Modal, Pressable, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../constants/Colors';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
 
 type FilterModalProps = {
     visible: boolean;
@@ -22,6 +22,8 @@ const FilterModal = ({
     onClear,
 }: FilterModalProps) => {
     const { t } = useTranslation();
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
     return (
         <Modal
@@ -35,7 +37,7 @@ const FilterModal = ({
                     <View style={styles.modalHeader}>
                         <Text style={styles.modalTitle}>{t('home.filterProducts')}</Text>
                         <TouchableOpacity onPress={onClose} testID="modal-close-button">
-                            <Ionicons name="close" size={24} color={Colors.light.text} />
+                            <Ionicons name="close" size={24} color={colors.text} />
                         </TouchableOpacity>
                     </View>
 
@@ -49,7 +51,7 @@ const FilterModal = ({
                                     value={tempPriceRange.min}
                                     onChangeText={(text) => onTempPriceChange('min', text)}
                                     placeholder={t('filters.min', 'Mín')}
-                                    placeholderTextColor={Colors.light.searchHint}
+                                    placeholderTextColor={colors.searchHint}
                                     keyboardType="numeric"
                                     testID="filter-min-price-input"
                                     accessibilityLabel={t('filters.minPriceInput', 'Input precio mínimo')}
@@ -62,7 +64,7 @@ const FilterModal = ({
                                     value={tempPriceRange.max}
                                     onChangeText={(text) => onTempPriceChange('max', text)}
                                     placeholder={t('filters.max', 'Máx')}
-                                    placeholderTextColor={Colors.light.searchHint}
+                                    placeholderTextColor={colors.searchHint}
                                     keyboardType="numeric"
                                     testID="filter-max-price-input"
                                     accessibilityLabel={t('filters.maxPriceInput', 'Input precio máximo')}
@@ -95,7 +97,7 @@ const FilterModal = ({
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     modalOverlay: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         width: '80%',
-        backgroundColor: Colors.light.backgroundLogin,
+        backgroundColor: colors.backgroundLogin,
         borderRadius: 12,
         padding: 16,
         shadowColor: '#000',
@@ -123,19 +125,19 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     modalTitle: {
-        fontSize: 18,
+        fontSize: fontSizes.lg,
         fontWeight: '600',
-        color: Colors.light.titleText,
+        color: colors.titleText,
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     filterSection: {
         marginBottom: 20,
     },
     filterSectionTitle: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         marginBottom: 10,
-        color: Colors.light.text,
+        color: colors.text,
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     priceInputsContainer: {
@@ -146,29 +148,30 @@ const styles = StyleSheet.create({
         width: '48%',
     },
     priceInputLabel: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         marginBottom: 4,
-        color: Colors.light.text,
+        color: colors.text,
         fontFamily: 'PlusJakartaSans_400Regular',
     },
     priceInput: {
         height: 40,
         borderWidth: 0.8,
-        borderColor: Colors.light.borderWidget,
+        borderColor: colors.borderWidget,
         borderRadius: 8,
         paddingHorizontal: 12,
-        backgroundColor: Colors.light.backgroundLogin,
-        fontSize: 16,
+        backgroundColor: colors.background,
+        fontSize: fontSizes.md,
         fontFamily: 'PlusJakartaSans_400Regular',
+        color: colors.text,
     },
     filterActions: {
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     clearButton: {
-        backgroundColor: Colors.light.backgroundLogin,
+        backgroundColor: colors.backgroundLogin,
         borderWidth: 1,
-        borderColor: Colors.light.borderWidget,
+        borderColor: colors.secondaryButtonOutline,
         borderRadius: 8,
         paddingVertical: 10,
         paddingHorizontal: 16,
@@ -178,13 +181,13 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     clearButtonText: {
-        color: Colors.light.text,
-        fontSize: 16,
+        color: colors.text,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     applyButton: {
-        backgroundColor: Colors.light.button,
+        backgroundColor: colors.button,
         borderRadius: 8,
         paddingVertical: 10,
         paddingHorizontal: 16,
@@ -194,8 +197,8 @@ const styles = StyleSheet.create({
         marginLeft: 8,
     },
     applyButtonText: {
-        color: Colors.light.buttonText,
-        fontSize: 16,
+        color: colors.buttonText,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },

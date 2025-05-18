@@ -3,6 +3,7 @@ import { render, fireEvent, act } from '@testing-library/react-native';
 import CartTable from '../../components/CartTable';
 import { CartProvider, useCart } from '../../contexts/CartContext';
 import { Product } from '../../components/ProductTable';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 jest.mock('@expo/vector-icons', () => ({
     Ionicons: 'Ionicons',
@@ -43,15 +44,17 @@ jest.mock('react-i18next', () => ({
 
 const renderWithProvider = (component: React.ReactElement) => {
     return render(
-        <CartProvider>
-            {component}
-        </CartProvider>
+        <ThemeProvider>
+            <CartProvider>
+                {component}
+            </CartProvider>
+        </ThemeProvider>
     );
 };
 
 describe('CartTable', () => {
-    const product1: Product = { id: '1', name: 'Producto 1', price: 10000, sku: 10001 };
-    const product2: Product = { id: '2', name: 'Producto 2', price: 20000, sku: 10002 };
+    const product1: Product = { id: '1', name: 'Producto 1', price: 10000, sku: 10001, availableQuantity: 5 };
+    const product2: Product = { id: '2', name: 'Producto 2', price: 20000, sku: 10002, availableQuantity: 3 };
 
     it('should render empty cart message when cart is empty', () => {
         const { getByTestId } = renderWithProvider(<CartTable />);

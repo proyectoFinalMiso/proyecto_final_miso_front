@@ -112,6 +112,8 @@
         "route_modal_address": "Dirección: ",
         "route_modal_table_col_1": "SKU",
         "route_modal_table_col_2": "Bodega",
+        "route_modal_table_col_3": "Disponible",
+        "route_modal_table_col_4": "Requerido",
         "button_close": "CERRAR"
   },
   "Sales": {

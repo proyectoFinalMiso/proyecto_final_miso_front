@@ -4,6 +4,7 @@ import PastVisitsTable from '../../components/PastVisitsTable';
 import { Visit } from '../../services/api/clientsService';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../../utils/i18n';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const mockVisits: Visit[] = [
   { id: 1, fecha: '2024-01-15T10:00:00Z', estado: 'completada', cliente_id: '1', vendedor_id: '1' },
@@ -13,7 +14,13 @@ const mockVisits: Visit[] = [
 const emptyVisits: Visit[] = [];
 
 const renderWithProviders = (component: React.ReactElement) => {
-  return render(<I18nextProvider i18n={i18n}>{component}</I18nextProvider>);
+  return render(
+    <ThemeProvider>
+      <I18nextProvider 
+        i18n={i18n}>{component}
+      </I18nextProvider>
+    </ThemeProvider>
+  );
 };
 
 describe('PastVisitsTable', () => {

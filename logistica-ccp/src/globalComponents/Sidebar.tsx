@@ -7,12 +7,18 @@ import Grid from "@mui/material/Grid2";
 import ConfigMenu from '../globalComponents/ConfigMenu'
 import { useTheme } from "@mui/material";
 
+import { usePathname } from "next/navigation";
+
 const Sidebar: React.FC = () => {
 
   if (typeof window !== 'undefined') { }
 
   const translations = useTranslations('Sidebar')
   const theme = useTheme()
+
+  const pathname = usePathname()
+  const isRootRoute = pathname === "/" || pathname.match(/^\/[a-z]{2}$/);
+  if (isRootRoute) return null;
 
   return (
     <div 

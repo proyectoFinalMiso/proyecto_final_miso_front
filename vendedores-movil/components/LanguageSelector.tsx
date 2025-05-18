@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Colors } from '../constants/Colors';
+import { useTheme } from '../contexts/ThemeContext';
 
 const LANGUAGES = [
     { code: 'es', name: 'Español' },
@@ -10,6 +10,8 @@ const LANGUAGES = [
 
 const LanguageSelector: React.FC = () => {
     const { t, i18n } = useTranslation();
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
     return (
         <View style={styles.container}>
@@ -24,6 +26,7 @@ const LanguageSelector: React.FC = () => {
                         ]}
                         onPress={() => i18n.changeLanguage(language.code)}
                         activeOpacity={0.7}
+                        testID={`language-${language.code}`}
                     >
                         <Text
                             style={[
@@ -40,11 +43,11 @@ const LanguageSelector: React.FC = () => {
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     container: {
         padding: 16,
         borderRadius: 12,
-        backgroundColor: Colors.light.backgroundLogin,
+        backgroundColor: colors.backgroundLogin,
         marginVertical: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -53,10 +56,10 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     title: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontFamily: 'PlusJakartaSans_600SemiBold',
         marginBottom: 16,
-        color: Colors.light.titleText,
+        color: colors.titleText,
     },
     languageButtons: {
         flexDirection: 'row',
@@ -67,22 +70,22 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 12,
         borderRadius: 8,
-        backgroundColor: Colors.light.expandableButtonBackground,
+        backgroundColor: colors.expandableButtonBackground,
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: Colors.light.borderWidget,
+        borderColor: colors.borderWidget,
     },
     activeLanguage: {
-        backgroundColor: Colors.light.button,
-        borderColor: Colors.light.button,
+        backgroundColor: colors.button,
+        borderColor: colors.button,
     },
     languageText: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontFamily: 'PlusJakartaSans_500Medium',
-        color: Colors.light.text,
+        color: colors.text,
     },
     activeLanguageText: {
-        color: Colors.light.buttonText,
+        color: colors.buttonText,
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
 });

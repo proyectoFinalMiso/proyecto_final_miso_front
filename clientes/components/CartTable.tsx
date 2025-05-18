@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     View,
     Text,
@@ -10,9 +10,9 @@ import {
     UIManager
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../constants/Colors';
 import { useCart, CartItem } from '../contexts/CartContext';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -23,6 +23,8 @@ if (Platform.OS === 'android') {
 const CartTable = () => {
     const { items, updateQuantity, removeFromCart, getTotal } = useCart();
     const { t } = useTranslation();
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
     const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
     const toggleExpand = (productId: string) => {
@@ -63,7 +65,7 @@ const CartTable = () => {
                         <Ionicons
                             name={isExpanded ? 'chevron-up' : 'chevron-down'}
                             size={20}
-                            color={Colors.light.text}
+                            color={colors.text}
                             accessibilityLabel={isExpanded ? t('cartTable.collapseDetails', 'Cerrar detalles') : t('cartTable.expandDetails', 'Abrir detalles')}
                         />
                     </View>
@@ -84,7 +86,7 @@ const CartTable = () => {
                                     testID={`decrease-quantity-${item.product.id}`}
                                     accessibilityLabel={t('cartTable.decreaseQuantity', { name: item.product.name, defaultValue: `Disminuir cantidad para ${item.product.name}` })}
                                 >
-                                    <Ionicons name="remove" size={12} color={Colors.light.text} />
+                                    <Ionicons name="remove" size={12} color={colors.text} />
                                 </TouchableOpacity>
                                 <Text style={styles.quantityText} testID={`quantity-${item.product.id}`} accessibilityLabel={t('cartTable.currentQuantity', { quantity: item.quantity, defaultValue: `Cantidad actual ${item.quantity}` })}>{item.quantity}</Text>
                                 <TouchableOpacity
@@ -93,7 +95,7 @@ const CartTable = () => {
                                     testID={`increase-quantity-${item.product.id}`}
                                     accessibilityLabel={t('cartTable.increaseQuantity', { name: item.product.name, defaultValue: `Aumentar cantidad para ${item.product.name}` })}
                                 >
-                                    <Ionicons name="add" size={12} color={Colors.light.text} />
+                                    <Ionicons name="add" size={12} color={colors.text} />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -108,7 +110,7 @@ const CartTable = () => {
                                 testID={`remove-product-${item.product.id}`}
                                 accessibilityLabel={t('cartTable.removeFromCart', { name: item.product.name, defaultValue: `Eliminar ${item.product.name} del carrito` })}
                             >
-                                <Ionicons name="trash" size={16} color={Colors.light.cancelColor} />
+                                <Ionicons name="trash" size={16} color={colors.cancelColor} />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -140,10 +142,10 @@ const CartTable = () => {
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colors.backgroundLogin,
         borderRadius: 21,
         overflow: 'hidden',
         shadowColor: '#000',
@@ -152,16 +154,16 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 3,
         borderWidth: 1,
-        borderColor: '#f0f0f0',
+        borderColor: colors.tableBorder,
     },
     header: {
-        backgroundColor: Colors.light.primary,
+        backgroundColor: colors.primary,
         paddingVertical: 12,
         paddingHorizontal: 16,
     },
     headerText: {
-        color: Colors.light.tableHeaderText,
-        fontSize: 11,
+        color: colors.tableHeaderText,
+        fontSize: fontSizes.xxs,
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
     },
@@ -170,7 +172,7 @@ const styles = StyleSheet.create({
     },
     productContainer: {
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
+        borderBottomColor: colors.tableBorder,
     },
     productRow: {
         flexDirection: 'row',
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
     },
     chevronIconContainer: {
-        backgroundColor: Colors.light.expandableButtonBackground,
+        backgroundColor: colors.expandableButtonBackground,
         padding: 2,
         borderRadius: 8,
         width: 28,
@@ -188,14 +190,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     productName: {
-        fontSize: 14,
-        color: Colors.light.text,
+        fontSize: fontSizes.sm,
+        color: colors.text,
         flex: 1,
         fontWeight: '500',
         fontFamily: 'PlusJakartaSans_500Medium',
     },
     expandedContent: {
-        backgroundColor: Colors.light.backgroundLogin,
+        backgroundColor: colors.backgroundLogin,
         paddingVertical: 6,
         paddingHorizontal: 12,
         paddingBottom: 2,
@@ -206,22 +208,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     detailLabel: {
-        fontSize: 15,
+        fontSize: fontSizes.smd,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: Colors.light.expandableDetailLabel,
+        color: colors.expandableDetailLabel,
         width: 100,
         marginRight: 15
     },
     detailValue: {
-        fontSize: 15,
-        color: Colors.light.expandableDetailValue,
+        fontSize: fontSizes.smd,
+        color: colors.expandableDetailValue,
         flex: 1,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
     },
     detailButton: {
-        backgroundColor: Colors.light.button,
+        backgroundColor: colors.button,
         borderRadius: 69,
         paddingVertical: 6,
         paddingHorizontal: 8,
@@ -233,8 +235,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#e63946',
     },
     detailButtonText: {
-        color: Colors.light.buttonText,
-        fontSize: 8,
+        color: colors.buttonText,
+        fontSize: fontSizes.xxxs,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
     },
@@ -244,7 +246,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         overflow: 'hidden',
         borderWidth: 1,
-        borderColor: Colors.light.expandableQuantityButtonBorder,
+        borderColor: colors.expandableQuantityButtonBorder,
     },
     quantityButton: {
         padding: 6,
@@ -254,22 +256,22 @@ const styles = StyleSheet.create({
     quantityText: {
         paddingVertical: 2,
         paddingHorizontal: 8,
-        fontSize: 13,
+        fontSize: fontSizes.xsPlus,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: Colors.light.text,
+        color: colors.text,
         borderLeftWidth: 1,
-        borderLeftColor: Colors.light.expandableQuantityButtonBorder,
+        borderLeftColor: colors.expandableQuantityButtonBorder,
         borderRightWidth: 1,
-        borderRightColor: Colors.light.expandableQuantityButtonBorder,
+        borderRightColor: colors.expandableQuantityButtonBorder,
     },
     emptyContainer: {
         padding: 24,
         alignItems: 'center',
     },
     emptyText: {
-        fontSize: 14,
-        color: Colors.light.text,
+        fontSize: fontSizes.sm,
+        color: colors.text,
         textAlign: 'center',
     }
 });

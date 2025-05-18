@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import { signOutUser, signin } from '../firebase-utils/authentication';
-import Login from '@/app/[locale]/login/page';
+import Login from '@/app/[locale]/page';
 import { NextIntlClientProvider } from 'next-intl';
 
 jest.mock('../firebase-utils/authentication');

@@ -1,0 +1,24 @@
+# See client details when tapping on a client
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "clients-icon"
+- tapOn:
+    id: "clients-icon"
+- assertVisible:
+    id: "client-.*"
+    index: 0
+- tapOn:
+    id: "client-.*"
+    index: 0
+- assertVisible:
+    id: "back-button"
+- assertVisible:
+    id: "register-visit-button"
+- assertVisible:
+    id: "upload-video-button"
+- assertVisible:
+    id: "planned-visits-title"
