@@ -1,0 +1,12 @@
+# See clients list when tapping on clients icon
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- runFlow: login-valid.yml
+- waitForAnimationToEnd
+- assertVisible:
+    id: "clients-icon"
+- tapOn:
+    id: "clients-icon"
+- assertVisible:
+    id: "clientsScreenTitle"
