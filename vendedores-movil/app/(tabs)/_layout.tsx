@@ -5,6 +5,7 @@ import CartIcon from '../../assets/icons/CartIcon';
 import ClientIcon from '../../assets/icons/ClientIcon';
 import SettingsIcon from '../../assets/icons/SettingsIcon';
 import { useTranslation } from 'react-i18next';
+import VisitsICon from '@/assets/icons/VisitsIcon';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useMemo } from 'react';
 
@@ -84,6 +85,21 @@ export default function TabLayout() {
               </View>
             );
           },
+        }}
+      />
+      <Tabs.Screen
+        name="visits"
+        options={{
+          title: t('tab.visits'),
+          tabBarIcon: ({ focused, color }) => (
+            <View
+              style={
+                focused ? styles.activeIconBackground : styles.iconBackground
+              }
+            >
+              <VisitsICon fill={color} />
+            </View>
+          ),
         }}
       />
       <Tabs.Screen
