@@ -239,6 +239,13 @@
     "orders": "Orders",
     "cart": "Cart",
     "settings": "Settings",
+    "clients": "Clients",
+    "visits": "Visit Routes"
+  },
+  "visits": {
+    "title": "Visits Routes",
+    "loadError": "The routes could not be loaded, please try again.",
+    "loading": "Loading scheduled visits...",
     "clients": "Clients"
   }
 }

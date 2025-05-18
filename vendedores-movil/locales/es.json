@@ -242,6 +242,13 @@
     "orders": "Pedidos",
     "cart": "Carrito",
     "settings": "Ajustes",
+    "clients": "Clientes",
+    "visits": "Ruta de visitas"
+  },
+  "visits": {
+    "title": "Rutas de Visita",
+    "loadError": "No se pudieron cargar las rutas, intente de nuevo.",
+    "loading": "Cargando visitas programadas...",
     "clients": "Clientes"
   }
 }
