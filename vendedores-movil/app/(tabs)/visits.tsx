@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import { Colors } from '../../constants/Colors';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import LoadingIndicator from '@/components/LoadingIndicator';
 import ErrorDisplay from '@/components/ErrorDisplay';
 import { fetchScheduledVisits, Visit } from '@/services/api/clientsService';
@@ -17,9 +17,10 @@ import VisitsTable from '@/components/VisitsTable';
 
 export default function VisitsScreen() {
   const { t } = useTranslation();
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
   const sellerInfo = useAuth();
-  const router = useRouter();
 
   // API data
   const [todayVisits, setTodayVisits] = useState<Visit[]>([]);
@@ -146,86 +147,86 @@ export default function VisitsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.light.background,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  header: {
-    paddingHorizontal: 16,
-    paddingTop: 24,
-    paddingBottom: 16,
-  },
-  title: {
-    fontSize: 28,
-    fontFamily: 'PlusJakartaSans_700Bold',
-    color: Colors.light.titleText,
-  },
-  content: {
-    paddingHorizontal: 16,
-  },
-  section: {
-    marginVertical: 16,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontFamily: 'PlusJakartaSans_600SemiBold',
-    color: Colors.light.primary,
-    marginBottom: 12,
-  },
-  optionItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: Colors.light.backgroundLogin,
-    borderRadius: 12,
-    marginVertical: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  optionIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: Colors.light.tabActiveBackground,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  optionTextContainer: {
-    flex: 1,
-  },
-  optionTitle: {
-    fontSize: 16,
-    fontFamily: 'PlusJakartaSans_600SemiBold',
-    color: Colors.light.titleText,
-  },
-  optionDescription: {
-    fontSize: 14,
-    fontFamily: 'PlusJakartaSans_400Regular',
-    color: Colors.light.text,
-    opacity: 0.7,
-    marginTop: 2,
-  },
-  versionContainer: {
-    padding: 24,
-    alignItems: 'center',
-    marginTop: 16,
-    marginBottom: 24,
-  },
-  versionText: {
-    fontSize: 14,
-    fontFamily: 'PlusJakartaSans_400Regular',
-    color: Colors.light.text,
-    opacity: 0.6,
-  },
-  tableWrapper: {
-    marginBottom: 20,
-  },
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: colors.background,
+    },
+    tableWrapper: {
+      marginBottom: 20,
+    },
+    scrollView: {
+        flex: 1,
+    },
+    header: {
+        paddingHorizontal: 16,
+        paddingTop: 24,
+        paddingBottom: 16,
+    },
+    title: {
+        fontSize: fontSizes.xxl,
+        fontFamily: 'PlusJakartaSans_700Bold',
+        color: colors.titleText,
+    },
+    content: {
+        paddingHorizontal: 16,
+    },
+    section: {
+        marginVertical: 16,
+    },
+    sectionTitle: {
+        fontSize: fontSizes.lg,
+        fontFamily: 'PlusJakartaSans_600SemiBold',
+        color: colors.primary,
+        marginBottom: 12,
+    },
+    optionItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+        backgroundColor: colors.backgroundLogin,
+        borderRadius: 12,
+        marginVertical: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        elevation: 2,
+    },
+    optionIconContainer: {
+        width: 40, 
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: colors.tabActiveBackground,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 12,
+    },
+    optionTextContainer: {
+        flex: 1,
+    },
+    optionTitle: {
+        fontSize: fontSizes.md,
+        fontFamily: 'PlusJakartaSans_600SemiBold',
+        color: colors.titleText,
+    },
+    optionDescription: {
+        fontSize: fontSizes.sm,
+        fontFamily: 'PlusJakartaSans_400Regular',
+        color: colors.text,
+        opacity: 0.7,
+        marginTop: 2,
+    },
+    versionContainer: {
+        padding: 24,
+        alignItems: 'center',
+        marginTop: 16,
+        marginBottom: 24,
+    },
+    versionText: {
+        fontSize: fontSizes.sm,
+        fontFamily: 'PlusJakartaSans_400Regular',
+        color: colors.text,
+        opacity: 0.6,
+    },
 });
