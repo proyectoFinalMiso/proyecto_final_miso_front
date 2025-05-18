@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, TextInput, Keyboard } from 'react-native';
-import { Colors } from '../constants/Colors';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { sendOrder } from '../services/api/orderService';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
 
 const isTestEnvironment = process.env.NODE_ENV === 'test';
 
@@ -12,6 +12,8 @@ const OrderSummary = () => {
     const { getTotal, items, clearCart } = useCart();
     const { clienteData, isLoggedIn } = useAuth();
     const { t } = useTranslation();
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
     const [isLoading, setIsLoading] = useState(false);
     const [destino, setDestino] = useState('');
     const [addressError, setAddressError] = useState('');
@@ -123,6 +125,7 @@ const OrderSummary = () => {
                 <TextInput
                     style={[styles.addressInput, addressError ? styles.errorInput : null]}
                     placeholder={t('cart.placeholderAddress', 'Ej: Calle 123 # 45-67, Apto 101. Ciudad de Bogotá')}
+                    placeholderTextColor={colors.searchHint}
                     value={destino}
                     onChangeText={handleAddressChange}
                     editable={!isLoading}
@@ -151,7 +154,7 @@ const OrderSummary = () => {
                     accessibilityLabel="finishOrderButton"
                 >
                     {isLoading ? (
-                        <ActivityIndicator size="small" color={Colors.light.buttonText} />
+                        <ActivityIndicator size="small" color={colors.buttonText} />
                     ) : (
                         <Text style={styles.buttonText}>{t('cart.finishOrder', 'Finalizar Pedido')}</Text>
                     )}
@@ -161,9 +164,9 @@ const OrderSummary = () => {
     );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     mainContainer: {
-        backgroundColor: Colors.light.backgroundLogin,
+        backgroundColor: colors.backgroundLogin,
         borderRadius: 21,
         marginBottom: 24,
         shadowColor: '#000',
@@ -175,31 +178,32 @@ const styles = StyleSheet.create({
     addressContainer: {
         padding: 16,
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
+        borderBottomColor: colors.tableBorder,
     },
     addressLabel: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
-        color: Colors.light.text,
+        color: colors.text,
         marginBottom: 8,
     },
     addressInput: {
         borderWidth: 1,
-        borderColor: '#e0e0e0',
+        borderColor: colors.tableBorder,
         borderRadius: 8,
         padding: 12,
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontFamily: 'PlusJakartaSans_400Regular',
-        backgroundColor: '#fff',
+        backgroundColor: colors.background,
         minHeight: 44,
+        color: colors.text,
     },
     errorInput: {
         borderColor: '#ff3b30',
     },
     errorText: {
         color: '#ff3b30',
-        fontSize: 12,
+        fontSize: fontSizes.xs,
         fontFamily: 'PlusJakartaSans_400Regular',
         marginTop: 6,
     },
@@ -215,20 +219,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     totalLabel: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
-        color: Colors.light.text,
+        color: colors.text,
         marginRight: 8,
     },
     totalValue: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
-        color: Colors.light.text,
+        color: colors.text,
     },
     finishButton: {
-        backgroundColor: Colors.light.button,
+        backgroundColor: colors.button,
         borderRadius: 69,
         paddingVertical: 10,
         paddingHorizontal: 16,
@@ -237,11 +241,11 @@ const styles = StyleSheet.create({
         minWidth: 120,
     },
     finishButtonDisabled: {
-        backgroundColor: Colors.light.button + '80',
+        backgroundColor: colors.button + '80',
     },
     buttonText: {
-        color: Colors.light.buttonText,
-        fontSize: 14,
+        color: colors.buttonText,
+        fontSize: fontSizes.sm,
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     }

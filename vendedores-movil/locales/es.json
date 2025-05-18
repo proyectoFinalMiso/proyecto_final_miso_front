@@ -7,6 +7,13 @@
     "cancel": "Cancelar",
     "error": "Error",
     "language": "Idioma",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "textSize": "Tamaño de texto",
+    "small": "Pequeño",
+    "medium": "Mediano",
+    "large": "Grande",
     "success": "Éxito",
     "confirm": "Confirmar",
     "back": "Volver",
@@ -242,6 +249,13 @@
     "orders": "Pedidos",
     "cart": "Carrito",
     "settings": "Ajustes",
+    "clients": "Clientes",
+    "visits": "Ruta de visitas"
+  },
+  "visits": {
+    "title": "Rutas de Visita",
+    "loadError": "No se pudieron cargar las rutas, intente de nuevo.",
+    "loading": "Cargando visitas programadas...",
     "clients": "Clientes"
   }
 }

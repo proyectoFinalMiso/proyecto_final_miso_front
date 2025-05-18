@@ -1,0 +1,21 @@
+# Navigate app tabs
+appId: com.proyecto_final_miso.vendedoresmovil
+---
+- launchApp
+- runFlow: login-valid.yml
+- tapOn:
+    id: "cart-icon"
+- assertVisible:
+    id: "cart-content"
+- tapOn:
+    id: "clients-icon"
+- assertVisible:
+    id: "clientsScreenTitle"
+- tapOn:
+    id: "settings-icon"
+- assertVisible:
+    id: "settingsScreenTitle"
+- tapOn:
+    id: "home-icon"
+- assertVisible:
+    id: "homeScreenTitle"

@@ -9,10 +9,11 @@ import {
   RefreshControlProps,
   TouchableOpacity,
 } from 'react-native';
-import { Colors } from '../constants/Colors';
 import { Cliente } from '../services/api/clientsService';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
+import { useMemo } from 'react';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -32,6 +33,9 @@ const ClientTable = ({
   refreshControl,
 }: ClientTableProps) => {
   const { t } = useTranslation();
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
+
   const renderClient = ({ item }: { item: Cliente }) => {
     return (
       <View style={styles.clientContainer}>
@@ -46,7 +50,7 @@ const ClientTable = ({
             <Ionicons
               name="eye-outline"
               size={20}
-              color={Colors.light.text}
+              color={colors.text}
             />
           </View>
         </TouchableOpacity>
@@ -76,10 +80,10 @@ const ClientTable = ({
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.backgroundLogin,
     borderRadius: 21,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -88,16 +92,16 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     borderWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: colors.tableBorder,
   },
   header: {
-    backgroundColor: Colors.light.primary,
+    backgroundColor: colors.primary,
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
   headerText: {
-    color: Colors.light.tableHeaderText,
-    fontSize: 11,
+    color: colors.tableHeaderText,
+    fontSize: fontSizes.xxs,
     fontWeight: '700',
     fontFamily: 'PlusJakartaSans_700Bold',
   },
@@ -106,7 +110,7 @@ const styles = StyleSheet.create({
   },
   clientContainer: {
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: colors.tableBorder,
   },
   clientRow: {
     flexDirection: 'row',
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   eyeIconContainer: {
-    backgroundColor: Colors.light.expandableButtonBackground,
+    backgroundColor: colors.expandableButtonBackground,
     padding: 2,
     borderRadius: 8,
     width: 28,
@@ -124,14 +128,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   clientName: {
-    fontSize: 14,
-    color: Colors.light.text,
+    fontSize: fontSizes.sm,
+    color: colors.text,
     flex: 1,
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   expandedContent: {
-    backgroundColor: Colors.light.backgroundLogin,
+    backgroundColor: colors.backgroundLogin,
     paddingVertical: 6,
     paddingHorizontal: 12,
     paddingBottom: 2,
@@ -142,22 +146,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   detailLabel: {
-    fontSize: 15,
+    fontSize: fontSizes.smd,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
-    color: Colors.light.expandableDetailLabel,
+    color: colors.expandableDetailLabel,
     width: 100,
     marginRight: 15,
   },
   detailValue: {
-    fontSize: 15,
-    color: Colors.light.expandableDetailValue,
+    fontSize: fontSizes.smd,
+    color: colors.expandableDetailValue,
     flex: 1,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
   },
   detailButton: {
-    backgroundColor: Colors.light.button,
+    backgroundColor: colors.button,
     borderRadius: 69,
     paddingVertical: 6,
     paddingHorizontal: 8,
@@ -166,8 +170,8 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   detailButtonText: {
-    color: Colors.light.buttonText,
-    fontSize: 8,
+    color: colors.buttonText,
+    fontSize: fontSizes.xxxs,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
   },
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: Colors.light.expandableQuantityButtonBorder,
+    borderColor: colors.expandableQuantityButtonBorder,
   },
   quantityButton: {
     padding: 6,
@@ -187,22 +191,22 @@ const styles = StyleSheet.create({
   quantityText: {
     paddingVertical: 2,
     paddingHorizontal: 8,
-    fontSize: 13,
+    fontSize: fontSizes.xsPlus,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
-    color: Colors.light.text,
+    color: colors.text,
     borderLeftWidth: 1,
-    borderLeftColor: Colors.light.expandableQuantityButtonBorder,
+    borderLeftColor: colors.expandableQuantityButtonBorder,
     borderRightWidth: 1,
-    borderRightColor: Colors.light.expandableQuantityButtonBorder,
+    borderRightColor: colors.expandableQuantityButtonBorder,
   },
   emptyContainer: {
     padding: 24,
     alignItems: 'center',
   },
   emptyText: {
-    fontSize: 14,
-    color: Colors.light.text,
+    fontSize: fontSizes.sm,
+    color: colors.text,
     textAlign: 'center',
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',

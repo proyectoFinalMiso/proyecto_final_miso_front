@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
-import { Colors } from '../../constants/Colors';
+import { useTheme } from '../../contexts/ThemeContext';
 import LanguageSelector from '../../components/LanguageSelector';
+import ThemeSelector from '../../components/ThemeSelector';
+import TextSizeSelector from '../../components/TextSizeSelector';
 import { useTranslation } from 'react-i18next';
 
 export default function SettingsScreen() {
     const { t } = useTranslation();
+    const { colors, fontSizes } = useTheme();
+    const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -18,8 +22,9 @@ export default function SettingsScreen() {
 
                 <View style={styles.content}>
                     <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>{t('settings.preferences', 'Preferencias')}</Text>
                         <LanguageSelector />
+                        <ThemeSelector />
+                        <TextSizeSelector />
                     </View>
                 </View>
 
@@ -33,10 +38,10 @@ export default function SettingsScreen() {
     );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.light.background,
+        backgroundColor: colors.background,
     },
     scrollView: {
         flex: 1,
@@ -47,9 +52,9 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
     },
     title: {
-        fontSize: 28,
+        fontSize: fontSizes.xxl,
         fontFamily: 'PlusJakartaSans_700Bold',
-        color: Colors.light.titleText,
+        color: colors.titleText,
     },
     content: {
         paddingHorizontal: 16,
@@ -58,16 +63,16 @@ const styles = StyleSheet.create({
         marginVertical: 16,
     },
     sectionTitle: {
-        fontSize: 18,
+        fontSize: fontSizes.lg,
         fontFamily: 'PlusJakartaSans_600SemiBold',
-        color: Colors.light.primary,
+        color: colors.primary,
         marginBottom: 12,
     },
     optionItem: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 16,
-        backgroundColor: Colors.light.backgroundLogin,
+        backgroundColor: colors.backgroundLogin,
         borderRadius: 12,
         marginVertical: 8,
         shadowColor: '#000',
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
         width: 40, 
         height: 40,
         borderRadius: 20,
-        backgroundColor: Colors.light.tabActiveBackground,
+        backgroundColor: colors.tabActiveBackground,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 12,
@@ -89,14 +94,14 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     optionTitle: {
-        fontSize: 16,
+        fontSize: fontSizes.md,
         fontFamily: 'PlusJakartaSans_600SemiBold',
-        color: Colors.light.titleText,
+        color: colors.titleText,
     },
     optionDescription: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: Colors.light.text,
+        color: colors.text,
         opacity: 0.7,
         marginTop: 2,
     },
@@ -107,9 +112,9 @@ const styles = StyleSheet.create({
         marginBottom: 24,
     },
     versionText: {
-        fontSize: 14,
+        fontSize: fontSizes.sm,
         fontFamily: 'PlusJakartaSans_400Regular',
-        color: Colors.light.text,
+        color: colors.text,
         opacity: 0.6,
     },
 });

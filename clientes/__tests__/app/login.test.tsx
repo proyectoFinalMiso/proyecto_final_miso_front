@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import LoginScreen from '../../app/login';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../contexts/ThemeContext';
 
 // Mock dependencies
 jest.mock('expo-router', () => ({
@@ -17,6 +18,10 @@ jest.mock('../../contexts/AuthContext', () => ({
 
 jest.mock('react-native/Libraries/Alert/Alert', () => ({
     alert: jest.fn()
+}));
+
+jest.mock('../../contexts/ThemeContext', () => ({
+    useTheme: jest.fn()
 }));
 
 jest.mock('react-i18next', () => ({
@@ -44,6 +49,7 @@ jest.mock('@expo/vector-icons', () => ({
 
 const mockUseRouter = useRouter as jest.Mock;
 const mockUseAuth = useAuth as jest.Mock;
+const mockUseTheme = useTheme as jest.Mock;
 
 describe('LoginScreen', () => {
     const mockLogin = jest.fn();
@@ -60,6 +66,17 @@ describe('LoginScreen', () => {
         mockUseAuth.mockReturnValue({
             login: mockLogin,
             isLoading: false
+        });
+
+        mockUseTheme.mockReturnValue({
+            colors: {
+                primary: '#6200ee',
+                background: '#ffffff',
+                text: '#000000',
+                button: '#6200ee',
+                buttonText: '#ffffff',
+                cancelColor: '#ff0000'
+            }
         });
     });
 

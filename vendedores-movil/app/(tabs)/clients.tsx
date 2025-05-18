@@ -1,6 +1,6 @@
 import { Cliente, fetchClients } from '../../services/api/clientsService';
 import { useAuth } from '../../contexts/AuthContext';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -9,17 +9,19 @@ import {
   TextInput,
   RefreshControl,
 } from 'react-native';
-import { Colors } from '../../constants/Colors';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ErrorDisplay from '../../components/ErrorDisplay';
 import ClientTable from '../../components/ClientsTable';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const ClientsScreen = () => {
   const sellerInfo = useAuth();
   const router = useRouter();
   const { t } = useTranslation();
+  const { colors, fontSizes } = useTheme();
+  const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
   // API data
   const [clients, setClients] = useState<Cliente[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -91,14 +93,16 @@ const ClientsScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.title}>{t('clients.title', 'Mis clientes')}</Text>
+          <Text style={styles.title} testID="clientsScreenTitle" accessibilityLabel="clientsScreenTitle">
+            {t('clients.title', 'Mis clientes')}
+          </Text>
         </View>
         <View style={styles.searchContainer}>
           <View style={styles.searchRow}>
             <TextInput
               style={styles.searchInput}
               placeholder={t('clients.search', 'Buscar clientes')}
-              placeholderTextColor={Colors.light.searchHint}
+              placeholderTextColor={colors.searchHint}
               value={searchText}
               onChangeText={setSearchText}
               testID="searchInput"
@@ -114,8 +118,8 @@ const ClientsScreen = () => {
             <RefreshControl
               refreshing={isRefreshing}
               onRefresh={onRefresh}
-              colors={[Colors.light.primary]}
-              tintColor={Colors.light.primary}
+              colors={[colors.primary]}
+              tintColor={colors.primary}
             />
           }
         />
@@ -124,24 +128,24 @@ const ClientsScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: colors.background,
   },
   header: {
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: fontSizes.xxl,
     fontWeight: '600',
-    color: Colors.light.titleText,
+    color: colors.titleText,
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   lastUpdatedText: {
     marginTop: 4,
-    fontSize: 12,
-    color: Colors.light.text,
+    fontSize: fontSizes.xs,
+    color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
   content: {
@@ -149,8 +153,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   placeholder: {
-    fontSize: 16,
-    color: Colors.light.text,
+    fontSize: fontSizes.md,
+    color: colors.text,
     textAlign: 'center',
     marginTop: 20,
   },
@@ -165,27 +169,28 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     borderWidth: 0.8,
-    borderColor: Colors.light.borderWidget,
+    borderColor: colors.borderWidget,
     borderRadius: 8,
     paddingHorizontal: 12,
-    backgroundColor: Colors.light.backgroundLogin,
-    fontSize: 16,
+    backgroundColor: colors.backgroundLogin,
+    fontSize: fontSizes.md,
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
+    color: colors.text,
   },
   filterButton: {
     width: 40,
     height: 40,
     borderRadius: 8,
     marginLeft: 10,
-    backgroundColor: Colors.light.backgroundLogin,
+    backgroundColor: colors.backgroundLogin,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 0.8,
-    borderColor: Colors.light.borderWidget,
+    borderColor: colors.borderWidget,
   },
   filterButtonActive: {
-    backgroundColor: Colors.light.button,
+    backgroundColor: colors.button,
   },
   activeFiltersContainer: {
     flexDirection: 'row',
@@ -193,15 +198,15 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingHorizontal: 10,
     paddingVertical: 4,
-    backgroundColor: Colors.light.backgroundLogin,
+    backgroundColor: colors.backgroundLogin,
     borderRadius: 4,
     borderWidth: 0.5,
-    borderColor: Colors.light.borderWidget,
+    borderColor: colors.borderWidget,
   },
   activeFiltersText: {
     flex: 1,
-    fontSize: 12,
-    color: Colors.light.text,
+    fontSize: fontSizes.xs,
+    color: colors.text,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
 });
