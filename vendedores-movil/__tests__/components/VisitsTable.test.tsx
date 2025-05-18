@@ -4,6 +4,7 @@ import { Visit } from '../../services/api/clientsService';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../../utils/i18n';
 import VisitsTable from '../../components/VisitsTable';
+import { Colors } from '../../constants/Colors';
 
 const mockVisits: Visit[] = [
   {
@@ -68,6 +69,25 @@ jest.mock('../../contexts/ThemeContext', () => {
 });
 
 describe('VisitsTable', () => {
+
+      beforeEach(() => {
+          jest.clearAllMocks();
+          const mockUseTheme = require('../../contexts/ThemeContext').useTheme;
+                  mockUseTheme.mockReturnValue({
+                      theme: 'light',
+                      colors: Colors.light,
+                      isDark: false,
+                      toggleTheme: jest.fn(),
+                      setTheme: jest.fn(),
+  
+                      fontSize: mockDefaultFontSizeMode,
+              fontSizes: mockDefaultFontSizes,
+              setFontSize: jest.fn(),
+              increaseFontSize: jest.fn(),
+              decreaseFontSize: jest.fn(),
+                  });
+      });
+      
   beforeAll(() => {
     if (!i18n.isInitialized) {
       i18n.init();
