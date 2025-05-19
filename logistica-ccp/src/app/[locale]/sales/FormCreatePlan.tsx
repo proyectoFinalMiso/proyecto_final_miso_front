@@ -158,12 +158,7 @@ export default function FormCreatePlan({ open, onClose }: ModalFormProps) {
                                 label={t('form_single_field_1')}
                                 name="meta_venta"
                                 value={formData.meta_venta}
-                                onChange={(e) => {
-                                    const value = e.target.value;
-                                    if (/^\d*$/.test(value)) { // Permitir solo números
-                                        handleChange;
-                                    }
-                                }}
+                                onChange={handleChange}
                                 margin="normal"
                                 title="Meta de venta del producto"
                             />
