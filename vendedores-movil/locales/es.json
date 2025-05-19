@@ -261,7 +261,7 @@
   "visitsTable":{
     "tomorrowTitle":"Mañana",
     "todayTitle":"Hoy",
-    "noTomorrowVisits":"No tienes visitas programadas para hoy",
-    "noTodayVisits":"No tienes visitas programadas para mañana"
+    "noTomorrowVisits":"No tienes visitas programadas para mañana",
+    "noTodayVisits":"No tienes visitas programadas para hoy"
   }
 }
