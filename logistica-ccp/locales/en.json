@@ -112,6 +112,8 @@
         "route_modal_address": "Address: ",
         "route_modal_table_col_1": "SKU",
         "route_modal_table_col_2": "Warehouse",
+        "route_modal_table_col_3": "Available",
+        "route_modal_table_col_4": "Requested",
         "button_close": "CLOSE"
     },
   "Sales": {
@@ -129,14 +131,6 @@
     "modal_button_close": "CLOSE",
     "close_plan": "Close",
     "sellers_plan": "Sales Plan",
-    "route_modal_title": "Delivery Route",
-    "route_modal_order": "Order: ",
-    "route_modal_customer": "Customer: ",
-    "route_modal_address": "Address: ",
-    "route_modal_table_col_1": "SKU",
-    "route_modal_table_col_2": "Warehouse",
-    "route_modal_table_col_3": "Available",
-    "route_modal_table_col_4": "Requested",
     "button_close": "CLOSE",
     "select_seller": "Select a seller",
     "form_single_title": "Create sales plan",
