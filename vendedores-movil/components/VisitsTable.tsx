@@ -9,7 +9,6 @@ import {
   RefreshControlProps,
   TouchableOpacity,
 } from 'react-native';
-import { Colors } from '../constants/Colors';
 import { Visit } from '../services/api/clientsService';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
@@ -23,7 +22,7 @@ if (Platform.OS === 'android') {
 type VisitsTableProps = {
   visits: Visit[];
   refreshControl?: React.ReactElement<RefreshControlProps>;
-  title: string;
+  title: 'TODAY' | 'TOMORROW';
 };
 
 const VisitsTable = ({ visits, refreshControl, title }: VisitsTableProps) => {
@@ -74,7 +73,7 @@ const VisitsTable = ({ visits, refreshControl, title }: VisitsTableProps) => {
         <FlatList
           data={visits}
           renderItem={renderVisit}
-          keyExtractor={(item) => String(item.id)}
+          keyExtractor={(item, index) => item.id?.toString() ?? index.toString()}
           contentContainerStyle={styles.listContent}
           refreshControl={refreshControl}
         />
@@ -111,18 +110,97 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
   listContent: {
     paddingBottom: 8,
   },
-  visitContainer: {
+  clientContainer: {
     borderBottomWidth: 1,
     borderBottomColor: colors.tableBorder,
+  },
+  clientRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 12,
   },
-  visitDate: {
+  eyeIconContainer: {
+    backgroundColor: colors.expandableButtonBackground,
+    padding: 2,
+    borderRadius: 8,
+    width: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  clientName: {
     fontSize: fontSizes.sm,
     color: colors.text,
+    flex: 1,
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
-    paddingVertical: 4,
+  },
+  expandedContent: {
+    backgroundColor: colors.backgroundLogin,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    paddingBottom: 2,
+  },
+  detailRow: {
+    flexDirection: 'row',
+    marginBottom: 14,
+    alignItems: 'center',
+  },
+  detailLabel: {
+    fontSize: fontSizes.smd,
+    fontWeight: '400',
+    fontFamily: 'PlusJakartaSans_400Regular',
+    color: colors.expandableDetailLabel,
+    width: 100,
+    marginRight: 15,
+  },
+  detailValue: {
+    fontSize: fontSizes.smd,
+    color: colors.expandableDetailValue,
+    flex: 1,
+    fontWeight: '400',
+    fontFamily: 'PlusJakartaSans_400Regular',
+  },
+  detailButton: {
+    backgroundColor: colors.button,
+    borderRadius: 69,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  detailButtonText: {
+    color: colors.buttonText,
+    fontSize: fontSizes.xxxs,
+    fontWeight: '400',
+    fontFamily: 'PlusJakartaSans_400Regular',
+  },
+  quantityContainer: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    borderRadius: 4,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: colors.expandableQuantityButtonBorder,
+  },
+  quantityButton: {
+    padding: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  quantityText: {
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+    fontSize: fontSizes.xsPlus,
+    fontWeight: '400',
+    fontFamily: 'PlusJakartaSans_400Regular',
+    color: colors.text,
+    borderLeftWidth: 1,
+    borderLeftColor: colors.expandableQuantityButtonBorder,
+    borderRightWidth: 1,
+    borderRightColor: colors.expandableQuantityButtonBorder,
   },
   emptyContainer: {
     padding: 24,
@@ -134,24 +212,6 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     textAlign: 'center',
     fontWeight: '400',
     fontFamily: 'PlusJakartaSans_400Regular',
-  },
-  clientRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-  },
-  clientContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.tableBorder,
-  },
-  clientName: {
-    fontSize: 14,
-    color: colors.text,
-    flex: 1,
-    fontWeight: '600',
-    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
 });
 

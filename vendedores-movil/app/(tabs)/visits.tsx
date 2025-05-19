@@ -6,21 +6,20 @@ import {
   Text,
   RefreshControl,
 } from 'react-native';
-import { Colors } from '../../constants/Colors';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
-import LoadingIndicator from '@/components/LoadingIndicator';
-import ErrorDisplay from '@/components/ErrorDisplay';
-import { fetchScheduledVisits, Visit } from '@/services/api/clientsService';
-import VisitsTable from '@/components/VisitsTable';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import ErrorDisplay from '../../components/ErrorDisplay';
+import { fetchScheduledVisits, Visit } from '../../services/api/clientsService';
+import VisitsTable from '../../components/VisitsTable';
 
 export default function VisitsScreen() {
   const { t } = useTranslation();
+  const sellerInfo = useAuth();
   const { colors, fontSizes } = useTheme();
   const styles = useMemo(() => getStyles(colors, fontSizes), [colors, fontSizes]);
 
-  const sellerInfo = useAuth();
 
   // API data
   const [todayVisits, setTodayVisits] = useState<Visit[]>([]);
@@ -67,7 +66,9 @@ export default function VisitsScreen() {
 
       setTodayVisits(todayVisits);
       setScheduleVisits(scheduleVisits);
+      console.log({todayVisits,scheduleVisits})
     } catch (err) {
+      console.log(err)
       setError(
         t(
           'visits.loadError',
@@ -116,20 +117,23 @@ export default function VisitsScreen() {
             {t('visits.title', 'Rutas de Visita')}
           </Text>
         </View>
+        
         <View style={styles.tableWrapper}>
-          <VisitsTable
-            visits={todayVisits}
-            title="TODAY"
-            refreshControl={
-              <RefreshControl
-                refreshing={isRefreshing}
-                onRefresh={onRefresh}
-                colors={[Colors.light.primary]}
-                tintColor={Colors.light.primary}
-              />
-            }
-          />
-        </View>
+        <VisitsTable
+          visits={todayVisits}
+          title="TODAY"
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={onRefresh}
+              colors={[colors.primary]}
+              tintColor={colors.primary}
+            />
+          }
+        />
+      </View>
+
+        <View style={styles.tableWrapperLast}>
         <VisitsTable
           visits={scheduleVisits}
           title="TOMORROW"
@@ -137,11 +141,12 @@ export default function VisitsScreen() {
             <RefreshControl
               refreshing={isRefreshing}
               onRefresh={onRefresh}
-              colors={[Colors.light.primary]}
-              tintColor={Colors.light.primary}
+              colors={[colors.primary]}
+              tintColor={colors.primary}
             />
           }
         />
+      </View>
       </View>
     </SafeAreaView>
   );
@@ -151,9 +156,6 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.background,
-    },
-    tableWrapper: {
-      marginBottom: 20,
     },
     scrollView: {
         flex: 1,
@@ -228,5 +230,13 @@ const getStyles = (colors: any, fontSizes: any) => StyleSheet.create({
         fontFamily: 'PlusJakartaSans_400Regular',
         color: colors.text,
         opacity: 0.6,
+    },
+    tableWrapper: {
+      minHeight: 100,
+      marginBottom: 20,
+    },
+    tableWrapperLast: {
+      minHeight: 100,
+      marginBottom: 0,
     },
 });
