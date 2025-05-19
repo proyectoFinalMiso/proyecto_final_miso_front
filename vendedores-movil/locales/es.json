@@ -257,5 +257,11 @@
     "loadError": "No se pudieron cargar las rutas, intente de nuevo.",
     "loading": "Cargando visitas programadas...",
     "clients": "Clientes"
+  },
+  "visitsTable":{
+    "tomorrowTitle":"Mañana",
+    "todayTitle":"Hoy",
+    "noTomorrowVisits":"No tienes visitas programadas para hoy",
+    "noTodayVisits":"No tienes visitas programadas para mañana"
   }
 }
